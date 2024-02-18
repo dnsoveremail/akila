@@ -63,7 +63,6 @@ import (
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 	"github.com/cosmos/cosmos-sdk/x/consensus"
-	crisistypes "github.com/cosmos/cosmos-sdk/x/crisis/types"
 	distr "github.com/cosmos/cosmos-sdk/x/distribution"
 	distrkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
@@ -125,18 +124,7 @@ import (
 	"akila/app/ante"
 	ethante "akila/app/ante/evm"
 	"akila/app/post"
-	v10 "akila/app/upgrades/v10"
-	v11 "akila/app/upgrades/v11"
-	v12 "akila/app/upgrades/v12"
-	v13 "akila/app/upgrades/v13"
-	v14 "akila/app/upgrades/v14"
-	v15 "akila/app/upgrades/v15"
 	v16 "akila/app/upgrades/v16"
-	v8 "akila/app/upgrades/v8"
-	v81 "akila/app/upgrades/v8_1"
-	v82 "akila/app/upgrades/v8_2"
-	v9 "akila/app/upgrades/v9"
-	v91 "akila/app/upgrades/v9_1"
 	"akila/encoding"
 	"akila/ethereum/eip712"
 	"akila/precompiles/common"
@@ -1147,113 +1135,6 @@ func initParamsKeeper(
 }
 
 func (app *Evmos) setupUpgradeHandlers() {
-	// v8 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v8.UpgradeName,
-		v8.CreateUpgradeHandler(
-			app.mm, app.configurator,
-		),
-	)
-
-	// v8.1 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v81.UpgradeName,
-		v81.CreateUpgradeHandler(
-			app.mm, app.configurator,
-		),
-	)
-
-	// v8.2 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v82.UpgradeName,
-		v82.CreateUpgradeHandler(
-			app.mm, app.configurator,
-		),
-	)
-
-	// v9 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v9.UpgradeName,
-		v9.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.DistrKeeper,
-		),
-	)
-
-	// v9.1 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v91.UpgradeName,
-		v91.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.DistrKeeper,
-		),
-	)
-
-	// v10 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v10.UpgradeName,
-		v10.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.StakingKeeper,
-		),
-	)
-
-	// v11 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v11.UpgradeName,
-		v11.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.AccountKeeper,
-			app.BankKeeper,
-			app.StakingKeeper,
-			app.DistrKeeper,
-		),
-	)
-
-	// v12 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v12.UpgradeName,
-		v12.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.DistrKeeper,
-		),
-	)
-
-	// v13 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v13.UpgradeName,
-		v13.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			*app.EvmKeeper,
-		),
-	)
-
-	// !! ATTENTION !!
-	// v14 upgrade handler
-	// !! WHEN UPGRADING TO SDK v0.47 MAKE SURE TO INCLUDE THIS
-	// source: https://github.com/cosmos/cosmos-sdk/blob/release/v0.47.x/UPGRADING.md#xconsensus
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v14.UpgradeName,
-		v14.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.EvmKeeper,
-			app.ConsensusParamsKeeper,
-			app.IBCKeeper.ClientKeeper,
-			app.ParamsKeeper,
-			app.appCodec,
-		),
-	)
-
-	// v15 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v15.UpgradeName,
-		v15.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.BankKeeper,
-			app.EvmKeeper,
-			app.StakingKeeper,
-		),
-	)
 
 	// v16 upgrade handler
 	app.UpgradeKeeper.SetUpgradeHandler(
@@ -1283,50 +1164,7 @@ func (app *Evmos) setupUpgradeHandlers() {
 	var storeUpgrades *storetypes.StoreUpgrades
 
 	switch upgradeInfo.Name {
-	case v8.UpgradeName:
-		// add revenue module for testnet (v7 -> v8)
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Added: []string{"feesplit"},
-		}
-	case v81.UpgradeName:
-		// NOTE: store upgrade for mainnet was not registered and was replaced by
-		// the v8.2 upgrade.
-	case v82.UpgradeName:
-		// add  missing revenue module for mainnet (v8.1 -> v8.2)
-		// IMPORTANT: this upgrade CANNOT be executed for testnet!
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Added:   []string{revenuetypes.ModuleName},
-			Deleted: []string{"feesplit"},
-		}
-	case v9.UpgradeName, v91.UpgradeName:
-		// no store upgrade in v9 or v9.1
-	case v10.UpgradeName:
-		// no store upgrades in v10
-	case v11.UpgradeName:
-		// add ica host submodule in v11
-		// initialize recovery store
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Added: []string{icahosttypes.SubModuleName, "recoveryv1"},
-		}
-	case v12.UpgradeName:
-		// no store upgrades
-	case v13.UpgradeName:
-		// no store upgrades
-	case v14.UpgradeName:
-		// !! ATTENTION !!
-		// !! WHEN UPGRADING TO SDK v0.47 MAKE SURE TO INCLUDE THIS
-		// source: https://github.com/cosmos/cosmos-sdk/blob/release/v0.47.x/UPGRADING.md
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Added: []string{
-				consensusparamtypes.StoreKey,
-				crisistypes.ModuleName,
-			},
-		}
-	case v15.UpgradeName:
-		// crisis module is deprecated in v15
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Deleted: []string{crisistypes.ModuleName},
-		}
+
 	case v16.UpgradeName:
 		// recovery and incentives modules are deprecated in v16
 		storeUpgrades = &storetypes.StoreUpgrades{
