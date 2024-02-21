@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"akila/app"
-	akilad "akila/cmd/evmosd"
+	akilad "akila/cmd/akilad"
 	"akila/utils"
 )
 
@@ -18,12 +18,12 @@ func TestInitCmd(t *testing.T) {
 	rootCmd, _ := akilad.NewRootCmd()
 	rootCmd.SetArgs([]string{
 		"init",       // Test the init cmd
-		"evmos-test", // Moniker
+		"akila-test", // Moniker
 		fmt.Sprintf("--%s=%s", cli.FlagOverwrite, "true"), // Overwrite genesis.json, in case it already exists
 		fmt.Sprintf("--%s=%s", flags.FlagChainID, utils.TestnetChainID+"-1"),
 	})
 
-	err := svrcmd.Execute(rootCmd, "evmosd", app.DefaultNodeHome)
+	err := svrcmd.Execute(rootCmd, "akilad", app.DefaultNodeHome)
 	require.NoError(t, err)
 }
 
@@ -36,6 +36,6 @@ func TestAddKeyLedgerCmd(t *testing.T) {
 		fmt.Sprintf("--%s", flags.FlagUseLedger),
 	})
 
-	err := svrcmd.Execute(rootCmd, "EVMOSD", app.DefaultNodeHome)
+	err := svrcmd.Execute(rootCmd, "AKILAD", app.DefaultNodeHome)
 	require.Error(t, err)
 }

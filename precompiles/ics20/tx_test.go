@@ -139,7 +139,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 			"requested amount is more than spend limit",
 		},
 		{
-			"fail - transfer 1 Evmos from chainA to chainB from somebody else's account",
+			"fail - transfer 1 Akila from chainA to chainB from somebody else's account",
 			func(sender, receiver sdk.AccAddress) []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -177,7 +177,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 			"does not exist",
 		},
 		{
-			"pass - transfer 1 Evmos from chainA to chainB and spend the entire allowance",
+			"pass - transfer 1 Akila from chainA to chainB and spend the entire allowance",
 			func(sender, receiver sdk.AccAddress) []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -210,7 +210,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 		},
 		//nolint:dupl
 		{
-			"pass - transfer 1 Evmos from chainA to chainB and don't change the unlimited spending limit",
+			"pass - transfer 1 Akila from chainA to chainB and don't change the unlimited spending limit",
 			func(sender, receiver sdk.AccAddress) []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -244,7 +244,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 		},
 		//nolint:dupl
 		{
-			"pass - transfer 1 Evmos from chainA to chainB and only change 1 spend limit",
+			"pass - transfer 1 Akila from chainA to chainB and only change 1 spend limit",
 			func(sender, receiver sdk.AccAddress) []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -277,7 +277,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 			"",
 		},
 		{
-			"pass - transfer 1 Evmos from chainA to chainB and only change 1 spend limit for the associated allocation",
+			"pass - transfer 1 Akila from chainA to chainB and only change 1 spend limit for the associated allocation",
 			func(sender, receiver sdk.AccAddress) []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)

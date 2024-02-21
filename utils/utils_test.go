@@ -17,7 +17,7 @@ import (
 
 func init() {
 	cfg := sdk.GetConfig()
-	cfg.SetBech32PrefixForAccount("evmos", "evmospub")
+	cfg.SetBech32PrefixForAccount("akila", "akilapub")
 }
 
 func TestIsSupportedKeys(t *testing.T) {
@@ -88,32 +88,32 @@ func TestGetAkilaAddressFromBech32(t *testing.T) {
 		},
 		{
 			"invalid bech32 address",
-			"evmos",
+			"akila",
 			"",
 			true,
 		},
 		{
 			"invalid address bytes",
-			"evmos1123",
+			"akila1123",
 			"",
 			true,
 		},
 		{
-			"evmos address",
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
+			"akila address",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
 			false,
 		},
 		{
 			"cosmos address",
 			"cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
 			false,
 		},
 		{
 			"osmosis address",
 			"osmo1qql8ag4cluz6r4dz28p3w00dnc9w8ueuhnecd2",
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
 			false,
 		},
 	}
@@ -137,7 +137,7 @@ func TestAkilaCoinDenom(t *testing.T) {
 	}{
 		{
 			"valid denom - native coin",
-			"aevmos",
+			"aakila",
 			false,
 		},
 		{

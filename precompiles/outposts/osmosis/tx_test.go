@@ -15,8 +15,8 @@ import (
 	cmn "akila/precompiles/common"
 	"akila/precompiles/ics20"
 	"akila/precompiles/outposts/osmosis"
+	testutils "akila/testutil/integration/akila/utils"
 	commonnetwork "akila/testutil/integration/common/network"
-	testutils "akila/testutil/integration/evmos/utils"
 	"akila/testutil/integration/ibc/coordinator"
 	utiltx "akila/testutil/tx"
 	"akila/utils"
@@ -31,7 +31,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 	senderAddress := utiltx.GenerateAddress()
 	sender := sdktypes.AccAddress(senderAddress.Bytes())
 	randomAddress := utiltx.GenerateAddress()
-	receiver := "evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7" //nolint:goconst
+	receiver := "akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc" //nolint:goconst
 
 	method := s.precompile.Methods[osmosis.SwapMethod]
 	testCases := []struct {
@@ -81,7 +81,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -106,7 +106,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -131,7 +131,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 				return []interface{}{
 					osmosis.SwapPacketData{
 						ChannelID:          ChannelID,
@@ -163,7 +163,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 				s.Require().NoError(err, "expected no error during ibc erc20 registration")
 
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -190,7 +190,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -215,7 +215,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				wrongIbcDenomTrace := utils.ComputeIBCDenomTrace(PortID, ChannelID, "wrong")
 				wrongTokenPair, err := testutils.RegisterIBCERC20Coins(s.unitNetwork, sender, wrongIbcDenomTrace)
@@ -251,7 +251,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 				s.Require().NoError(err, "expected no error during ibc erc20 registration")
 
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -281,7 +281,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 				s.Require().NoError(err, "expected no error during ibc erc20 registration")
 
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -299,7 +299,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			},
 			expError:    true,
 			ibcSetup:    true,
-			errContains: fmt.Sprintf(osmosis.ErrReceiverAddress, "not a valid evmos address"),
+			errContains: fmt.Sprintf(osmosis.ErrReceiverAddress, "not a valid akila address"),
 		},
 		{
 			//  THIS PANICS INSIDE CheckAuthzExists
@@ -312,7 +312,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 				s.Require().NoError(err, "expected no error during ibc erc20 registration")
 
 				akilaTokenPair, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				return []interface{}{
 					osmosis.SwapPacketData{
@@ -359,7 +359,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			errContains: fmt.Sprintf("port ID (%s) channel ID (%s)", PortID, ChannelID),
 		},
 		{
-			name:   "pass - correct swap output ibc evmos",
+			name:   "pass - correct swap output ibc akila",
 			sender: senderAddress,
 			origin: senderAddress,
 			malleate: func() []interface{} {
@@ -390,7 +390,7 @@ func (s *PrecompileTestSuite) TestSwap() {
 			origin: senderAddress,
 			malleate: func() []interface{} {
 				_, err := testutils.RegisterAkilaERC20Coins(*s.unitNetwork, sender)
-				s.Require().NoError(err, "expected no error during evmos erc20 registration")
+				s.Require().NoError(err, "expected no error during akila erc20 registration")
 
 				osmoIbcDenomTrace := utils.ComputeIBCDenomTrace(PortID, ChannelID, osmosis.OsmosisDenom)
 				osmoTokenPair, err := testutils.RegisterIBCERC20Coins(s.unitNetwork, sender, osmoIbcDenomTrace)

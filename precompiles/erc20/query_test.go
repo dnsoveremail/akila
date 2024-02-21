@@ -27,9 +27,9 @@ var (
 	// validTraceDenom is a denomination trace with a valid IBC voucher name
 	validTraceDenom = types.DenomTrace{Path: "channel-0", BaseDenom: "uosmo"}
 	// validAttoTraceDenom is a denomination trace with a valid IBC voucher name and 18 decimals
-	validAttoTraceDenom = types.DenomTrace{Path: "channel-0", BaseDenom: "aevmos"}
+	validAttoTraceDenom = types.DenomTrace{Path: "channel-0", BaseDenom: "aakila"}
 	// validTraceDenomNoMicroAtto is a denomination trace with a valid IBC voucher name but no micro or atto prefix
-	validTraceDenomNoMicroAtto = types.DenomTrace{Path: "channel-0", BaseDenom: "mevmos"}
+	validTraceDenomNoMicroAtto = types.DenomTrace{Path: "channel-0", BaseDenom: "makila"}
 
 	// --------------------
 	// Variables for coin with valid metadata
@@ -153,8 +153,8 @@ func (s *PrecompileTestSuite) TestNameSymbol() {
 				app.TransferKeeper.SetDenomTrace(ctx, validTraceDenomNoMicroAtto)
 			},
 			expPass:   true,
-			expName:   "Evmos",
-			expSymbol: "EVMOS",
+			expName:   "Akila",
+			expSymbol: "AKILA",
 		},
 		{
 			name:  "pass - valid denom with metadata",

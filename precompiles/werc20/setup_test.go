@@ -5,10 +5,10 @@ import (
 
 	"akila/precompiles/werc20"
 
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
 	"github.com/stretchr/testify/suite"
 
 	//nolint:revive // dot imports are fine for Ginkgo
@@ -40,7 +40,7 @@ func TestPrecompileTestSuite(t *testing.T) {
 
 	// Run Ginkgo integration tests
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "WEVMOS Extension Suite")
+	RunSpecs(t, "WAKILA Extension Suite")
 }
 
 func (s *PrecompileTestSuite) SetupTest() {

@@ -6,9 +6,9 @@ import (
 
 	"akila/precompiles/bank/testdata"
 
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	"akila/testutil/integration/evmos/network"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	"akila/testutil/integration/akila/network"
 	"akila/utils"
 	evmtypes "akila/x/evm/types"
 	inflationtypes "akila/x/inflation/v1/types"
@@ -21,7 +21,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"akila/precompiles/testutil"
-	"akila/testutil/integration/evmos/keyring"
+	"akila/testutil/integration/akila/keyring"
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
 	//nolint:revive // dot imports are fine for Ginkgo
@@ -239,7 +239,7 @@ var _ = Describe("Bank Extension -", func() {
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
 				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
-				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
+				Expect(ok).To(BeTrue(), "failed to parse akila total supply")
 				xmplTotalSupply := amount
 
 				Expect(balances[0].Amount).To(Equal(akilaTotalSupply))
@@ -248,7 +248,7 @@ var _ = Describe("Bank Extension -", func() {
 		})
 
 		Context("supplyOf query", func() {
-			It("should return the supply of Evmos", func() {
+			It("should return the supply of Akila", func() {
 				queryArgs, supplyArgs := getTxAndCallArgs(directCall, contractData, bank.SupplyOfMethod, is.akilaAddr)
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
@@ -257,7 +257,7 @@ var _ = Describe("Bank Extension -", func() {
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
 				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
-				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
+				Expect(ok).To(BeTrue(), "failed to parse akila total supply")
 
 				Expect(out[0].(*big.Int)).To(Equal(akilaTotalSupply))
 			})
@@ -383,7 +383,7 @@ var _ = Describe("Bank Extension -", func() {
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
 				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
-				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
+				Expect(ok).To(BeTrue(), "failed to parse akila total supply")
 				xmplTotalSupply := amount
 
 				Expect(balances[0].Amount).To(Equal(akilaTotalSupply))
@@ -392,7 +392,7 @@ var _ = Describe("Bank Extension -", func() {
 		})
 
 		Context("supplyOf query", func() {
-			It("should return the supply of Evmos", func() {
+			It("should return the supply of Akila", func() {
 				queryArgs, supplyArgs := getTxAndCallArgs(contractCall, contractData, SupplyOfFunction, is.akilaAddr)
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
@@ -401,7 +401,7 @@ var _ = Describe("Bank Extension -", func() {
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
 				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
-				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
+				Expect(ok).To(BeTrue(), "failed to parse akila total supply")
 
 				Expect(out[0].(*big.Int)).To(Equal(akilaTotalSupply))
 			})

@@ -3,15 +3,15 @@ package distribution_test
 import (
 	"math/big"
 
+	cmn "akila/precompiles/common"
+	"akila/precompiles/distribution"
+	"akila/utils"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/distribution"
-	"akila/utils"
 )
 
 func (s *PrecompileTestSuite) TestSetWithdrawAddressEvent() {
@@ -46,7 +46,7 @@ func (s *PrecompileTestSuite) TestSetWithdrawAddressEvent() {
 				err := cmn.UnpackLog(s.precompile.ABI, &setWithdrawerAddrEvent, distribution.EventTypeSetWithdrawAddress, *log)
 				s.Require().NoError(err)
 				s.Require().Equal(s.address, setWithdrawerAddrEvent.Caller)
-				s.Require().Equal(sdk.MustBech32ifyAddressBytes("evmos", s.address.Bytes()), setWithdrawerAddrEvent.WithdrawerAddress)
+				s.Require().Equal(sdk.MustBech32ifyAddressBytes("akila", s.address.Bytes()), setWithdrawerAddrEvent.WithdrawerAddress)
 			},
 			20000,
 			false,

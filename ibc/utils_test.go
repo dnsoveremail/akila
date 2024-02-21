@@ -16,7 +16,7 @@ import (
 
 func init() {
 	cfg := sdk.GetConfig()
-	cfg.SetBech32PrefixForAccount("evmos", "evmospub")
+	cfg.SetBech32PrefixForAccount("akila", "akilapub")
 }
 
 func TestGetTransferSenderRecipient(t *testing.T) {
@@ -57,7 +57,7 @@ func TestGetTransferSenderRecipient(t *testing.T) {
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "123456",
 					},
 				),
@@ -71,7 +71,7 @@ func TestGetTransferSenderRecipient(t *testing.T) {
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-						Receiver: "evmos1",
+						Receiver: "akila1",
 						Amount:   "123456",
 					},
 				),
@@ -80,48 +80,48 @@ func TestGetTransferSenderRecipient(t *testing.T) {
 			true,
 		},
 		{
-			"valid - cosmos sender, evmos recipient",
+			"valid - cosmos sender, akila recipient",
 			channeltypes.Packet{
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "123456",
 					},
 				),
 			},
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
-			"evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
+			"akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 			false,
 		},
 		{
-			"valid - evmos sender, cosmos recipient",
+			"valid - akila sender, cosmos recipient",
 			channeltypes.Packet{
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
-						Sender:   "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Sender:   "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Receiver: "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
 						Amount:   "123456",
 					},
 				),
 			},
-			"evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
+			"akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
 			false,
 		},
 		{
-			"valid - osmosis sender, evmos recipient",
+			"valid - osmosis sender, akila recipient",
 			channeltypes.Packet{
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "osmo1qql8ag4cluz6r4dz28p3w00dnc9w8ueuhnecd2",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "123456",
 					},
 				),
 			},
-			"evmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueuafmxps",
-			"evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+			"akila1qql8ag4cluz6r4dz28p3w00dnc9w8ueuslyqxk",
+			"akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 			false,
 		},
 	}
@@ -165,7 +165,7 @@ func TestGetTransferAmount(t *testing.T) {
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "",
 					},
 				),
@@ -179,7 +179,7 @@ func TestGetTransferAmount(t *testing.T) {
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "test",
 					},
 				),
@@ -193,7 +193,7 @@ func TestGetTransferAmount(t *testing.T) {
 				Data: transfertypes.ModuleCdc.MustMarshalJSON(
 					&transfertypes.FungibleTokenPacketData{
 						Sender:   "cosmos1qql8ag4cluz6r4dz28p3w00dnc9w8ueulg2gmc",
-						Receiver: "evmos1x2w87cvt5mqjncav4lxy8yfreynn273xn5335v",
+						Receiver: "akila1x2w87cvt5mqjncav4lxy8yfreynn273x7zwhn2",
 						Amount:   "10000",
 					},
 				),
@@ -241,9 +241,9 @@ func TestGetReceivedCoin(t *testing.T) {
 			"channel-0",
 			"transfer",
 			"channel-0",
-			"transfer/channel-0/aevmos",
+			"transfer/channel-0/aakila",
 			"10",
-			sdk.Coin{Denom: "aevmos", Amount: math.NewInt(10)},
+			sdk.Coin{Denom: "aakila", Amount: math.NewInt(10)},
 		},
 		{
 			"transfer 2x ibc wrapped coin to destination which is its source",
@@ -281,14 +281,14 @@ func TestGetSentCoin(t *testing.T) {
 		expCoin   sdk.Coin
 	}{
 		{
-			"get unwrapped aevmos coin",
-			"aevmos",
+			"get unwrapped aakila coin",
+			"aakila",
 			"10",
-			sdk.Coin{Denom: "aevmos", Amount: math.NewInt(10)},
+			sdk.Coin{Denom: "aakila", Amount: math.NewInt(10)},
 		},
 		{
-			"get ibc wrapped aevmos coin",
-			"transfer/channel-0/aevmos",
+			"get ibc wrapped aakila coin",
+			"transfer/channel-0/aakila",
 			"10",
 			sdk.Coin{Denom: teststypes.AakilaIbcdenom, Amount: math.NewInt(10)},
 		},

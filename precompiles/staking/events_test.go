@@ -6,13 +6,13 @@ import (
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	"akila/precompiles/authorization"
+	cmn "akila/precompiles/common"
+	"akila/precompiles/staking"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	"akila/precompiles/authorization"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/staking"
 )
 
 func (s *PrecompileTestSuite) TestApprovalEvent() {
@@ -94,7 +94,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowanceEvent() {
 		postCheck   func()
 	}{
 		{
-			"success - increased allowance for all 3 methods by 1 evmos",
+			"success - increased allowance for all 3 methods by 1 akila",
 			func() []interface{} {
 				return []interface{}{
 					s.address,
@@ -161,7 +161,7 @@ func (s *PrecompileTestSuite) TestDecreaseAllowanceEvent() {
 		postCheck   func()
 	}{
 		{
-			"success - decreased allowance for all 3 methods by 1 evmos",
+			"success - decreased allowance for all 3 methods by 1 akila",
 			func() []interface{} {
 				return []interface{}{
 					s.address,

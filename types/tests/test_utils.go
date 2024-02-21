@@ -22,7 +22,7 @@ var (
 
 	UakilaDenomtrace = transfertypes.DenomTrace{
 		Path:      "transfer/channel-0",
-		BaseDenom: "aevmos",
+		BaseDenom: "aakila",
 	}
 	UakilaIbcdenom = UakilaDenomtrace.IBCDenom()
 
@@ -34,7 +34,7 @@ var (
 
 	AakilaDenomtrace = transfertypes.DenomTrace{
 		Path:      "transfer/channel-0",
-		BaseDenom: "aevmos",
+		BaseDenom: "aakila",
 	}
 	AakilaIbcdenom = AakilaDenomtrace.IBCDenom()
 )

@@ -11,14 +11,14 @@ import (
 	sdkmath "cosmossdk.io/math"
 	"github.com/stretchr/testify/suite"
 
+	"akila/crypto/ethsecp256k1"
+	utiltx "akila/testutil/tx"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"akila/crypto/ethsecp256k1"
-	utiltx "akila/testutil/tx"
 
 	"akila/app"
 	"akila/encoding"
@@ -441,7 +441,7 @@ func (suite *MsgsTestSuite) TestMsgEthereumTx_ValidateBasic() {
 			accessList: &ethtypes.AccessList{},
 			chainID:    hundredInt,
 			expectPass: false,
-			errMsg:     "chain ID must be 9000 or 9001 on Evmos",
+			errMsg:     "chain ID must be 9000 or 9001 on Akila",
 		},
 	}
 

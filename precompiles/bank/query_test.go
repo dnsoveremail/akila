@@ -52,7 +52,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 			[]bank.Balance{},
 		},
 		{
-			"pass - EVMOS balance present",
+			"pass - AKILA balance present",
 			func() []interface{} {
 				return []interface{}{
 					s.keyring.GetAddr(0),
@@ -66,7 +66,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 			}},
 		},
 		{
-			"pass - EVMOS and XMPL balances present",
+			"pass - AKILA and XMPL balances present",
 			func() []interface{} {
 				s.mintAndSendXMPLCoin(s.keyring.GetAccAddr(0), sdk.NewInt(1e18))
 				return []interface{}{
@@ -123,7 +123,7 @@ func (s *PrecompileTestSuite) TestTotalSupply() {
 		expSupply []bank.Balance
 	}{
 		{
-			"pass - EVMOS and XMPL total supply",
+			"pass - AKILA and XMPL total supply",
 			func() {
 				s.mintAndSendXMPLCoin(s.keyring.GetAccAddr(0), sdk.NewInt(1e18))
 			},
@@ -218,7 +218,7 @@ func (s *PrecompileTestSuite) TestSupplyOf() {
 		},
 
 		{
-			"pass - EVMOS total supply",
+			"pass - AKILA total supply",
 			func() []interface{} {
 				return []interface{}{
 					s.akilaAddr,

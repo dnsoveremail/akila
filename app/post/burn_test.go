@@ -4,9 +4,10 @@
 package post_test
 
 import (
-	sdkmath "cosmossdk.io/math"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"akila/app/post"
+	sdkmath "cosmossdk.io/math"
+	"fmt"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	// "github.com/evmos/evmos/v16/testutil/integration/evmos/factory"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -47,15 +48,15 @@ func (s *PostTestSuite) TestPostHandle() {
 		{
 			name: "pass - burn fees of a single token with non-empty end balance",
 			tx: func() sdk.Tx {
-				feeAmount := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"}}
-				amount := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(20), Denom: "evmos"}}
+				feeAmount := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"}}
+				amount := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(20), Denom: "akila"}}
 				s.MintCoinsForFeeCollector(amount)
 
 				return s.BuildCosmosTxWithNSendMsg(1, feeAmount)
 			},
 			expPass: true,
 			postChecks: func() {
-				expected := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"}}
+				expected := sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"}}
 				balance := s.GetFeeCollectorBalance()
 				s.Require().Equal(expected, balance)
 			},
@@ -64,8 +65,8 @@ func (s *PostTestSuite) TestPostHandle() {
 			name: "pass - burn fees of multiple tokens with empty end balance",
 			tx: func() sdk.Tx {
 				feeAmount := sdk.Coins{
+					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"},
 					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "eth"},
-					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"},
 				}
 				amount := feeAmount
 				s.MintCoinsForFeeCollector(amount)
@@ -82,12 +83,12 @@ func (s *PostTestSuite) TestPostHandle() {
 			name: "pass - burn fees of multiple tokens with non-empty end balance",
 			tx: func() sdk.Tx {
 				feeAmount := sdk.Coins{
+					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"},
 					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "btc"},
-					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"},
 				}
 				amount := sdk.Coins{
+					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"},
 					sdk.Coin{Amount: sdkmath.NewInt(20), Denom: "btc"},
-					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"},
 					sdk.Coin{Amount: sdkmath.NewInt(3), Denom: "osmo"},
 				}
 				s.MintCoinsForFeeCollector(amount)
@@ -108,12 +109,12 @@ func (s *PostTestSuite) TestPostHandle() {
 			name: "pass - burn fees of multiple tokens, non-empty end balance, and multiple messages",
 			tx: func() sdk.Tx {
 				feeAmount := sdk.Coins{
+					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"},
 					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "btc"},
-					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"},
 				}
 				amount := sdk.Coins{
+					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "akila"},
 					sdk.Coin{Amount: sdkmath.NewInt(20), Denom: "btc"},
-					sdk.Coin{Amount: sdkmath.NewInt(10), Denom: "evmos"},
 					sdk.Coin{Amount: sdkmath.NewInt(3), Denom: "osmo"},
 				}
 				s.MintCoinsForFeeCollector(amount)
@@ -131,12 +132,12 @@ func (s *PostTestSuite) TestPostHandle() {
 			},
 		},
 		{
-			name: "pass - fees exceeds MaxUint64 (~18 EVMOS). Should not panic",
+			name: "pass - fees exceeds MaxUint64 (~18 AKILA). Should not panic",
 			tx: func() sdk.Tx {
 				amt, ok := sdkmath.NewIntFromString("10000000000000000000000000000000000")
 				s.Require().True(ok)
-				feeAmount := sdk.Coins{sdk.Coin{Amount: amt, Denom: "evmos"}}
-				amount := sdk.Coins{sdk.Coin{Amount: amt, Denom: "evmos"}}
+				feeAmount := sdk.Coins{sdk.Coin{Amount: amt, Denom: "akila"}}
+				amount := sdk.Coins{sdk.Coin{Amount: amt, Denom: "akila"}}
 				s.MintCoinsForFeeCollector(amount)
 
 				return s.BuildCosmosTxWithNSendMsg(1, feeAmount)
@@ -151,6 +152,7 @@ func (s *PostTestSuite) TestPostHandle() {
 	}
 
 	for _, tc := range testCases {
+		fmt.Println(tc.name)
 		// Be sure to have a fresh new network before each test. It is not required for following
 		// test but it is still a good practice.
 		s.SetupTest()

@@ -247,7 +247,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 			Expect(transferAuthz.Allocations[0].SpendLimit).To(Equal(defaultCoins))
 		})
 
-		It("should increase allowance by 1 EVMOS", func() {
+		It("should increase allowance by 1 AKILA", func() {
 			s.setTransferApproval(defaultCallArgs, s.differentAddr, defaultSingleAlloc)
 
 			increaseAllowanceArgs := defaultCallArgs.
@@ -1210,7 +1210,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 			)
 		})
 
-		Context("'aevmos' coin", func() {
+		Context("'aakila' coin", func() {
 			Context("with authorization", func() {
 				BeforeEach(func() {
 					// set approval to transfer 'aevmos'
@@ -1502,7 +1502,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 			)
 		})
 
-		Context("transfer 'aevmos", func() {
+		Context("transfer 'aakila", func() {
 			var defaultTransferAkilaArgs contracts.CallArgs
 			BeforeEach(func() {
 				// send some funds to the contract from which the funds will be sent

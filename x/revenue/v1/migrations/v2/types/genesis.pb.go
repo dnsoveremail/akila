@@ -153,11 +153,11 @@ func (m *V2Params) GetAddrDerivationCostCreate() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*V2GenesisState)(nil), "evmos.revenue.v1.V2GenesisState")
-	proto.RegisterType((*V2Params)(nil), "evmos.revenue.v1.V2Params")
+	proto.RegisterType((*V2GenesisState)(nil), "akila.revenue.v1.V2GenesisState")
+	proto.RegisterType((*V2Params)(nil), "akila.revenue.v1.V2Params")
 }
 
-func init() { proto.RegisterFile("evmos/revenue/v1/genesis.proto", fileDescriptor_649d64d9c3438055) }
+func init() { proto.RegisterFile("akila/revenue/v1/genesis.proto", fileDescriptor_649d64d9c3438055) }
 
 var fileDescriptor_649d64d9c3438055 = []byte{
 	// 351 bytes of a gzipped FileDescriptorProto

@@ -4,19 +4,19 @@ import (
 	"math/big"
 	"time"
 
+	commonfactory "akila/testutil/integration/common/factory"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	commonfactory "akila/testutil/integration/common/factory"
 
+	"akila/precompiles/erc20"
+	"akila/precompiles/testutil"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/keyring"
+	evmtypes "akila/x/evm/types"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/precompiles/erc20"
-	"akila/precompiles/testutil"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/keyring"
-	evmtypes "akila/x/evm/types"
 
 	//nolint:revive // dot imports are fine for Gomega
 	. "github.com/onsi/gomega"

@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
+	"akila/x/erc20/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	"akila/x/erc20/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -60,37 +60,37 @@ func TestEqualMetadata(t *testing.T) {
 		{
 			"equal metadata",
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 					{
-						Denom:    "evmos",
+						Denom:    "akila",
 						Exponent: 18,
 					},
 				},
 			},
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 					{
-						Denom:    "evmos",
+						Denom:    "akila",
 						Exponent: 18,
 					},
 				},
@@ -100,44 +100,44 @@ func TestEqualMetadata(t *testing.T) {
 		{
 			"different base field",
 			banktypes.Metadata{
-				Base: "aevmos",
+				Base: "aakila",
 			},
 			banktypes.Metadata{
-				Base: "taevmos",
+				Base: "taakila",
 			},
 			true,
 		},
 		{
 			"different denom units length",
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 					{
-						Denom:    "evmos",
+						Denom:    "akila",
 						Exponent: 18,
 					},
 				},
 			},
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 				},
 			},
@@ -146,47 +146,47 @@ func TestEqualMetadata(t *testing.T) {
 		{
 			"different denom units",
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 					{
-						Denom:    "uevmos",
+						Denom:    "uakila",
 						Exponent: 12,
-						Aliases:  []string{"micro evmos"},
+						Aliases:  []string{"micro akila"},
 					},
 					{
-						Denom:    "evmos",
+						Denom:    "akila",
 						Exponent: 18,
 					},
 				},
 			},
 			banktypes.Metadata{
-				Base:        "aevmos",
-				Display:     "evmos",
-				Name:        "Evmos",
-				Symbol:      "EVMOS",
-				Description: "EVM, staking and governance denom of Evmos",
+				Base:        "aakila",
+				Display:     "akila",
+				Name:        "Akila",
+				Symbol:      "AKILA",
+				Description: "EVM, staking and governance denom of Akila",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "aevmos",
+						Denom:    "aakila",
 						Exponent: 0,
-						Aliases:  []string{"atto evmos"},
+						Aliases:  []string{"atto akila"},
 					},
 					{
-						Denom:    "Uevmos",
+						Denom:    "Uakila",
 						Exponent: 12,
-						Aliases:  []string{"micro evmos"},
+						Aliases:  []string{"micro akila"},
 					},
 					{
-						Denom:    "evmos",
+						Denom:    "akila",
 						Exponent: 18,
 					},
 				},
@@ -221,25 +221,25 @@ func TestEqualAliases(t *testing.T) {
 		{
 			"different lengths",
 			[]string{},
-			[]string{"atto evmos"},
+			[]string{"atto akila"},
 			false,
 		},
 		{
 			"different values",
-			[]string{"attoevmos"},
-			[]string{"atto evmos"},
+			[]string{"attoakila"},
+			[]string{"atto akila"},
 			false,
 		},
 		{
 			"same values, unsorted",
-			[]string{"atto evmos", "aevmos"},
-			[]string{"aevmos", "atto evmos"},
+			[]string{"atto akila", "aakila"},
+			[]string{"aakila", "atto akila"},
 			false,
 		},
 		{
 			"same values, sorted",
-			[]string{"aevmos", "atto evmos"},
-			[]string{"aevmos", "atto evmos"},
+			[]string{"aakila", "atto akila"},
+			[]string{"aakila", "atto akila"},
 			true,
 		},
 	}

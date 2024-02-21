@@ -8,10 +8,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"akila/precompiles/bank"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
@@ -64,7 +64,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 
 	// Register EVMOS
 	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(s.network.GetContext(), s.bondDenom)
-	s.Require().True(found, "expected evmos denom metadata")
+	s.Require().True(found, "expected akila denom metadata")
 
 	tokenPair, err := s.network.App.Erc20Keeper.RegisterCoin(s.network.GetContext(), akilaMetadata)
 	s.Require().NoError(err, "failed to register coin")

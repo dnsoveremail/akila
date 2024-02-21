@@ -185,7 +185,7 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 
 	// Register EVMOS in denom metadata
 	akilaMetadata := banktypes.Metadata{
-		Description: "The native token of Evmos",
+		Description: "The native token of Akila",
 		Base:        n.cfg.denom,
 		// NOTE: Denom units MUST be increasing
 		DenomUnits: []*banktypes.DenomUnit{
@@ -199,8 +199,8 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 				Exponent: 18,
 			},
 		},
-		Name:    "Evmos",
-		Symbol:  "EVMOS",
+		Name:    "Akila",
+		Symbol:  "AKILA",
 		Display: n.cfg.denom,
 	}
 	akilaApp.BankKeeper.SetDenomMetaData(n.ctx, akilaMetadata)

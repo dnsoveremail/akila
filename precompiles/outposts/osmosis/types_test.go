@@ -16,8 +16,8 @@ import (
 func TestCreatePacketWithMemo(t *testing.T) {
 	t.Parallel()
 
-	contract := "evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7"
-	receiver := "evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7"
+	contract := "akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc"
+	receiver := "akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc"
 	doNothing := "do_nothing"
 
 	testCases := []struct {
@@ -40,7 +40,7 @@ func TestCreatePacketWithMemo(t *testing.T) {
 			windowSeconds:      30,
 			onFailedDelivery:   doNothing,
 			nextMemo:           "",
-			expMemo:            "{\"wasm\":{\"contract\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aevmos\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"on_failed_delivery\":\"do_nothing\"}}}}",
+			expMemo:            "{\"wasm\":{\"contract\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aakila\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"on_failed_delivery\":\"do_nothing\"}}}}",
 		},
 		{
 			name:               "pass - correct string with memo",
@@ -51,7 +51,7 @@ func TestCreatePacketWithMemo(t *testing.T) {
 			windowSeconds:      30,
 			onFailedDelivery:   doNothing,
 			nextMemo:           "a next memo",
-			expMemo:            "{\"wasm\":{\"contract\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aevmos\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"on_failed_delivery\":\"do_nothing\",\"next_memo\":\"a next memo\"}}}}",
+			expMemo:            "{\"wasm\":{\"contract\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aakila\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"on_failed_delivery\":\"do_nothing\",\"next_memo\":\"a next memo\"}}}}",
 		},
 		{
 			name:               "pass - correct string with memo and recovery address",
@@ -62,7 +62,7 @@ func TestCreatePacketWithMemo(t *testing.T) {
 			windowSeconds:      30,
 			onFailedDelivery:   osmosisoutpost.RecoveryAddress{"osmo1g8j7tgfam7kmj86zks5rcfxruf9lzp87u8mwdf"},
 			nextMemo:           "a next memo",
-			expMemo:            "{\"wasm\":{\"contract\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aevmos\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7\",\"on_failed_delivery\":{\"local_recovery_addr\":\"osmo1g8j7tgfam7kmj86zks5rcfxruf9lzp87u8mwdf\"},\"next_memo\":\"a next memo\"}}}}",
+			expMemo:            "{\"wasm\":{\"contract\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"msg\":{\"osmosis_swap\":{\"output_denom\":\"aakila\",\"slippage\":{\"twap\":{\"slippage_percentage\":\"10\",\"window_seconds\":30}},\"receiver\":\"akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc\",\"on_failed_delivery\":{\"local_recovery_addr\":\"osmo1g8j7tgfam7kmj86zks5rcfxruf9lzp87u8mwdf\"},\"next_memo\":\"a next memo\"}}}}",
 		},
 	}
 
@@ -94,7 +94,7 @@ func (s *PrecompileTestSuite) TestParseSwapPacketData() {
 	amount := big.NewInt(3)
 	slippagePercentage := uint8(10)
 	windowSeconds := uint64(20)
-	receiver := "evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7"
+	receiver := "akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc"
 
 	testCases := []struct {
 		name        string
@@ -162,7 +162,7 @@ func (s *PrecompileTestSuite) TestParseSwapPacketData() {
 func TestValidateMemo(t *testing.T) {
 	t.Parallel()
 
-	receiver := "evmos1vl0x3xr0zwgrllhdzxxlkal7txnnk56q3552x7"
+	receiver := "akila1vl0x3xr0zwgrllhdzxxlkal7txnnk56quztvpc"
 	contract := "osmo1a34wxsxjwvtz3ua4hnkh4lv3d4qrgry0fhkasppplphwu5k538tqcyms9x"
 	onFailedDelivery := "do_nothing"
 	slippagePercentage := uint8(10)
@@ -190,14 +190,14 @@ func TestValidateMemo(t *testing.T) {
 			windowSeconds:      windowSeconds,
 			expPass:            true,
 		}, {
-			name:               "fail - not evmos bech32",
+			name:               "fail - not akila bech32",
 			receiver:           "cosmos1c2m73hdt6f37w9jqpqps5t3ha3st99dcsp7lf5",
 			contractAddress:    contract,
 			onFailedDelivery:   onFailedDelivery,
 			slippagePercentage: slippagePercentage,
 			windowSeconds:      windowSeconds,
 			expPass:            false,
-			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid evmos address"),
+			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid akila address"),
 		}, {
 			name:               "fail - not bech32",
 			receiver:           "cosmos",
@@ -206,7 +206,7 @@ func TestValidateMemo(t *testing.T) {
 			slippagePercentage: slippagePercentage,
 			windowSeconds:      windowSeconds,
 			expPass:            false,
-			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid evmos address"),
+			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid akila address"),
 		}, {
 			name:               "fail - empty receiver",
 			receiver:           "",
@@ -215,7 +215,7 @@ func TestValidateMemo(t *testing.T) {
 			slippagePercentage: slippagePercentage,
 			windowSeconds:      windowSeconds,
 			expPass:            false,
-			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid evmos address"),
+			errContains:        fmt.Sprintf(osmosisoutpost.ErrReceiverAddress, "not a valid akila address"),
 		}, {
 			name:               "fail - on failed delivery empty",
 			receiver:           receiver,
@@ -323,7 +323,7 @@ func TestValidateInputOutput(t *testing.T) {
 			expPass:      true,
 		},
 		{
-			name:         "fail - input equal to output aevmos",
+			name:         "fail - input equal to output aakila",
 			inputDenom:   utils.BaseDenom,
 			outputDenom:  utils.BaseDenom,
 			stakingDenom: utils.BaseDenom,
@@ -428,7 +428,7 @@ func TestConvertToOsmosisRepresentation(t *testing.T) {
 		errContains string
 	}{
 		{
-			name:     "pass - correct conversion of aevmos",
+			name:     "pass - correct conversion of aakila",
 			denom:    utils.BaseDenom,
 			expPass:  true,
 			expDenom: "ibc/8EAC8061F4499F03D2D1419A3E73D346289AE9DB89CAB1486B72539572B1915E",
@@ -484,7 +484,7 @@ func TestValidateOsmosisContractAddress(t *testing.T) {
 		},
 		{
 			name:            "fail - not osmosis smart contract",
-			contractAddress: "evmos18rj46qcpr57m3qncrj9cuzm0gn3km08w5jxxlnw002c9y7xex5xsu74ytz",
+			contractAddress: "akila18rj46qcpr57m3qncrj9cuzm0gn3km08w5jxxlnw002c9y7xex5xsu74ytz",
 			expPass:         false,
 			errContains:     fmt.Sprintf(osmosisoutpost.ErrInvalidContractAddress),
 		},

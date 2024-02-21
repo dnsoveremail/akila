@@ -54,7 +54,7 @@ func RegisterAkilaERC20Coins(
 
 	akilaMetadata, found := network.App.BankKeeper.GetDenomMetaData(network.GetContext(), utils.BaseDenom)
 	if !found {
-		return erc20types.TokenPair{}, fmt.Errorf("expected evmos denom metadata")
+		return erc20types.TokenPair{}, fmt.Errorf("expected akila denom metadata")
 	}
 
 	_, err = network.App.Erc20Keeper.RegisterCoin(network.GetContext(), akilaMetadata)
@@ -65,7 +65,7 @@ func RegisterAkilaERC20Coins(
 	akilaDenomID := network.App.Erc20Keeper.GetDenomMap(network.GetContext(), bondDenom)
 	tokenPair, ok := network.App.Erc20Keeper.GetTokenPair(network.GetContext(), akilaDenomID)
 	if !ok {
-		return erc20types.TokenPair{}, fmt.Errorf("expected evmos erc20 token pair")
+		return erc20types.TokenPair{}, fmt.Errorf("expected akila erc20 token pair")
 	}
 
 	return tokenPair, nil

@@ -148,7 +148,7 @@ func (r RawPacketMetadata) Validate() error {
 
 	// Check if account is a valid bech32 evmos address.
 	if _, err := sdk.AccAddressFromBech32(osmosisSwap.Receiver); err != nil {
-		return fmt.Errorf(ErrReceiverAddress, "not a valid evmos address")
+		return fmt.Errorf(ErrReceiverAddress, "not a valid akila address")
 	}
 
 	slippagePercNum, err := strconv.ParseUint(osmosisSwap.Slippage.TWAP.SlippagePercentage, 10, 8)

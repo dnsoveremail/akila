@@ -141,12 +141,12 @@ func (m *V2ExponentialCalculation) XXX_DiscardUnknown() {
 var xxx_messageInfo_V2ExponentialCalculation proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*V2InflationDistribution)(nil), "evmos.inflation.v1.V2InflationDistribution")
-	proto.RegisterType((*V2ExponentialCalculation)(nil), "evmos.inflation.v1.V2ExponentialCalculation")
+	proto.RegisterType((*V2InflationDistribution)(nil), "akila.inflation.v1.V2InflationDistribution")
+	proto.RegisterType((*V2ExponentialCalculation)(nil), "akila.inflation.v1.V2ExponentialCalculation")
 }
 
 func init() {
-	proto.RegisterFile("evmos/inflation/v1/inflation.proto", fileDescriptor_d064cb35c3ff7df8)
+	proto.RegisterFile("akila/inflation/v1/inflation.proto", fileDescriptor_d064cb35c3ff7df8)
 }
 
 var fileDescriptor_d064cb35c3ff7df8 = []byte{

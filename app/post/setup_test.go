@@ -7,6 +7,11 @@ import (
 	"math/big"
 	"testing"
 
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
+	evmtypes "akila/x/evm/types"
+	inflationtypes "akila/x/inflation/v1/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -14,11 +19,6 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
-	evmtypes "akila/x/evm/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/stretchr/testify/suite"
@@ -85,7 +85,7 @@ func (s *PostTestSuite) BuildEthTx() sdk.Tx {
 
 	msgEthereumTx := evmtypes.NewTx(ethTxParams)
 	msgEthereumTx.From = s.from.String()
-	tx, err := msgEthereumTx.BuildTx(s.txBuilder, "evmos")
+	tx, err := msgEthereumTx.BuildTx(s.txBuilder, "akila")
 	s.Require().NoError(err)
 	return tx
 }

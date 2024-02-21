@@ -25,6 +25,6 @@ func init() {
 	}
 
 	if len(WAKILAContract.Bin) == 0 {
-		panic("failed to load WEVMOS smart contract")
+		panic("failed to load WAKILA smart contract")
 	}
 }

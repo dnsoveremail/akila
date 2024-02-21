@@ -102,7 +102,7 @@ type Config struct {
 // testing requirements.
 func DefaultConfig() Config {
 	encCfg := encoding.MakeConfig(app.ModuleBasics)
-	chainID := fmt.Sprintf("evmos_%d-1", tmrand.Int63n(9999999999999)+1)
+	chainID := fmt.Sprintf("akila_%d-1", tmrand.Int63n(9999999999999)+1)
 	return Config{
 		Codec:             encCfg.Codec,
 		TxConfig:          encCfg.TxConfig,
@@ -114,7 +114,7 @@ func DefaultConfig() Config {
 		TimeoutCommit:     3 * time.Second,
 		ChainID:           chainID,
 		NumValidators:     4,
-		BondDenom:         "aevmos",
+		BondDenom:         "aakila",
 		MinGasPrices:      fmt.Sprintf("0.000006%s", akilatypes.AttoAkila),
 		AccountTokens:     sdk.TokensFromConsensusPower(1000000000000000000, akilatypes.PowerReduction),
 		StakingTokens:     sdk.TokensFromConsensusPower(500000000000000000, akilatypes.PowerReduction),
@@ -337,8 +337,8 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 		ctx.Logger = logger
 
 		nodeDirName := fmt.Sprintf("node%d", i)
-		nodeDir := filepath.Join(network.BaseDir, nodeDirName, "evmosd")
-		clientDir := filepath.Join(network.BaseDir, nodeDirName, "evmoscli")
+		nodeDir := filepath.Join(network.BaseDir, nodeDirName, "akilad")
+		clientDir := filepath.Join(network.BaseDir, nodeDirName, "akilacli")
 		gentxsDir := filepath.Join(network.BaseDir, "gentxs")
 
 		err := os.MkdirAll(filepath.Join(nodeDir, "config"), 0o750)

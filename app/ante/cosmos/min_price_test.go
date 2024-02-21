@@ -5,12 +5,12 @@ import (
 
 	"cosmossdk.io/math"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	cosmosante "akila/app/ante/cosmos"
 	"akila/testutil"
 	testutiltx "akila/testutil/tx"
 	"akila/utils"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 
 var execTypes = []struct {
@@ -25,8 +25,8 @@ var execTypes = []struct {
 func (suite *AnteTestSuite) TestMinGasPriceDecorator() {
 	denom := utils.BaseDenom
 	testMsg := banktypes.MsgSend{
-		FromAddress: "evmos1x8fhpj9nmhqk8z9kpgjt95ck2xwyue0ptzkucp",
-		ToAddress:   "evmos1dx67l23hz9l0k9hcher8xz04uj7wf3yu26l2yn",
+		FromAddress: "akila1x8fhpj9nmhqk8z9kpgjt95ck2xwyue0ptzkucp",
+		ToAddress:   "akila1dx67l23hz9l0k9hcher8xz04uj7wf3yu8vqvr4",
 		Amount:      sdk.Coins{sdk.Coin{Amount: math.NewInt(10), Denom: denom}},
 	}
 

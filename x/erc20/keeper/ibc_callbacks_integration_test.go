@@ -48,7 +48,7 @@ var _ = Describe("Convert receiving IBC to Erc20", Ordered, func() {
 	}
 
 	akilaMeta := banktypes.Metadata{
-		Description: "Base Denom for Evmos Chain",
+		Description: "Base Denom for Akila Chain",
 		Base:        utils.BaseDenom,
 		DenomUnits: []*banktypes.DenomUnit{
 			{
@@ -148,7 +148,7 @@ var _ = Describe("Convert receiving IBC to Erc20", Ordered, func() {
 			ibcAtomBalanceAfter := s.app.BankKeeper.GetBalance(s.AkilaChain.GetContext(), receiverAcc, teststypes.UatomIbcdenom)
 			s.Require().Equal(amount, ibcAtomBalanceAfter.Amount.Int64())
 		})
-		It("should transfer and not convert aevmos", func() {
+		It("should transfer and not convert aakila", func() {
 			// Register 'aevmos' coin in ERC-20 keeper to validate it is not converting the coins when receiving 'aevmos' thru IBC
 			pair, err := s.app.Erc20Keeper.RegisterCoin(s.AkilaChain.GetContext(), akilaMeta)
 			s.Require().NoError(err)

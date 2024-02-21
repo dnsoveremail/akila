@@ -3,19 +3,19 @@ package ante_test
 import (
 	"time"
 
+	testutiltx "akila/testutil/tx"
 	sdkmath "cosmossdk.io/math"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	testutiltx "akila/testutil/tx"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"akila/crypto/ethsecp256k1"
 	"akila/testutil"
 	"akila/utils"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 var _ = Describe("when sending a Cosmos transaction", func() {
@@ -36,7 +36,7 @@ var _ = Describe("when sending a Cosmos transaction", func() {
 
 			msg = &banktypes.MsgSend{
 				FromAddress: addr.String(),
-				ToAddress:   "evmos1dx67l23hz9l0k9hcher8xz04uj7wf3yu26l2yn",
+				ToAddress:   "akila1dx67l23hz9l0k9hcher8xz04uj7wf3yu8vqvr4",
 				Amount:      sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(1e14), Denom: utils.BaseDenom}},
 			}
 
@@ -71,7 +71,7 @@ var _ = Describe("when sending a Cosmos transaction", func() {
 
 			msg = &banktypes.MsgSend{
 				FromAddress: addr.String(),
-				ToAddress:   "evmos1dx67l23hz9l0k9hcher8xz04uj7wf3yu26l2yn",
+				ToAddress:   "akila1dx67l23hz9l0k9hcher8xz04uj7wf3yu8vqvr4",
 				Amount:      sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(1e14), Denom: utils.BaseDenom}},
 			}
 
@@ -108,7 +108,7 @@ var _ = Describe("when sending a Cosmos transaction", func() {
 
 			msg = &banktypes.MsgSend{
 				FromAddress: addr.String(),
-				ToAddress:   "evmos1dx67l23hz9l0k9hcher8xz04uj7wf3yu26l2yn",
+				ToAddress:   "akila1dx67l23hz9l0k9hcher8xz04uj7wf3yu8vqvr4",
 				Amount:      sdk.Coins{sdk.Coin{Amount: sdkmath.NewInt(1), Denom: utils.BaseDenom}},
 			}
 

@@ -16,11 +16,11 @@ import (
 	. "github.com/onsi/gomega"
 
 	"akila/precompiles/p256"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
-	"akila/testutil/integration/evmos/utils"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
+	"akila/testutil/integration/akila/utils"
 	evmtypes "akila/x/evm/types"
 )
 

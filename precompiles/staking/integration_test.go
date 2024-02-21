@@ -158,7 +158,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 			s.ExpectAuthorization(staking.DelegateAuthz, s.precompile.Address(), s.address, nil)
 		})
 
-		It("should approve the undelegate method with 1 evmos", func() {
+		It("should approve the undelegate method with 1 akila", func() {
 			s.SetupApproval(
 				s.privKey, s.precompile.Address(), big.NewInt(1e18), []string{staking.UndelegateMsg},
 			)
@@ -166,7 +166,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 			s.ExpectAuthorization(staking.UndelegateAuthz, s.precompile.Address(), s.address, &oneE18Coin)
 		})
 
-		It("should approve the redelegate method with 2 evmos", func() {
+		It("should approve the redelegate method with 2 akila", func() {
 			s.SetupApproval(
 				s.privKey, s.precompile.Address(), big.NewInt(2e18), []string{staking.RedelegateMsg},
 			)
@@ -174,7 +174,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 			s.ExpectAuthorization(staking.RedelegateAuthz, s.precompile.Address(), s.address, &twoE18Coin)
 		})
 
-		It("should approve the cancel unbonding delegation method with 1 evmos", func() {
+		It("should approve the cancel unbonding delegation method with 1 akila", func() {
 			s.SetupApproval(
 				s.privKey, s.precompile.Address(), big.NewInt(1e18), []string{staking.CancelUnbondingDelegationMsg},
 			)
@@ -209,7 +209,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 		//	Expect(err).To(BeNil(), "error while calling the contract and checking logs")
 		// })
 
-		It("Should increase the allowance of the delegate method with 1 evmos", func() {
+		It("Should increase the allowance of the delegate method with 1 akila", func() {
 			increaseArgs := defaultCallArgs.
 				WithMethodName(authorization.IncreaseAllowanceMethod).
 				WithArgs(
@@ -271,7 +271,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 		//	Expect(err).To(BeNil(), "error while calling the contract and checking logs")
 		// })
 
-		It("Should decrease the allowance of the delegate method with 1 evmos", func() {
+		It("Should decrease the allowance of the delegate method with 1 akila", func() {
 			decreaseArgs := defaultDecreaseArgs.WithArgs(
 				s.precompile.Address(), big.NewInt(1e18), []string{staking.DelegateMsg},
 			)
@@ -2233,7 +2233,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 			err = s.precompile.UnpackIntoInterface(&delOut, staking.DelegationMethod, ethRes.Ret)
 			Expect(err).To(BeNil(), "error while unpacking the delegation output: %v", err)
 			Expect(delOut.Balance.Amount.Int64()).To(Equal(int64(0)), "expected a different delegation balance")
-			Expect(delOut.Balance.Denom).To(Equal("aevmos"), "expected a different delegation balance")
+			Expect(delOut.Balance.Denom).To(Equal("aakila"), "expected a different delegation balance")
 		})
 
 		It("which exists should return the delegation", func() {
@@ -2248,7 +2248,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 			err = s.precompile.UnpackIntoInterface(&delOut, staking.DelegationMethod, ethRes.Ret)
 			Expect(err).To(BeNil(), "error while unpacking the delegation output: %v", err)
 			Expect(delOut.Balance).To(Equal(
-				cmn.Coin{Denom: "aevmos", Amount: big.NewInt(1e18)}),
+				cmn.Coin{Denom: "aakila", Amount: big.NewInt(1e18)}),
 				"expected a different delegation balance",
 			)
 		})

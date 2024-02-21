@@ -9,9 +9,9 @@ import (
 	"akila/precompiles/erc20"
 
 	"akila/precompiles/outposts/stride"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
 	"akila/testutil/integration/common/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 )

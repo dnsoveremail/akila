@@ -5,8 +5,8 @@ import (
 
 	"akila/precompiles/bech32"
 
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
 	"github.com/stretchr/testify/suite"
 )
 

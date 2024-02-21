@@ -3,11 +3,11 @@ package bech32_test
 import (
 	"math/big"
 
+	"akila/cmd/config"
+	"akila/precompiles/bech32"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	"akila/cmd/config"
-	"akila/precompiles/bech32"
 )
 
 func (s *PrecompileTestSuite) TestNewPrecompile() {
@@ -105,7 +105,7 @@ func (s *PrecompileTestSuite) TestRun() {
 			"invalid bech32 human readable prefix (HRP)",
 		},
 		{
-			"pass - hex to bech32 account (evmos)",
+			"pass - hex to bech32 account (akila)",
 			func() *vm.Contract {
 				input, err := s.precompile.Pack(
 					bech32.HexToBech32Method,
@@ -128,7 +128,7 @@ func (s *PrecompileTestSuite) TestRun() {
 			"",
 		},
 		{
-			"pass - hex to bech32 validator operator (evmosvaloper)",
+			"pass - hex to bech32 validator operator (akilavaloper)",
 			func() *vm.Contract {
 				input, err := s.precompile.Pack(
 					bech32.HexToBech32Method,
@@ -151,7 +151,7 @@ func (s *PrecompileTestSuite) TestRun() {
 			"",
 		},
 		{
-			"pass - hex to bech32 consensus address (evmosvalcons)",
+			"pass - hex to bech32 consensus address (akilavalcons)",
 			func() *vm.Contract {
 				input, err := s.precompile.Pack(
 					bech32.HexToBech32Method,

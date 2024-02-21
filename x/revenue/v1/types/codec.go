@@ -26,10 +26,10 @@ var (
 
 const (
 	// Amino names
-	cancelRevenueName   = "evmos/MsgCancelRevenue"
-	registerRevenueName = "evmos/MsgRegisterRevenue"
-	updateRevenueName   = "evmos/MsgUpdateRevenue"
-	updateParamsName    = "evmos/MsgUpdateParams"
+	cancelRevenueName   = "akila/MsgCancelRevenue"
+	registerRevenueName = "akila/MsgRegisterRevenue"
+	updateRevenueName   = "akila/MsgUpdateRevenue"
+	updateParamsName    = "akila/MsgUpdateParams"
 )
 
 // NOTE: This is required for the GetSignBytes function

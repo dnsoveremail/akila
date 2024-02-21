@@ -4,10 +4,10 @@ import (
 	"testing"
 
 	erc20precompile "akila/precompiles/erc20"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
 	"github.com/stretchr/testify/suite"
 )
 

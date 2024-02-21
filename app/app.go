@@ -171,7 +171,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, ".evmosd")
+	DefaultNodeHome = filepath.Join(userHomeDir, ".akilad")
 
 	// manually update the power reduction by replacing micro (u) -> atto (a) evmos
 	sdk.DefaultPowerReduction = akilatypes.PowerReduction
@@ -183,7 +183,7 @@ func init() {
 }
 
 // Name defines the application binary name
-const Name = "evmosd"
+const Name = "akilad"
 
 var (
 	// DefaultNodeHome default home directories for the application daemon

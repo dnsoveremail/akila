@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"math/big"
 
-	"cosmossdk.io/math"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
-	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 	"akila/precompiles/authorization"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/ics20"
 	"akila/utils"
+	"cosmossdk.io/math"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
+	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 )
 
 type allowanceTestCase struct {
@@ -341,7 +341,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowance() {
 			cmn.ErrIntegerOverflow,
 		},
 		{
-			"pass - increase allowance by 1 EVMOS for a single allocation with a single coin denomination",
+			"pass - increase allowance by 1 AKILA for a single allocation with a single coin denomination",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -393,7 +393,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowance() {
 			"",
 		},
 		{
-			"pass - increase allowance by 1 Evmos for multiple allocations with a single coin denomination",
+			"pass - increase allowance by 1 Akila for multiple allocations with a single coin denomination",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -485,7 +485,7 @@ func (s *PrecompileTestSuite) TestDecreaseAllowance() {
 			cmn.ErrNegativeAmount,
 		},
 		{
-			"pass - decrease allowance by 1 EVMOS for a single allocation with a single coin denomination",
+			"pass - decrease allowance by 1 AKILA for a single allocation with a single coin denomination",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -547,7 +547,7 @@ func (s *PrecompileTestSuite) TestDecreaseAllowance() {
 			"",
 		},
 		{
-			"pass - decrease allowance by 0.5 Evmos for multiple allocations with a single coin denomination",
+			"pass - decrease allowance by 0.5 Akila for multiple allocations with a single coin denomination",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)

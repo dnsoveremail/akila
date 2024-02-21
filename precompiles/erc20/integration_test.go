@@ -6,23 +6,23 @@ import (
 	"strings"
 	"testing"
 
-	"cosmossdk.io/math"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 	"akila/contracts"
 	auth "akila/precompiles/authorization"
 	"akila/precompiles/erc20"
 	"akila/precompiles/erc20/testdata"
 	"akila/precompiles/testutil"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	"akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
-	"akila/testutil/integration/evmos/utils"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	"akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
+	"akila/testutil/integration/akila/utils"
 	utiltx "akila/testutil/tx"
 	erc20types "akila/x/erc20/types"
 	evmtypes "akila/x/evm/types"
+	"cosmossdk.io/math"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
@@ -2251,8 +2251,8 @@ var _ = Describe("ERC20 Extension migration Flows -", func() {
 		})
 	})
 
-	When("using Evmos (not wEvmos) in smart contracts", func() {
-		It("should be using straight Evmos for sending funds in smart contracts", func() {
+	When("using Akila (not wAkila) in smart contracts", func() {
+		It("should be using straight Akila for sending funds in smart contracts", func() {
 			Skip("will be addressed in follow-up PR")
 
 			Expect(true).To(BeFalse(), "not implemented")

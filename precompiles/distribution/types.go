@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"math/big"
 
+	cmn "akila/precompiles/common"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
-	cmn "akila/precompiles/common"
 )
 
 // EventSetWithdrawAddress defines the event data for the SetWithdrawAddress transaction.
@@ -76,7 +76,7 @@ func NewMsgSetWithdrawAddress(args []interface{}) (*distributiontypes.MsgSetWith
 	// If the withdrawer address is a hex address, convert it to a bech32 address.
 	if common.IsHexAddress(withdrawerAddress) {
 		var err error
-		withdrawerAddress, err = sdk.Bech32ifyAddressBytes("evmos", common.HexToAddress(withdrawerAddress).Bytes())
+		withdrawerAddress, err = sdk.Bech32ifyAddressBytes("akila", common.HexToAddress(withdrawerAddress).Bytes())
 		if err != nil {
 			return nil, common.Address{}, err
 		}

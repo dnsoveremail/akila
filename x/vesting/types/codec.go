@@ -4,6 +4,7 @@
 package types
 
 import (
+	migrationtypes "akila/x/vesting/migrations/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,7 +13,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/vesting/exported"
 	sdkvesting "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
-	migrationtypes "akila/x/vesting/migrations/types"
 )
 
 var (
@@ -26,11 +26,11 @@ var (
 
 const (
 	// Amino names
-	clawback                     = "evmos/MsgClawback"
-	createClawbackVestingAccount = "evmos/MsgCreateClawbackVestingAccount"
-	updateVestingFunder          = "evmos/MsgUpdateVestingFunder"
-	convertVestingAccount        = "evmos/MsgConvertVestingAccount"
-	fundVestingAccount           = "evmos/MsgFundVestingAccount"
+	clawback                     = "akila/MsgClawback"
+	createClawbackVestingAccount = "akila/MsgCreateClawbackVestingAccount"
+	updateVestingFunder          = "akila/MsgUpdateVestingFunder"
+	convertVestingAccount        = "akila/MsgConvertVestingAccount"
+	fundVestingAccount           = "akila/MsgFundVestingAccount"
 )
 
 // NOTE: This is required for the GetSignBytes function

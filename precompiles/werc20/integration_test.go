@@ -11,8 +11,8 @@ import (
 	"akila/precompiles/testutil"
 	"akila/precompiles/werc20"
 	"akila/precompiles/werc20/testdata"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/keyring"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/keyring"
 	erc20types "akila/x/erc20/types"
 	evmtypes "akila/x/evm/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -23,7 +23,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("WEVMOS Extension -", func() {
+var _ = Describe("WAKILA Extension -", func() {
 	var (
 		WERC20ContractAddr         common.Address
 		WAKILAOriginalContractAddr common.Address
@@ -64,11 +64,11 @@ var _ = Describe("WEVMOS Extension -", func() {
 			s.network.App.TransferKeeper,
 		)
 
-		Expect(err).ToNot(HaveOccurred(), "failed to create wevmos extension")
+		Expect(err).ToNot(HaveOccurred(), "failed to create wakila extension")
 		s.precompile = precompile
 
 		err = s.network.App.EvmKeeper.AddEVMExtensions(s.network.GetContext(), precompile)
-		Expect(err).ToNot(HaveOccurred(), "failed to add wevmos extension")
+		Expect(err).ToNot(HaveOccurred(), "failed to add wakila extension")
 
 		s.tokenDenom = tokenPair.GetDenom()
 
@@ -91,7 +91,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 		amount = big.NewInt(1e18)
 	})
 
-	Context("WEVMOS specific functions", func() {
+	Context("WAKILA specific functions", func() {
 		When("calling deposit correctly", func() {
 			It("should emit the Deposit event but not modify the balance", func() {
 				depositCheck := passCheck.WithExpPass(true).WithExpEvents(werc20.EventTypeDeposit)
@@ -233,7 +233,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 		})
 	})
 
-	Context("Comparing to original WEVMOS contract", func() {
+	Context("Comparing to original WAKILA contract", func() {
 		BeforeEach(func() {
 			WAKILAOriginalContractAddr, err = s.factory.DeployContract(
 				sender.Priv,
@@ -408,7 +408,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 				var name string
 				err = s.precompile.UnpackIntoInterface(&name, erc20.NameMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack result")
-				Expect(name).To(Equal("Evmos"), "expected different name")
+				Expect(name).To(Equal("Akila"), "expected different name")
 			})
 		})
 
@@ -423,7 +423,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 				var symbol string
 				err = s.precompile.UnpackIntoInterface(&symbol, erc20.SymbolMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack result")
-				Expect(symbol).To(Equal("EVMOS"), "expected different symbol")
+				Expect(symbol).To(Equal("AKILA"), "expected different symbol")
 			})
 		})
 

@@ -12,20 +12,20 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
-	"github.com/ethereum/go-ethereum/common"
 	"akila/contracts"
 	"akila/precompiles/staking"
+	"github.com/ethereum/go-ethereum/common"
 
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/grpc"
-	testkeyring "akila/testutil/integration/evmos/keyring"
-	"akila/testutil/integration/evmos/network"
-	integrationutils "akila/testutil/integration/evmos/utils"
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/grpc"
+	testkeyring "akila/testutil/integration/akila/keyring"
+	"akila/testutil/integration/akila/network"
+	integrationutils "akila/testutil/integration/akila/utils"
 
+	evmtypes "akila/x/evm/types"
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmtypes "akila/x/evm/types"
 )
 
 type IntegrationTestSuite struct {

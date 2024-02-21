@@ -3,14 +3,14 @@ package ics20_test
 import (
 	"math/big"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
 	"akila/precompiles/authorization"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/ics20"
 	"akila/utils"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/vm"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 func (s *PrecompileTestSuite) TestTransferEvent() {
@@ -218,7 +218,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowanceEvent() {
 		postCheck   func()
 	}{
 		{
-			"success - increased allowance by 1 Evmos",
+			"success - increased allowance by 1 Akila",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)
@@ -269,7 +269,7 @@ func (s *PrecompileTestSuite) TestDecreaseAllowanceEvent() {
 		postCheck   func()
 	}{
 		{
-			"success - decrease allowance by 0.5 Evmos",
+			"success - decrease allowance by 0.5 Akila",
 			func() []interface{} {
 				path := NewTransferPath(s.chainA, s.chainB)
 				s.coordinator.Setup(path)

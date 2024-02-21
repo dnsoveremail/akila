@@ -1,15 +1,15 @@
 package bank_test
 
 import (
+	"akila/precompiles/bank"
+	"akila/testutil/integration/akila/factory"
+	evmtypes "akila/x/evm/types"
+	inflationtypes "akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/precompiles/bank"
-	"akila/testutil/integration/evmos/factory"
-	evmtypes "akila/x/evm/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"

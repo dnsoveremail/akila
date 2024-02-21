@@ -11,6 +11,14 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
+	"akila/contracts"
+	"akila/crypto/ethsecp256k1"
+	"akila/testutil"
+	utiltx "akila/testutil/tx"
+	"akila/utils"
+	erc20types "akila/x/erc20/types"
+	evmtypes "akila/x/evm/types"
+	"akila/x/vesting/types"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
@@ -21,14 +29,6 @@ import (
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/contracts"
-	"akila/crypto/ethsecp256k1"
-	"akila/testutil"
-	utiltx "akila/testutil/tx"
-	"akila/utils"
-	erc20types "akila/x/erc20/types"
-	evmtypes "akila/x/evm/types"
-	"akila/x/vesting/types"
 )
 
 // TestClawbackAccount is a struct to store all relevant information that is corresponding
@@ -886,7 +886,7 @@ var _ = Describe("Clawback Vesting Accounts - claw back tokens", func() {
 			msgSubmitProposal, err := govv1beta1.NewMsgSubmitProposal(
 				&erc20types.RegisterERC20Proposal{
 					Title:          "test gov upgrade",
-					Description:    "this is an example of a governance proposal to upgrade the evmos app",
+					Description:    "this is an example of a governance proposal to upgrade the akila app",
 					Erc20Addresses: []string{},
 				},
 				sdk.NewCoins(sdk.NewCoin(stakeDenom, math.NewInt(1e9))),

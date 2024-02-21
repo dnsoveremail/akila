@@ -3,10 +3,10 @@
 package v5
 
 import (
+	"akila/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"akila/x/evm/types"
 
 	v5types "akila/x/evm/migrations/v5/types"
 )
@@ -34,7 +34,7 @@ func MigrateStore(
 	cdc.MustUnmarshal(extraEIPsBz, &extraEIPs)
 
 	// revert ExtraEIP change for Evmos testnet
-	if ctx.ChainID() == "evmos_9000-4" {
+	if ctx.ChainID() == "akila_9000-4" {
 		extraEIPs.EIPs = []int64{}
 	}
 

@@ -12,9 +12,9 @@ import (
 	"github.com/linxGnu/grocksdb"
 	"github.com/spf13/cobra"
 
-	versiondbclient "github.com/crypto-org-chain/cronos/versiondb/client"
 	"akila/app"
-	"akila/cmd/evmosd/opendb"
+	"akila/cmd/akilad/opendb"
+	versiondbclient "github.com/crypto-org-chain/cronos/versiondb/client"
 )
 
 // ChangeSetCmd returns a Cobra command for interacting with change sets.

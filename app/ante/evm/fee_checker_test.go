@@ -7,6 +7,9 @@ import (
 	"cosmossdk.io/math"
 	"github.com/stretchr/testify/require"
 
+	"akila/encoding"
+	"akila/types"
+	evmtypes "akila/x/evm/types"
 	"github.com/cometbft/cometbft/libs/log"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -14,9 +17,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	"github.com/ethereum/go-ethereum/params"
-	"akila/encoding"
-	"akila/types"
-	evmtypes "akila/x/evm/types"
 )
 
 var _ DynamicFeeEVMKeeper = MockEVMKeeper{}
@@ -99,7 +99,7 @@ func TestSDKTxFeeChecker(t *testing.T) {
 				txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewCoin(evmtypes.DefaultEVMDenom, math.NewInt(10))))
 				return txBuilder.GetTx()
 			},
-			"10aevmos",
+			"10aakila",
 			0,
 			true,
 		},
@@ -141,7 +141,7 @@ func TestSDKTxFeeChecker(t *testing.T) {
 				txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewCoin(evmtypes.DefaultEVMDenom, math.NewInt(10))))
 				return txBuilder.GetTx()
 			},
-			"10aevmos",
+			"10aakila",
 			0,
 			true,
 		},
@@ -157,7 +157,7 @@ func TestSDKTxFeeChecker(t *testing.T) {
 				txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewCoin(evmtypes.DefaultEVMDenom, math.NewInt(10).Mul(evmtypes.DefaultPriorityReduction).Add(math.NewInt(10)))))
 				return txBuilder.GetTx()
 			},
-			"10000010aevmos",
+			"10000010aakila",
 			10,
 			true,
 		},
@@ -177,7 +177,7 @@ func TestSDKTxFeeChecker(t *testing.T) {
 				txBuilder.SetExtensionOptions(option)
 				return txBuilder.GetTx()
 			},
-			"10aevmos",
+			"10aakila",
 			0,
 			true,
 		},
@@ -199,7 +199,7 @@ func TestSDKTxFeeChecker(t *testing.T) {
 				txBuilder.SetExtensionOptions(option)
 				return txBuilder.GetTx()
 			},
-			"5000010aevmos",
+			"5000010aakila",
 			5,
 			true,
 		},

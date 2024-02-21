@@ -28,7 +28,7 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 	ctx := s.network.GetContext()
 	bondDenom := s.network.App.StakingKeeper.BondDenom(ctx)
 	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(ctx, bondDenom)
-	s.Require().True(found, "expected evmos denom metadata")
+	s.Require().True(found, "expected akila denom metadata")
 
 	coin := sdk.NewCoin(akilaMetadata.Base, math.NewInt(2e18))
 	err := s.network.App.BankKeeper.MintCoins(ctx, inflationtypes.ModuleName, sdk.NewCoins(coin))
@@ -45,7 +45,7 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 	}
 	s.network.App.TransferKeeper.SetDenomTrace(ctx, denomTrace)
 	stAkilaMetadata := banktypes.Metadata{
-		Description: "The native token of Evmos",
+		Description: "The native token of Akila",
 		Base:        denomTrace.IBCDenom(),
 		// NOTE: Denom units MUST be increasing
 		DenomUnits: []*banktypes.DenomUnit{
@@ -59,8 +59,8 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 				Exponent: 18,
 			},
 		},
-		Name:    "stEvmos",
-		Symbol:  "STEVMOS",
+		Name:    "stAkila",
+		Symbol:  "STAKILA",
 		Display: denomTrace.BaseDenom,
 	}
 

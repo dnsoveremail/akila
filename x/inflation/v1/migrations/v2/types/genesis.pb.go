@@ -192,11 +192,11 @@ func (m *V2Params) GetEnableInflation() bool {
 }
 
 func init() {
-	proto.RegisterType((*V2GenesisState)(nil), "evmos.inflation.v1.V2GenesisState")
-	proto.RegisterType((*V2Params)(nil), "evmos.inflation.v1.V2Params")
+	proto.RegisterType((*V2GenesisState)(nil), "akila.inflation.v1.V2GenesisState")
+	proto.RegisterType((*V2Params)(nil), "akila.inflation.v1.V2Params")
 }
 
-func init() { proto.RegisterFile("evmos/inflation/v1/genesis.proto", fileDescriptor_1cb8eee530db1235) }
+func init() { proto.RegisterFile("akila/inflation/v1/genesis.proto", fileDescriptor_1cb8eee530db1235) }
 
 var fileDescriptor_1cb8eee530db1235 = []byte{
 	// 415 bytes of a gzipped FileDescriptorProto

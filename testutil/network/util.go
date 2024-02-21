@@ -19,6 +19,7 @@ import (
 	tmtime "github.com/cometbft/cometbft/types/time"
 	"github.com/ethereum/go-ethereum/ethclient"
 
+	inflationtypes "akila/x/inflation/v1/types"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	servergrpc "github.com/cosmos/cosmos-sdk/server/grpc"
 	srvtypes "github.com/cosmos/cosmos-sdk/server/types"
@@ -30,7 +31,6 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
 	"akila/server"
 	evmtypes "akila/x/evm/types"
@@ -156,7 +156,7 @@ func collectGenFiles(cfg Config, vals []*Validator, outputDir string) error {
 	for i := 0; i < cfg.NumValidators; i++ {
 		tmCfg := vals[i].Ctx.Config
 
-		nodeDir := filepath.Join(outputDir, vals[i].Moniker, "evmosd")
+		nodeDir := filepath.Join(outputDir, vals[i].Moniker, "akilad")
 		gentxsDir := filepath.Join(outputDir, "gentxs")
 
 		tmCfg.Moniker = vals[i].Moniker
