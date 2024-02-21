@@ -49,7 +49,7 @@ import (
 	pruningtypes "github.com/cosmos/cosmos-sdk/store/pruning/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"akila/cmd/evmosd/opendb"
+	"akila/cmd/akilad/opendb"
 	"akila/indexer"
 	ethdebug "akila/rpc/namespaces/ethereum/debug"
 	"akila/server/config"

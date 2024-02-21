@@ -3,11 +3,11 @@
 package factory
 
 import (
+	"akila/testutil/integration/akila/grpc"
+	"akila/testutil/integration/akila/network"
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	testutiltypes "github.com/cosmos/cosmos-sdk/types/module/testutil"
-	"akila/testutil/integration/evmos/grpc"
-	"akila/testutil/integration/evmos/network"
 
 	errorsmod "cosmossdk.io/errors"
 )

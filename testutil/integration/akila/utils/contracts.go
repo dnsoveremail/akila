@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/exp/slices"
 
-	"akila/testutil/integration/evmos/factory"
+	"akila/testutil/integration/akila/factory"
 
 	akilatypes "akila/types"
 	evmtypes "akila/x/evm/types"

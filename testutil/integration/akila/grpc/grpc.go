@@ -3,13 +3,13 @@
 package grpc
 
 import (
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
-	"github.com/ethereum/go-ethereum/common"
+	"akila/testutil/integration/akila/network"
 	commongrpc "akila/testutil/integration/common/grpc"
-	"akila/testutil/integration/evmos/network"
 	evmtypes "akila/x/evm/types"
 	feemarkettypes "akila/x/feemarket/types"
 	revtypes "akila/x/revenue/v1/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // Handler is an interface that defines the methods that are used to query

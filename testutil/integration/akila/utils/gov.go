@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"strconv"
 
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/network"
+	commonfactory "akila/testutil/integration/common/factory"
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
 	abcitypes "github.com/cometbft/cometbft/abci/types"
@@ -16,9 +19,6 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
-	commonfactory "akila/testutil/integration/common/factory"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/network"
 )
 
 // SubmitProposal is a helper function to submit a governance proposal and

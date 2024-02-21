@@ -11,7 +11,7 @@ import (
 	"akila/utils"
 	"cosmossdk.io/math"
 
-	"akila/testutil/integration/evmos/network"
+	"akila/testutil/integration/akila/network"
 	erc20types "akila/x/erc20/types"
 	inflationtypes "akila/x/inflation/v1/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"

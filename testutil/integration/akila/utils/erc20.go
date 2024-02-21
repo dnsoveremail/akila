@@ -6,13 +6,13 @@ package utils
 import (
 	"fmt"
 
+	"akila/testutil/integration/akila/factory"
+	"akila/testutil/integration/akila/network"
+	erc20types "akila/x/erc20/types"
 	errorsmod "cosmossdk.io/errors"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/testutil/integration/evmos/factory"
-	"akila/testutil/integration/evmos/network"
-	erc20types "akila/x/erc20/types"
 )
 
 // ERC20RegistrationData is the necessary data to provide in order to register an ERC20 token.
