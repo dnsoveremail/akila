@@ -19,6 +19,6 @@ for dir in $proto_dirs; do
 done
 
 # move proto files to the right places
-cp -r github.com/akila/akila/v*/* ./
+cp -r akila/v*/* ./
 rm -rf github.com
 
