@@ -7,6 +7,10 @@ import (
 	"math/big"
 	"time"
 
+	rpctypes "akila/rpc/types"
+	"akila/server/config"
+	akilatypes "akila/types"
+	evmtypes "akila/x/evm/types"
 	"cosmossdk.io/math"
 	"github.com/cometbft/cometbft/libs/log"
 	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
@@ -20,10 +24,6 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	rpctypes "akila/rpc/types"
-	"akila/server/config"
-	evmostypes "akila/types"
-	evmtypes "akila/x/evm/types"
 )
 
 // BackendI implements the Cosmos and EVM backend.
@@ -103,8 +103,8 @@ type EVMBackend interface {
 
 	// Tx Info
 	GetTransactionByHash(txHash common.Hash) (*rpctypes.RPCTransaction, error)
-	GetTxByEthHash(txHash common.Hash) (*evmostypes.TxResult, error)
-	GetTxByTxIndex(height int64, txIndex uint) (*evmostypes.TxResult, error)
+	GetTxByEthHash(txHash common.Hash) (*akilatypes.TxResult, error)
+	GetTxByTxIndex(height int64, txIndex uint) (*akilatypes.TxResult, error)
 	GetTransactionByBlockAndIndex(block *tmrpctypes.ResultBlock, idx hexutil.Uint) (*rpctypes.RPCTransaction, error)
 	GetTransactionReceipt(hash common.Hash) (map[string]interface{}, error)
 	GetTransactionByBlockHashAndIndex(hash common.Hash, idx hexutil.Uint) (*rpctypes.RPCTransaction, error)
@@ -139,7 +139,7 @@ type Backend struct {
 	chainID             *big.Int
 	cfg                 config.Config
 	allowUnprotectedTxs bool
-	indexer             evmostypes.EVMTxIndexer
+	indexer             akilatypes.EVMTxIndexer
 }
 
 // NewBackend creates a new Backend instance for cosmos and ethereum namespaces
@@ -148,9 +148,9 @@ func NewBackend(
 	logger log.Logger,
 	clientCtx client.Context,
 	allowUnprotectedTxs bool,
-	indexer evmostypes.EVMTxIndexer,
+	indexer akilatypes.EVMTxIndexer,
 ) *Backend {
-	chainID, err := evmostypes.ParseChainID(clientCtx.ChainID)
+	chainID, err := akilatypes.ParseChainID(clientCtx.ChainID)
 	if err != nil {
 		panic(err)
 	}

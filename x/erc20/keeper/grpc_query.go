@@ -9,10 +9,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	akilatypes "akila/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
-	evmostypes "akila/types"
 
 	"akila/x/erc20/types"
 )
@@ -57,7 +57,7 @@ func (k Keeper) TokenPair(c context.Context, req *types.QueryTokenPairRequest) (
 
 	// check if the token is a hex address, if not, check if it is a valid SDK
 	// denom
-	if err := evmostypes.ValidateAddress(req.Token); err != nil {
+	if err := akilatypes.ValidateAddress(req.Token); err != nil {
 		if err := sdk.ValidateDenom(req.Token); err != nil {
 			return nil, status.Errorf(
 				codes.InvalidArgument,

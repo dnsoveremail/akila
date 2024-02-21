@@ -26,8 +26,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"akila/crypto/ethsecp256k1"
 	"akila/server/config"
 	"akila/testutil"
@@ -36,6 +34,8 @@ import (
 	"akila/x/evm/statedb"
 	evm "akila/x/evm/types"
 	feemarkettypes "akila/x/feemarket/types"
+	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
 	"akila/app"
 	"akila/contracts"
@@ -53,7 +53,7 @@ type KeeperTestSuite struct {
 	suite.Suite
 
 	ctx              sdk.Context
-	app              *app.Evmos
+	app              *app.Akila
 	queryClientEvm   evm.QueryClient
 	queryClient      types.QueryClient
 	address          common.Address

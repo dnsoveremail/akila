@@ -4,11 +4,11 @@
 package types
 
 import (
+	akilatypes "akila/types"
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/ethereum/go-ethereum/common"
-	evmostypes "akila/types"
 )
 
 var (
@@ -56,7 +56,7 @@ func (msg MsgRegisterRevenue) ValidateBasic() error {
 		return errorsmod.Wrapf(err, "invalid deployer address %s", msg.DeployerAddress)
 	}
 
-	if err := evmostypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
+	if err := akilatypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
 		return errorsmod.Wrapf(err, "invalid contract address %s", msg.ContractAddress)
 	}
 
@@ -111,7 +111,7 @@ func (msg MsgCancelRevenue) ValidateBasic() error {
 		return errorsmod.Wrapf(err, "invalid deployer address %s", msg.DeployerAddress)
 	}
 
-	if err := evmostypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
+	if err := akilatypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
 		return errorsmod.Wrapf(err, "invalid contract address %s", msg.ContractAddress)
 	}
 
@@ -154,7 +154,7 @@ func (msg MsgUpdateRevenue) ValidateBasic() error {
 		return errorsmod.Wrapf(err, "invalid deployer address %s", msg.DeployerAddress)
 	}
 
-	if err := evmostypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
+	if err := akilatypes.ValidateNonZeroAddress(msg.ContractAddress); err != nil {
 		return errorsmod.Wrapf(err, "invalid contract address %s", msg.ContractAddress)
 	}
 

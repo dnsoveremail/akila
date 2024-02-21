@@ -6,7 +6,7 @@ package types
 import (
 	"cosmossdk.io/math"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 )
 
 // CalculateEpochProvisions returns mint provision per epoch
@@ -45,6 +45,6 @@ func CalculateEpochMintProvision(
 	// Multiply epochMintProvision with power reduction (10^18 for evmos) as the
 	// calculation is based on `evmos` and the issued tokens need to be given in
 	// `aevmos`
-	epochProvision = epochProvision.Mul(math.LegacyNewDecFromInt(evmostypes.PowerReduction))
+	epochProvision = epochProvision.Mul(math.LegacyNewDecFromInt(akilatypes.PowerReduction))
 	return epochProvision
 }

@@ -12,13 +12,13 @@ import (
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	clienttypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/vm"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/ics20"
 	erc20keeper "akila/x/erc20/keeper"
 	transferkeeper "akila/x/ibc/transfer/keeper"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/vm"
 )
 
 var _ vm.PrecompiledContract = &Precompile{}
@@ -30,7 +30,7 @@ var f embed.FS
 
 type Precompile struct {
 	cmn.Precompile
-	wevmosAddress  common.Address
+	wakilaAddress  common.Address
 	timeoutHeight  clienttypes.Height
 	transferKeeper transferkeeper.Keeper
 	erc20Keeper    erc20keeper.Keeper
@@ -40,7 +40,7 @@ type Precompile struct {
 // NewPrecompile creates a new Stride outpost Precompile instance as a
 // PrecompiledContract interface.
 func NewPrecompile(
-	wevmosAddress common.Address,
+	wakilaAddress common.Address,
 	transferKeeper transferkeeper.Keeper,
 	erc20Keeper erc20keeper.Keeper,
 	authzKeeper authzkeeper.Keeper,
@@ -59,7 +59,7 @@ func NewPrecompile(
 			TransientKVGasConfig: storetypes.TransientGasConfig(),
 			ApprovalExpiration:   cmn.DefaultExpirationDuration, // should be configurable in the future.
 		},
-		wevmosAddress:  wevmosAddress,
+		wakilaAddress:  wakilaAddress,
 		timeoutHeight:  clienttypes.NewHeight(ics20.DefaultTimeoutHeight, ics20.DefaultTimeoutHeight),
 		transferKeeper: transferKeeper,
 		erc20Keeper:    erc20Keeper,

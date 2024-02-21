@@ -3,9 +3,9 @@ package bank_test
 import (
 	"math/big"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"akila/precompiles/bank"
-	evmosutiltx "akila/testutil/tx"
+	akilautiltx "akila/testutil/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func (s *PrecompileTestSuite) TestBalances() {
@@ -44,7 +44,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 			"pass - empty balances for new account",
 			func() []interface{} {
 				return []interface{}{
-					evmosutiltx.GenerateAddress(),
+					akilautiltx.GenerateAddress(),
 				}
 			},
 			true,
@@ -61,7 +61,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 			true,
 			"",
 			[]bank.Balance{{
-				ContractAddress: s.evmosAddr,
+				ContractAddress: s.akilaAddr,
 				Amount:          big.NewInt(4e18),
 			}},
 		},
@@ -76,7 +76,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 			true,
 			"",
 			[]bank.Balance{{
-				ContractAddress: s.evmosAddr,
+				ContractAddress: s.akilaAddr,
 				Amount:          big.NewInt(4e18),
 			}, {
 				ContractAddress: s.xmplAddr,
@@ -114,7 +114,7 @@ func (s *PrecompileTestSuite) TestBalances() {
 func (s *PrecompileTestSuite) TestTotalSupply() {
 	method := s.precompile.Methods[bank.TotalSupplyMethod]
 
-	evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+	akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 	s.Require().True(ok)
 
 	testcases := []struct {
@@ -128,8 +128,8 @@ func (s *PrecompileTestSuite) TestTotalSupply() {
 				s.mintAndSendXMPLCoin(s.keyring.GetAccAddr(0), sdk.NewInt(1e18))
 			},
 			[]bank.Balance{{
-				ContractAddress: s.evmosAddr,
-				Amount:          evmosTotalSupply,
+				ContractAddress: s.akilaAddr,
+				Amount:          akilaTotalSupply,
 			}, {
 				ContractAddress: s.xmplAddr,
 				Amount:          big.NewInt(1e18),
@@ -162,7 +162,7 @@ func (s *PrecompileTestSuite) TestTotalSupply() {
 func (s *PrecompileTestSuite) TestSupplyOf() {
 	method := s.precompile.Methods[bank.SupplyOfMethod]
 
-	evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+	akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 	s.Require().True(ok)
 
 	testcases := []struct {
@@ -198,7 +198,7 @@ func (s *PrecompileTestSuite) TestSupplyOf() {
 			"pass - erc20 not registered return 0 supply",
 			func() []interface{} {
 				return []interface{}{
-					evmosutiltx.GenerateAddress(),
+					akilautiltx.GenerateAddress(),
 				}
 			},
 			false,
@@ -221,12 +221,12 @@ func (s *PrecompileTestSuite) TestSupplyOf() {
 			"pass - EVMOS total supply",
 			func() []interface{} {
 				return []interface{}{
-					s.evmosAddr,
+					s.akilaAddr,
 				}
 			},
 			false,
 			"",
-			evmosTotalSupply,
+			akilaTotalSupply,
 		},
 	}
 

@@ -3,9 +3,12 @@
 package factory
 
 import (
-	"github.com/ethereum/go-ethereum/common"
 	evmtypes "akila/x/evm/types"
+	"github.com/ethereum/go-ethereum/common"
 
+	enccodec "akila/encoding/codec"
+	"akila/testutil/tx"
+	akilatypes "akila/types"
 	errorsmod "cosmossdk.io/errors"
 	amino "github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -14,9 +17,6 @@ import (
 	testutiltypes "github.com/cosmos/cosmos-sdk/types/module/testutil"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	enccodec "akila/encoding/codec"
-	"akila/testutil/tx"
-	evmostypes "akila/types"
 )
 
 // buildMsgEthereumTx builds an Ethereum transaction from the given arguments and populates the From field.
@@ -28,7 +28,7 @@ func buildMsgEthereumTx(txArgs evmtypes.EvmTxArgs, fromAddr common.Address) evmt
 
 // signMsgEthereumTx signs a MsgEthereumTx with the provided private key and chainID.
 func signMsgEthereumTx(msgEthereumTx evmtypes.MsgEthereumTx, privKey cryptotypes.PrivKey, chainID string) (evmtypes.MsgEthereumTx, error) {
-	ethChainID, err := evmostypes.ParseChainID(chainID)
+	ethChainID, err := akilatypes.ParseChainID(chainID)
 	if err != nil {
 		return evmtypes.MsgEthereumTx{}, errorsmod.Wrapf(err, "failed to parse chainID: %v", chainID)
 	}

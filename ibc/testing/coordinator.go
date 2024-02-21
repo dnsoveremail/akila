@@ -8,13 +8,13 @@ import (
 	"testing"
 	"time"
 
+	"akila/app"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	simtestutil "github.com/cosmos/cosmos-sdk/testutil/sims"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	ibctesting "github.com/cosmos/ibc-go/v7/testing"
-	"akila/app"
 	"github.com/stretchr/testify/require"
 )
 
@@ -127,8 +127,8 @@ func SendMsgs(chain *ibctesting.TestChain, feeAmt int64, msgs ...sdk.Msg) (*sdk.
 	// ensure the chain has the latest time
 	chain.Coordinator.UpdateTimeForChain(chain)
 
-	if evmosChain, ok := chain.App.(*app.Evmos); ok {
-		bondDenom = evmosChain.StakingKeeper.BondDenom(chain.GetContext())
+	if akilaChain, ok := chain.App.(*app.Akila); ok {
+		bondDenom = akilaChain.StakingKeeper.BondDenom(chain.GetContext())
 	} else {
 		bondDenom = chain.GetSimApp().StakingKeeper.BondDenom(chain.GetContext())
 	}

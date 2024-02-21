@@ -16,12 +16,6 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	"golang.org/x/exp/maps"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
-	distributionkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-	channelkeeper "github.com/cosmos/ibc-go/v7/modules/core/04-channel/keeper"
 	bankprecompile "akila/precompiles/bank"
 	distprecompile "akila/precompiles/distribution"
 	erc20precompile "akila/precompiles/erc20"
@@ -34,6 +28,12 @@ import (
 	erc20Keeper "akila/x/erc20/keeper"
 	transferkeeper "akila/x/ibc/transfer/keeper"
 	vestingkeeper "akila/x/vesting/keeper"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
+	distributionkeeper "github.com/cosmos/cosmos-sdk/x/distribution/keeper"
+	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+	channelkeeper "github.com/cosmos/ibc-go/v7/modules/core/04-channel/keeper"
 )
 
 // AvailablePrecompiles returns the list of all available precompiled contracts.
@@ -85,15 +85,15 @@ func AvailablePrecompiles(
 		panic(fmt.Errorf("failed to instantiate bank precompile: %w", err))
 	}
 
-	var WEVMOSAddress common.Address
+	var WAKILAAddress common.Address
 	if utils.IsMainnet(chainID) {
-		WEVMOSAddress = common.HexToAddress(erc20precompile.WEVMOSContractMainnet)
+		WAKILAAddress = common.HexToAddress(erc20precompile.WAKILAContractMainnet)
 	} else {
-		WEVMOSAddress = common.HexToAddress(erc20precompile.WEVMOSContractTestnet)
+		WAKILAAddress = common.HexToAddress(erc20precompile.WAKILAContractTestnet)
 	}
 
 	strideOutpost, err := strideoutpost.NewPrecompile(
-		WEVMOSAddress,
+		WAKILAAddress,
 		transferKeeper,
 		erc20Keeper,
 		authzKeeper,
@@ -104,7 +104,7 @@ func AvailablePrecompiles(
 	}
 
 	osmosisOutpost, err := osmosisoutpost.NewPrecompile(
-		WEVMOSAddress,
+		WAKILAAddress,
 		authzKeeper,
 		bankKeeper,
 		transferKeeper,

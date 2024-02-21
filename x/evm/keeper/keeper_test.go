@@ -6,7 +6,7 @@ import (
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	"akila/x/evm/keeper"
 	"akila/x/evm/statedb"
 	evmtypes "akila/x/evm/types"
@@ -124,7 +124,7 @@ func (suite *KeeperTestSuite) TestGetAccountStorage() {
 			tc.malleate()
 			i := 0
 			suite.app.AccountKeeper.IterateAccounts(suite.ctx, func(account authtypes.AccountI) bool {
-				ethAccount, ok := account.(evmostypes.EthAccountI)
+				ethAccount, ok := account.(akilatypes.EthAccountI)
 				if !ok {
 					// ignore non EthAccounts
 					return false

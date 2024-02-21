@@ -30,7 +30,7 @@ type KeeperTestSuite struct {
 
 	ctx sdk.Context
 
-	app            *app.Evmos
+	app            *app.Akila
 	queryClient    types.QueryClient
 	queryClientEvm evm.QueryClient
 	address        common.Address

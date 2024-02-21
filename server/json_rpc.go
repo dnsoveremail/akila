@@ -9,15 +9,15 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 
+	"akila/rpc"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/types"
 	ethlog "github.com/ethereum/go-ethereum/log"
 	ethrpc "github.com/ethereum/go-ethereum/rpc"
-	"akila/rpc"
 
 	"akila/server/config"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 )
 
 // StartJSONRPC starts the JSON-RPC server
@@ -26,7 +26,7 @@ func StartJSONRPC(ctx *server.Context,
 	tmRPCAddr,
 	tmEndpoint string,
 	config *config.Config,
-	indexer evmostypes.EVMTxIndexer,
+	indexer akilatypes.EVMTxIndexer,
 ) (*http.Server, chan struct{}, error) {
 	tmWsClient := ConnectTmWS(tmRPCAddr, tmEndpoint, ctx.Logger)
 

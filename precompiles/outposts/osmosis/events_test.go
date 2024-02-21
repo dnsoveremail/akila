@@ -3,18 +3,18 @@ package osmosis_test
 import (
 	"math/big"
 
-	"github.com/ethereum/go-ethereum/common"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/outposts/osmosis"
-	evmosutiltx "akila/testutil/tx"
+	akilautiltx "akila/testutil/tx"
 	"akila/x/evm/statedb"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 func (s *PrecompileTestSuite) TestSwapEvent() {
 	// random common.Address that represents the evmos ERC20 token address and
 	// the IBC OSMO ERC20 token address.
-	evmosAddress := evmosutiltx.GenerateAddress()
-	osmoAddress := evmosutiltx.GenerateAddress()
+	akilaAddress := akilautiltx.GenerateAddress()
+	osmoAddress := akilautiltx.GenerateAddress()
 
 	sender := s.keyring.GetAddr(0)
 	receiver := "osmo1qql8ag4cluz6r4dz28p3w00dnc9w8ueuhnecd2"
@@ -30,7 +30,7 @@ func (s *PrecompileTestSuite) TestSwapEvent() {
 	}{
 		{
 			"pass - correct event emitted",
-			evmosAddress,
+			akilaAddress,
 			osmoAddress,
 			big.NewInt(transferAmount),
 			receiver,

@@ -12,19 +12,19 @@ import (
 
 var (
 	//go:embed WEVMOS.json
-	WevmosJSON []byte
+	WakilaJSON []byte
 
 	// WEVMOSContract is the compiled contract of WEVMOS
-	WEVMOSContract evmtypes.CompiledContract
+	WAKILAContract evmtypes.CompiledContract
 )
 
 func init() {
-	err := json.Unmarshal(WevmosJSON, &WEVMOSContract)
+	err := json.Unmarshal(WakilaJSON, &WAKILAContract)
 	if err != nil {
 		panic(err)
 	}
 
-	if len(WEVMOSContract.Bin) == 0 {
+	if len(WAKILAContract.Bin) == 0 {
 		panic("failed to load WEVMOS smart contract")
 	}
 }

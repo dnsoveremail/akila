@@ -9,11 +9,11 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	sdkvesting "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 
-	vestingexported "github.com/cosmos/cosmos-sdk/x/auth/vesting/exported"
 	"akila/testutil"
 	utiltx "akila/testutil/tx"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	"akila/x/vesting/types"
+	vestingexported "github.com/cosmos/cosmos-sdk/x/auth/vesting/exported"
 )
 
 var (
@@ -733,7 +733,7 @@ func (suite *KeeperTestSuite) TestConvertVestingAccount() {
 				_, ok := account.(vestingexported.VestingAccount)
 				suite.Require().False(ok)
 
-				_, ok = account.(evmostypes.EthAccountI)
+				_, ok = account.(akilatypes.EthAccountI)
 				suite.Require().True(ok)
 
 			} else {

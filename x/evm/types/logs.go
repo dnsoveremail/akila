@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 )
 
 // NewTransactionLogs creates a new NewTransactionLogs instance.
@@ -30,7 +30,7 @@ func NewTransactionLogsFromEth(hash common.Hash, ethlogs []*ethtypes.Log) Transa
 
 // Validate performs a basic validation of a GenesisAccount fields.
 func (tx TransactionLogs) Validate() error {
-	if evmostypes.IsEmptyHash(tx.Hash) {
+	if akilatypes.IsEmptyHash(tx.Hash) {
 		return fmt.Errorf("hash cannot be the empty %s", tx.Hash)
 	}
 
@@ -55,16 +55,16 @@ func (tx TransactionLogs) EthLogs() []*ethtypes.Log {
 
 // Validate performs a basic validation of an ethereum Log fields.
 func (log *Log) Validate() error {
-	if err := evmostypes.ValidateAddress(log.Address); err != nil {
+	if err := akilatypes.ValidateAddress(log.Address); err != nil {
 		return fmt.Errorf("invalid log address %w", err)
 	}
-	if evmostypes.IsEmptyHash(log.BlockHash) {
+	if akilatypes.IsEmptyHash(log.BlockHash) {
 		return fmt.Errorf("block hash cannot be the empty %s", log.BlockHash)
 	}
 	if log.BlockNumber == 0 {
 		return errors.New("block number cannot be zero")
 	}
-	if evmostypes.IsEmptyHash(log.TxHash) {
+	if akilatypes.IsEmptyHash(log.TxHash) {
 		return fmt.Errorf("tx hash cannot be the empty %s", log.TxHash)
 	}
 	return nil

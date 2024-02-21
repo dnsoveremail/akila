@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"strings"
 
-	authclient "github.com/cosmos/cosmos-sdk/x/auth/client"
 	"akila/ethereum/eip712"
-	evmos "akila/types"
+	akila "akila/types"
+	authclient "github.com/cosmos/cosmos-sdk/x/auth/client"
 	"github.com/pkg/errors"
 
 	"github.com/cometbft/cometbft/libs/bytes"
@@ -158,7 +158,7 @@ func LegacyEIP712Cmd() *cobra.Command {
 				return errors.Wrap(err, "encode tx")
 			}
 
-			chainID, err := evmos.ParseChainID(clientCtx.ChainID)
+			chainID, err := akila.ParseChainID(clientCtx.ChainID)
 			if err != nil {
 				return errors.Wrap(err, "invalid chain ID passed as argument")
 			}

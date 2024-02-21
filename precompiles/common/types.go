@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
+	akilautils "akila/utils"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
-	evmosutils "akila/utils"
 )
 
 var (
@@ -20,7 +20,7 @@ var (
 	// DefaultExpirationDuration is the default duration for an authorization to expire.
 	DefaultExpirationDuration = time.Hour * 24 * 365
 	// DefaultChainID is the standard chain id used for testing purposes
-	DefaultChainID = evmosutils.MainnetChainID + "-1"
+	DefaultChainID = akilautils.MainnetChainID + "-1"
 	// DefaultPrecompilesBech32 is the standard bech32 address for the precompiles
 	DefaultPrecompilesBech32 = []string{
 		"evmos1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqn2svlxe", // secp256r1 curve precompile

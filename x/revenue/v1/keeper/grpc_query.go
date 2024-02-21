@@ -10,11 +10,11 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	akilatypes "akila/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/ethereum/go-ethereum/common"
-	evmostypes "akila/types"
 
 	"akila/x/revenue/v1/types"
 )
@@ -72,7 +72,7 @@ func (k Keeper) Revenue(
 	}
 
 	// check if the contract is a non-zero hex address
-	if err := evmostypes.ValidateNonZeroAddress(req.ContractAddress); err != nil {
+	if err := akilatypes.ValidateNonZeroAddress(req.ContractAddress); err != nil {
 		return nil, status.Errorf(
 			codes.InvalidArgument,
 			"invalid format for contract %s, should be non-zero hex ('0x...')", req.ContractAddress,

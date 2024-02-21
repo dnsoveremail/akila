@@ -19,14 +19,14 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
+	"akila/encoding"
+	"akila/utils"
 	dbm "github.com/cometbft/cometbft-db"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/libs/log"
 	tmtypes "github.com/cometbft/cometbft/proto/tendermint/types"
 	cmtypes "github.com/cometbft/cometbft/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"akila/encoding"
-	"akila/utils"
 )
 
 // EthDefaultConsensusParams defines the default Tendermint consensus params used in
@@ -49,14 +49,14 @@ var EthDefaultConsensusParams = &tmtypes.ConsensusParams{
 }
 
 // EthSetup initializes a new EvmosApp. A Nop logger is set in EvmosApp.
-func EthSetup(isCheckTx bool, patchGenesis func(*Evmos, simapp.GenesisState) simapp.GenesisState) *Evmos {
+func EthSetup(isCheckTx bool, patchGenesis func(*Akila, simapp.GenesisState) simapp.GenesisState) *Akila {
 	return EthSetupWithDB(isCheckTx, patchGenesis, dbm.NewMemDB())
 }
 
 // EthSetupWithDB initializes a new EvmosApp. A Nop logger is set in EvmosApp.
-func EthSetupWithDB(isCheckTx bool, patchGenesis func(*Evmos, simapp.GenesisState) simapp.GenesisState, db dbm.DB) *Evmos {
+func EthSetupWithDB(isCheckTx bool, patchGenesis func(*Akila, simapp.GenesisState) simapp.GenesisState, db dbm.DB) *Akila {
 	chainID := utils.TestnetChainID + "-1"
-	app := NewEvmos(log.NewNopLogger(),
+	app := NewAkila(log.NewNopLogger(),
 		db,
 		nil,
 		true,

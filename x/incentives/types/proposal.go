@@ -6,9 +6,9 @@ package types
 import (
 	"errors"
 
+	akilatypes "akila/types"
 	govcdc "github.com/cosmos/cosmos-sdk/x/gov/codec"
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
-	evmostypes "akila/types"
 )
 
 // constants
@@ -53,7 +53,7 @@ func (*CancelIncentiveProposal) ProposalType() string {
 
 // ValidateBasic performs a stateless check of the proposal fields
 func (rip *CancelIncentiveProposal) ValidateBasic() error {
-	if err := evmostypes.ValidateAddress(rip.Contract); err != nil {
+	if err := akilatypes.ValidateAddress(rip.Contract); err != nil {
 		return err
 	}
 	return errors.New("Deprecated")

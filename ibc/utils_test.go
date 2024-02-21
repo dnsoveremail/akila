@@ -8,10 +8,10 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	teststypes "akila/types/tests"
 	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v7/testing"
-	teststypes "akila/types/tests"
 )
 
 func init() {
@@ -290,7 +290,7 @@ func TestGetSentCoin(t *testing.T) {
 			"get ibc wrapped aevmos coin",
 			"transfer/channel-0/aevmos",
 			"10",
-			sdk.Coin{Denom: teststypes.AevmosIbcdenom, Amount: math.NewInt(10)},
+			sdk.Coin{Denom: teststypes.AakilaIbcdenom, Amount: math.NewInt(10)},
 		},
 		{
 			"get ibc wrapped uosmo coin",

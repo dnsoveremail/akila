@@ -7,6 +7,9 @@ import (
 
 	errorsmod "cosmossdk.io/errors"
 
+	"akila/crypto/ethsecp256k1"
+	"akila/ethereum/eip712"
+	"akila/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -19,19 +22,16 @@ import (
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
-	"akila/crypto/ethsecp256k1"
-	"akila/ethereum/eip712"
-	"akila/types"
 
 	evmtypes "akila/x/evm/types"
 )
 
-var evmosCodec codec.ProtoCodecMarshaler
+var akilaCodec codec.ProtoCodecMarshaler
 
 func init() {
 	registry := codectypes.NewInterfaceRegistry()
 	types.RegisterInterfaces(registry)
-	evmosCodec = codec.NewProtoCodec(registry)
+	akilaCodec = codec.NewProtoCodec(registry)
 }
 
 // Deprecated: LegacyEip712SigVerificationDecorator Verify all signatures for a tx and return an error if any are invalid. Note,
@@ -226,7 +226,7 @@ func VerifySignature(
 			FeePayer: feePayer,
 		}
 
-		typedData, err := eip712.LegacyWrapTxToTypedData(evmosCodec, extOpt.TypedDataChainID, msgs[0], txBytes, feeDelegation)
+		typedData, err := eip712.LegacyWrapTxToTypedData(akilaCodec, extOpt.TypedDataChainID, msgs[0], txBytes, feeDelegation)
 		if err != nil {
 			return errorsmod.Wrap(err, "failed to create EIP-712 typed data from tx")
 		}

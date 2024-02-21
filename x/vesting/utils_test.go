@@ -4,6 +4,13 @@ import (
 	"encoding/json"
 	"time"
 
+	akilaapp "akila/app"
+	cmn "akila/precompiles/common"
+	akilautil "akila/testutil"
+	testutiltx "akila/testutil/tx"
+	akilatypes "akila/types"
+	"akila/utils"
+	evmtypes "akila/x/evm/types"
 	"cosmossdk.io/math"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/crypto/tmhash"
@@ -16,13 +23,6 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
-	evmosapp "akila/app"
-	cmn "akila/precompiles/common"
-	evmosutil "akila/testutil"
-	testutiltx "akila/testutil/tx"
-	evmostypes "akila/types"
-	"akila/utils"
-	evmtypes "akila/x/evm/types"
 )
 
 // SetupWithGenesisValSet initializes a new EvmosApp with a validator set and genesis accounts
@@ -30,8 +30,8 @@ import (
 // of one consensus engine unit (10^6) in the default token of the simapp from first genesis
 // account. A Nop logger is set in SimApp.
 func (s *VestingTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, balances ...banktypes.Balance) {
-	appI, genesisState := evmosapp.SetupTestingApp(cmn.DefaultChainID)()
-	app, ok := appI.(*evmosapp.Evmos)
+	appI, genesisState := akilaapp.SetupTestingApp(cmn.DefaultChainID)()
+	app, ok := appI.(*akilaapp.Akila)
 	s.Require().True(ok)
 
 	// set genesis accounts
@@ -41,7 +41,7 @@ func (s *VestingTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, 
 	validators := make([]stakingtypes.Validator, 0, len(valSet.Validators))
 	delegations := make([]stakingtypes.Delegation, 0, len(valSet.Validators))
 
-	bondAmt := sdk.TokensFromConsensusPower(1, evmostypes.PowerReduction)
+	bondAmt := sdk.TokensFromConsensusPower(1, akilatypes.PowerReduction)
 
 	for _, val := range valSet.Validators {
 		pk, err := cryptocodec.FromTmPubKeyInterface(val.PubKey)
@@ -96,7 +96,7 @@ func (s *VestingTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, 
 	stateBytes, err := json.MarshalIndent(genesisState, "", " ")
 	s.Require().NoError(err)
 
-	header := evmosutil.NewHeader(
+	header := akilautil.NewHeader(
 		2,
 		time.Now().UTC(),
 		cmn.DefaultChainID,
@@ -110,7 +110,7 @@ func (s *VestingTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, 
 		abci.RequestInitChain{
 			ChainId:         cmn.DefaultChainID,
 			Validators:      []abci.ValidatorUpdate{},
-			ConsensusParams: evmosapp.DefaultConsensusParams,
+			ConsensusParams: akilaapp.DefaultConsensusParams,
 			AppStateBytes:   stateBytes,
 		},
 	)
@@ -149,12 +149,12 @@ func (s *VestingTestSuite) DoSetupTest() {
 
 	baseAcc := authtypes.NewBaseAccount(priv.PubKey().Address().Bytes(), priv.PubKey(), 0, 0)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: baseAcc,
 		CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 	}
 
-	amount := sdk.TokensFromConsensusPower(5, evmostypes.PowerReduction)
+	amount := sdk.TokensFromConsensusPower(5, akilatypes.PowerReduction)
 
 	balance := banktypes.Balance{
 		Address: acc.GetAddress().String(),

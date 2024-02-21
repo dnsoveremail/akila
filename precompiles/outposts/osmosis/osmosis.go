@@ -7,6 +7,10 @@ import (
 	"embed"
 	"fmt"
 
+	cmn "akila/precompiles/common"
+	"akila/precompiles/ics20"
+	erc20keeper "akila/x/erc20/keeper"
+	transferkeeper "akila/x/ibc/transfer/keeper"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
@@ -16,10 +20,6 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/ics20"
-	erc20keeper "akila/x/erc20/keeper"
-	transferkeeper "akila/x/ibc/transfer/keeper"
 )
 
 const (
@@ -40,7 +40,7 @@ var f embed.FS
 // the common Precompile type.
 type Precompile struct {
 	cmn.Precompile
-	wevmosAddress common.Address
+	wakilaAddress common.Address
 	// IBC
 	timeoutHeight    clienttypes.Height
 	timeoutTimestamp uint64
@@ -56,7 +56,7 @@ type Precompile struct {
 // NewPrecompile creates a new Osmosis outpost Precompile instance as a
 // PrecompiledContract interface.
 func NewPrecompile(
-	wevmosAddress common.Address,
+	wakilaAddress common.Address,
 	authzKeeper authzkeeper.Keeper,
 	bankKeeper bankkeeper.Keeper,
 	transferKeeper transferkeeper.Keeper,
@@ -77,7 +77,7 @@ func NewPrecompile(
 			ApprovalExpiration:   cmn.DefaultExpirationDuration,
 			AuthzKeeper:          authzKeeper,
 		},
-		wevmosAddress:    wevmosAddress,
+		wakilaAddress:    wakilaAddress,
 		timeoutHeight:    clienttypes.NewHeight(ics20.DefaultTimeoutHeight, ics20.DefaultTimeoutHeight),
 		timeoutTimestamp: ics20.DefaultTimeoutTimestamp,
 		bankKeeper:       bankKeeper,

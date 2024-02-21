@@ -27,7 +27,7 @@ const versionDB = "versiondb"
 // NOTE: this code is only included in a build with rocksdb.
 // Otherwise, the setupVersionDB code on 'app/db_placeholder.go' will be included
 // in the compiled binary
-func (app *Evmos) setupVersionDB(
+func (app *Akila) setupVersionDB(
 	homePath string,
 	keys map[string]*storetypes.KVStoreKey,
 	tkeys map[string]*storetypes.TransientStoreKey,

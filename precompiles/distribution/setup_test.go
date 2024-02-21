@@ -11,6 +11,8 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
+	akilaapp "akila/app"
+	evmtypes "akila/x/evm/types"
 	tmtypes "github.com/cometbft/cometbft/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -18,8 +20,6 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmosapp "akila/app"
-	evmtypes "akila/x/evm/types"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -29,7 +29,7 @@ type PrecompileTestSuite struct {
 	suite.Suite
 
 	ctx        sdk.Context
-	app        *evmosapp.Evmos
+	app        *akilaapp.Akila
 	address    common.Address
 	validators []stakingtypes.Validator
 	valSet     *tmtypes.ValidatorSet

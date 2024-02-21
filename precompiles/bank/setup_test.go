@@ -3,17 +3,17 @@ package bank_test
 import (
 	"testing"
 
+	inflationtypes "akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	"github.com/ethereum/go-ethereum/common"
 	"akila/precompiles/bank"
 	"akila/testutil/integration/evmos/factory"
 	"akila/testutil/integration/evmos/grpc"
 	testkeyring "akila/testutil/integration/evmos/keyring"
 	"akila/testutil/integration/evmos/network"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -25,7 +25,7 @@ type PrecompileTestSuite struct {
 	suite.Suite
 
 	bondDenom, tokenDenom string
-	evmosAddr, xmplAddr   common.Address
+	akilaAddr, xmplAddr   common.Address
 
 	// tokenDenom is the specific token denomination used in testing the ERC20 precompile.
 	// This denomination is used to instantiate the precompile.
@@ -63,13 +63,13 @@ func (s *PrecompileTestSuite) SetupTest() {
 	s.network = integrationNetwork
 
 	// Register EVMOS
-	evmosMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(s.network.GetContext(), s.bondDenom)
+	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(s.network.GetContext(), s.bondDenom)
 	s.Require().True(found, "expected evmos denom metadata")
 
-	tokenPair, err := s.network.App.Erc20Keeper.RegisterCoin(s.network.GetContext(), evmosMetadata)
+	tokenPair, err := s.network.App.Erc20Keeper.RegisterCoin(s.network.GetContext(), akilaMetadata)
 	s.Require().NoError(err, "failed to register coin")
 
-	s.evmosAddr = common.HexToAddress(tokenPair.Erc20Address)
+	s.akilaAddr = common.HexToAddress(tokenPair.Erc20Address)
 
 	// Mint and register a second coin for testing purposes
 	err = s.network.App.BankKeeper.MintCoins(s.network.GetContext(), inflationtypes.ModuleName, sdk.Coins{{Denom: "xmpl", Amount: math.NewInt(1e18)}})

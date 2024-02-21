@@ -13,6 +13,12 @@ import (
 	"akila/app"
 	"akila/types"
 
+	commonnetwork "akila/testutil/integration/common/network"
+	erc20types "akila/x/erc20/types"
+	evmtypes "akila/x/evm/types"
+	feemarkettypes "akila/x/feemarket/types"
+	infltypes "akila/x/inflation/v1/types"
+	revtypes "akila/x/revenue/v1/types"
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	tmtypes "github.com/cometbft/cometbft/types"
@@ -20,12 +26,6 @@ import (
 	txtypes "github.com/cosmos/cosmos-sdk/types/tx"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	commonnetwork "akila/testutil/integration/common/network"
-	erc20types "akila/x/erc20/types"
-	evmtypes "akila/x/evm/types"
-	feemarkettypes "akila/x/feemarket/types"
-	infltypes "akila/x/inflation/v1/types"
-	revtypes "akila/x/revenue/v1/types"
 )
 
 // Network is the interface that wraps the methods to interact with integration test network.
@@ -60,7 +60,7 @@ type IntegrationNetwork struct {
 	cfg        Config
 	ctx        sdktypes.Context
 	validators []stakingtypes.Validator
-	app        *app.Evmos
+	app        *app.Akila
 
 	// This is only needed for IBC chain testing setup
 	valSet     *tmtypes.ValidatorSet
@@ -125,28 +125,28 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 	delegations := createDelegations(valSet.Validators, genAccounts[0].GetAddress())
 
 	// Create a new EvmosApp with the following params
-	evmosApp := createEvmosApp(n.cfg.chainID)
+	akilaApp := createAkilaApp(n.cfg.chainID)
 
 	// Configure Genesis state
 	genesisState := app.NewDefaultGenesisState()
 
-	genesisState = setAuthGenesisState(evmosApp, genesisState, genAccounts)
+	genesisState = setAuthGenesisState(akilaApp, genesisState, genAccounts)
 
 	stakingParams := StakingCustomGenesisState{
 		denom:       n.cfg.denom,
 		validators:  validators,
 		delegations: delegations,
 	}
-	genesisState = setStakingGenesisState(evmosApp, genesisState, stakingParams)
+	genesisState = setStakingGenesisState(akilaApp, genesisState, stakingParams)
 
-	genesisState = setInflationGenesisState(evmosApp, genesisState)
+	genesisState = setInflationGenesisState(akilaApp, genesisState)
 
 	totalSupply := calculateTotalSupply(fundedAccountBalances)
 	bankParams := BankCustomGenesisState{
 		totalSupply: totalSupply,
 		balances:    fundedAccountBalances,
 	}
-	genesisState = setBankGenesisState(evmosApp, genesisState, bankParams)
+	genesisState = setBankGenesisState(akilaApp, genesisState, bankParams)
 
 	// Init chain
 	stateBytes, err := json.MarshalIndent(genesisState, "", " ")
@@ -154,7 +154,7 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 		return err
 	}
 
-	evmosApp.InitChain(
+	akilaApp.InitChain(
 		abcitypes.RequestInitChain{
 			ChainId:         n.cfg.chainID,
 			Validators:      []abcitypes.ValidatorUpdate{},
@@ -163,28 +163,28 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 		},
 	)
 	// Commit genesis changes
-	evmosApp.Commit()
+	akilaApp.Commit()
 
 	header := tmproto.Header{
 		ChainID:            n.cfg.chainID,
-		Height:             evmosApp.LastBlockHeight() + 1,
-		AppHash:            evmosApp.LastCommitID().Hash,
+		Height:             akilaApp.LastBlockHeight() + 1,
+		AppHash:            akilaApp.LastCommitID().Hash,
 		ValidatorsHash:     valSet.Hash(),
 		NextValidatorsHash: valSet.Hash(),
 		ProposerAddress:    valSet.Proposer.Address,
 	}
-	evmosApp.BeginBlock(abcitypes.RequestBeginBlock{Header: header})
+	akilaApp.BeginBlock(abcitypes.RequestBeginBlock{Header: header})
 
 	// Set networks global parameters
-	n.app = evmosApp
+	n.app = akilaApp
 	// TODO - this might not be the best way to initilize the context
-	n.ctx = evmosApp.BaseApp.NewContext(false, header)
+	n.ctx = akilaApp.BaseApp.NewContext(false, header)
 	n.validators = validators
 	n.valSet = valSet
 	n.valSigners = valSigners
 
 	// Register EVMOS in denom metadata
-	evmosMetadata := banktypes.Metadata{
+	akilaMetadata := banktypes.Metadata{
 		Description: "The native token of Evmos",
 		Base:        n.cfg.denom,
 		// NOTE: Denom units MUST be increasing
@@ -203,7 +203,7 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 		Symbol:  "EVMOS",
 		Display: n.cfg.denom,
 	}
-	evmosApp.BankKeeper.SetDenomMetaData(n.ctx, evmosMetadata)
+	akilaApp.BankKeeper.SetDenomMetaData(n.ctx, akilaMetadata)
 
 	return nil
 }

@@ -5,19 +5,19 @@ import (
 	"math/big"
 	"time"
 
+	akilautiltx "akila/testutil/tx"
 	"cosmossdk.io/math"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	evmosutiltx "akila/testutil/tx"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkauthz "github.com/cosmos/cosmos-sdk/x/authz"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/core/vm"
 	"akila/precompiles/authorization"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/staking"
 	"akila/precompiles/testutil"
-	evmosutil "akila/testutil"
+	akilautil "akila/testutil"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkauthz "github.com/cosmos/cosmos-sdk/x/authz"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/core/vm"
 )
 
 func (s *PrecompileTestSuite) TestApprove() {
@@ -218,7 +218,7 @@ func (s *PrecompileTestSuite) TestApprove() {
 			func(_ *vm.Contract) []interface{} {
 				// Commit block (otherwise test logic will not be executed correctly, i.e. somehow unbonding does not take effect)
 				var err error
-				s.ctx, err = evmosutil.Commit(s.ctx, s.app, time.Second, nil)
+				s.ctx, err = akilautil.Commit(s.ctx, s.app, time.Second, nil)
 				s.Require().NoError(err, "failed to commit block")
 
 				// Jail a validator
@@ -234,7 +234,7 @@ func (s *PrecompileTestSuite) TestApprove() {
 				s.Require().Equal(math.NewInt(1e18), amount, "expected different amount of tokens to be unbonded")
 
 				// Commit block and update time to one year later
-				s.ctx, err = evmosutil.Commit(s.ctx, s.app, time.Hour*24*365, nil)
+				s.ctx, err = akilautil.Commit(s.ctx, s.app, time.Hour*24*365, nil)
 				s.Require().NoError(err, "failed to commit block")
 
 				return []interface{}{
@@ -634,7 +634,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowance() {
 
 func (s *PrecompileTestSuite) TestRevoke() {
 	method := s.precompile.Methods[authorization.RevokeMethod]
-	granteeAddr := evmosutiltx.GenerateAddress()
+	granteeAddr := akilautiltx.GenerateAddress()
 	granterAddr := s.address
 	createdAuthz := staking.DelegateAuthz
 	approvedCoin := &sdk.Coin{Denom: s.bondDenom, Amount: math.NewInt(1e18)}

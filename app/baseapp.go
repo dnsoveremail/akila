@@ -9,7 +9,7 @@ import (
 )
 
 // Close will be called in graceful shutdown in start cmd
-func (app *Evmos) Close() error {
+func (app *Akila) Close() error {
 	err := app.BaseApp.Close()
 
 	if cms, ok := app.CommitMultiStore().(io.Closer); ok {

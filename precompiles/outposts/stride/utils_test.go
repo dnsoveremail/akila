@@ -5,16 +5,16 @@ package stride_test
 import (
 	"fmt"
 
-	"cosmossdk.io/math"
 	commonnetwork "akila/testutil/integration/common/network"
 	"akila/testutil/integration/ibc/coordinator"
+	"cosmossdk.io/math"
 
 	erc20types "akila/x/erc20/types"
 
+	inflationtypes "akila/x/inflation/v1/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
-	inflationtypes "akila/x/inflation/v1/types"
 )
 
 const (
@@ -27,15 +27,15 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 	// Register EVMOS ERC20 equivalent
 	ctx := s.network.GetContext()
 	bondDenom := s.network.App.StakingKeeper.BondDenom(ctx)
-	evmosMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(ctx, bondDenom)
+	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(ctx, bondDenom)
 	s.Require().True(found, "expected evmos denom metadata")
 
-	coin := sdk.NewCoin(evmosMetadata.Base, math.NewInt(2e18))
+	coin := sdk.NewCoin(akilaMetadata.Base, math.NewInt(2e18))
 	err := s.network.App.BankKeeper.MintCoins(ctx, inflationtypes.ModuleName, sdk.NewCoins(coin))
 	s.Require().NoError(err)
 
 	// Register some Token Pairs
-	_, err = s.network.App.Erc20Keeper.RegisterCoin(ctx, evmosMetadata)
+	_, err = s.network.App.Erc20Keeper.RegisterCoin(ctx, akilaMetadata)
 	s.Require().NoError(err)
 
 	// Register stEvmos Token Pair
@@ -44,7 +44,7 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 		BaseDenom: "st" + bondDenom,
 	}
 	s.network.App.TransferKeeper.SetDenomTrace(ctx, denomTrace)
-	stEvmosMetadata := banktypes.Metadata{
+	stAkilaMetadata := banktypes.Metadata{
 		Description: "The native token of Evmos",
 		Base:        denomTrace.IBCDenom(),
 		// NOTE: Denom units MUST be increasing
@@ -64,18 +64,18 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 		Display: denomTrace.BaseDenom,
 	}
 
-	stEvmos := sdk.NewCoin(stEvmosMetadata.Base, math.NewInt(9e18))
-	err = s.network.App.BankKeeper.MintCoins(ctx, inflationtypes.ModuleName, sdk.NewCoins(stEvmos))
+	stAkila := sdk.NewCoin(stAkilaMetadata.Base, math.NewInt(9e18))
+	err = s.network.App.BankKeeper.MintCoins(ctx, inflationtypes.ModuleName, sdk.NewCoins(stAkila))
 	s.Require().NoError(err)
-	err = s.network.App.BankKeeper.SendCoinsFromModuleToAccount(ctx, inflationtypes.ModuleName, s.keyring.GetAccAddr(0), sdk.NewCoins(stEvmos))
+	err = s.network.App.BankKeeper.SendCoinsFromModuleToAccount(ctx, inflationtypes.ModuleName, s.keyring.GetAccAddr(0), sdk.NewCoins(stAkila))
 	s.Require().NoError(err)
 
 	// Register some Token Pairs
-	_, err = s.network.App.Erc20Keeper.RegisterCoin(ctx, stEvmosMetadata)
+	_, err = s.network.App.Erc20Keeper.RegisterCoin(ctx, stAkilaMetadata)
 	s.Require().NoError(err)
 
 	convertCoin := erc20types.NewMsgConvertCoin(
-		stEvmos,
+		stAkila,
 		s.keyring.GetAddr(0),
 		s.keyring.GetAccAddr(0),
 	)

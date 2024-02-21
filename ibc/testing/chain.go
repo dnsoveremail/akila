@@ -22,7 +22,7 @@ import (
 	"github.com/cosmos/ibc-go/v7/testing/mock"
 
 	"akila/crypto/ethsecp256k1"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	"akila/utils"
 	evmtypes "akila/x/evm/types"
 )
@@ -66,12 +66,12 @@ func NewTestChain(t *testing.T, coord *ibcgotesting.Coordinator, chainID string)
 
 	baseAcc := authtypes.NewBaseAccount(senderPrivKey.PubKey().Address().Bytes(), senderPrivKey.PubKey(), 0, 0)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: baseAcc,
 		CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 	}
 
-	amount := sdk.TokensFromConsensusPower(1, evmostypes.PowerReduction)
+	amount := sdk.TokensFromConsensusPower(1, akilatypes.PowerReduction)
 
 	balance := banktypes.Balance{
 		Address: acc.GetAddress().String(),

@@ -65,7 +65,7 @@ func (p Precompile) Swap(
 
 	// Case 1. Input has to be either the address of Osmosis or WEVMOS
 	switch input {
-	case p.wevmosAddress:
+	case p.wakilaAddress:
 		inputDenom = bondDenom
 	default:
 		inputDenom, err = p.erc20Keeper.GetTokenDenom(ctx, input)
@@ -76,7 +76,7 @@ func (p Precompile) Swap(
 
 	// Case 2. Output has to be either the address of Osmosis or WEVMOS
 	switch output {
-	case p.wevmosAddress:
+	case p.wakilaAddress:
 		outputDenom = bondDenom
 	default:
 		outputDenom, err = p.erc20Keeper.GetTokenDenom(ctx, output)
@@ -85,8 +85,8 @@ func (p Precompile) Swap(
 		}
 	}
 
-	evmosChannel := NewIBCChannel(transfertypes.PortID, swapPacketData.ChannelID)
-	err = ValidateInputOutput(inputDenom, outputDenom, bondDenom, evmosChannel)
+	akilaChannel := NewIBCChannel(transfertypes.PortID, swapPacketData.ChannelID)
+	err = ValidateInputOutput(inputDenom, outputDenom, bondDenom, akilaChannel)
 	if err != nil {
 		return nil, err
 	}
@@ -94,16 +94,16 @@ func (p Precompile) Swap(
 	// Retrieve Osmosis channel and port associated with Evmos transfer app. We need these information
 	// to reconstruct the output denom in the Osmosis chain.
 
-	channel, found := p.channelKeeper.GetChannel(ctx, evmosChannel.PortID, evmosChannel.ChannelID)
+	channel, found := p.channelKeeper.GetChannel(ctx, akilaChannel.PortID, akilaChannel.ChannelID)
 	if !found {
-		return nil, errorsmod.Wrapf(channeltypes.ErrChannelNotFound, "port ID (%s) channel ID (%s)", evmosChannel.PortID, evmosChannel.ChannelID)
+		return nil, errorsmod.Wrapf(channeltypes.ErrChannelNotFound, "port ID (%s) channel ID (%s)", akilaChannel.PortID, akilaChannel.ChannelID)
 	}
 	osmosisChannel := NewIBCChannel(
 		channel.GetCounterparty().GetPortID(),
 		channel.GetCounterparty().GetChannelID(),
 	)
 
-	outputOnOsmosis, err := ConvertToOsmosisRepresentation(outputDenom, bondDenom, evmosChannel, osmosisChannel)
+	outputOnOsmosis, err := ConvertToOsmosisRepresentation(outputDenom, bondDenom, akilaChannel, osmosisChannel)
 	if err != nil {
 		return nil, err
 	}
@@ -128,8 +128,8 @@ func (p Precompile) Swap(
 
 	coin := sdk.Coin{Denom: inputDenom, Amount: math.NewIntFromBigInt(amount)}
 	msg, err := ics20.CreateAndValidateMsgTransfer(
-		evmosChannel.PortID,
-		evmosChannel.ChannelID,
+		akilaChannel.PortID,
+		akilaChannel.ChannelID,
 		coin,
 		sdk.AccAddress(sender.Bytes()).String(),
 		swapPacketData.XcsContract,

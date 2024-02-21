@@ -14,7 +14,7 @@ func TestCreateMemo(t *testing.T) {
 		name          string
 		action        string
 		receiver      string
-		evmosReceiver string
+		akilaReceiver string
 		expPass       bool
 		errContains   string
 		expMemo       string
@@ -23,7 +23,7 @@ func TestCreateMemo(t *testing.T) {
 			name:          "success - liquid stake",
 			action:        strideoutpost.LiquidStakeAction,
 			receiver:      "stride1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
-			evmosReceiver: "evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
+			akilaReceiver: "evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
 			expPass:       true,
 			expMemo:       "{\"autopilot\":{\"receiver\":\"stride1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5\",\"stakeibc\":{\"action\":\"LiquidStake\",\"ibcreceiver\":\"evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5\"}}}",
 		},
@@ -31,7 +31,7 @@ func TestCreateMemo(t *testing.T) {
 			name:          "success - redeem stake",
 			action:        strideoutpost.RedeemStakeAction,
 			receiver:      "stride1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
-			evmosReceiver: "evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
+			akilaReceiver: "evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5",
 			expPass:       true,
 			expMemo:       "{\"autopilot\":{\"receiver\":\"stride1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5\",\"stakeibc\":{\"action\":\"RedeemStake\",\"ibcreceiver\":\"evmos1xv9tklw7d82sezh9haa573wufgy59vmwe6xxe5\"}}}",
 		},
@@ -43,7 +43,7 @@ func TestCreateMemo(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
-			memo, err := strideoutpost.CreateMemo(tc.action, tc.receiver, tc.evmosReceiver)
+			memo, err := strideoutpost.CreateMemo(tc.action, tc.receiver, tc.akilaReceiver)
 			if tc.expPass {
 				require.NoError(t, err, "expected no error while creating memo")
 				require.NotEmpty(t, memo, "expected memo not to be empty")

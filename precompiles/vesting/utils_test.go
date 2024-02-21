@@ -6,6 +6,19 @@ import (
 	"encoding/json"
 	"time"
 
+	akilaapp "akila/app"
+	cmn "akila/precompiles/common"
+	"akila/precompiles/testutil/contracts"
+	"akila/precompiles/vesting"
+	"akila/precompiles/vesting/testdata"
+	akilautil "akila/testutil"
+	testutiltx "akila/testutil/tx"
+	akilatypes "akila/types"
+	"akila/utils"
+	"akila/x/evm/statedb"
+	evmtypes "akila/x/evm/types"
+	inflationtypes "akila/x/inflation/v1/types"
+	vestingtypes "akila/x/vesting/types"
 	"cosmossdk.io/math"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/crypto/tmhash"
@@ -20,19 +33,6 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmosapp "akila/app"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/testutil/contracts"
-	"akila/precompiles/vesting"
-	"akila/precompiles/vesting/testdata"
-	evmosutil "akila/testutil"
-	testutiltx "akila/testutil/tx"
-	evmostypes "akila/types"
-	"akila/utils"
-	"akila/x/evm/statedb"
-	evmtypes "akila/x/evm/types"
-	inflationtypes "akila/x/inflation/v1/types"
-	vestingtypes "akila/x/vesting/types"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
@@ -43,8 +43,8 @@ import (
 // of one consensus engine unit (10^6) in the default token of the simapp from first genesis
 // account. A Nop logger is set in SimApp.
 func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, balances ...banktypes.Balance) {
-	appI, genesisState := evmosapp.SetupTestingApp(cmn.DefaultChainID)()
-	app, ok := appI.(*evmosapp.Evmos)
+	appI, genesisState := akilaapp.SetupTestingApp(cmn.DefaultChainID)()
+	app, ok := appI.(*akilaapp.Akila)
 	s.Require().True(ok)
 
 	// set genesis accounts
@@ -54,7 +54,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	validators := make([]stakingtypes.Validator, 0, len(valSet.Validators))
 	delegations := make([]stakingtypes.Delegation, 0, len(valSet.Validators))
 
-	bondAmt := sdk.TokensFromConsensusPower(1, evmostypes.PowerReduction)
+	bondAmt := sdk.TokensFromConsensusPower(1, akilatypes.PowerReduction)
 
 	for _, val := range valSet.Validators {
 		pk, err := cryptocodec.FromTmPubKeyInterface(val.PubKey)
@@ -109,7 +109,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	stateBytes, err := json.MarshalIndent(genesisState, "", " ")
 	s.Require().NoError(err)
 
-	header := evmosutil.NewHeader(
+	header := akilautil.NewHeader(
 		2,
 		time.Now().UTC(),
 		cmn.DefaultChainID,
@@ -123,7 +123,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 		abci.RequestInitChain{
 			ChainId:         cmn.DefaultChainID,
 			Validators:      []abci.ValidatorUpdate{},
-			ConsensusParams: evmosapp.DefaultConsensusParams,
+			ConsensusParams: akilaapp.DefaultConsensusParams,
 			AppStateBytes:   stateBytes,
 		},
 	)
@@ -162,12 +162,12 @@ func (s *PrecompileTestSuite) DoSetupTest() {
 
 	baseAcc := authtypes.NewBaseAccount(priv.PubKey().Address().Bytes(), priv.PubKey(), 0, 0)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: baseAcc,
 		CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 	}
 
-	amount := sdk.TokensFromConsensusPower(5, evmostypes.PowerReduction)
+	amount := sdk.TokensFromConsensusPower(5, akilatypes.PowerReduction)
 
 	balance := banktypes.Balance{
 		Address: acc.GetAddress().String(),
@@ -252,7 +252,7 @@ func (s *PrecompileTestSuite) CreateTestClawbackVestingAccount(funder, vestingAd
 	msgArgs := []interface{}{funder, vestingAddr, false}
 	//nolint
 	msg, _, _, err := vesting.NewMsgCreateClawbackVestingAccount(msgArgs)
-	err = evmosutil.FundAccount(s.ctx, s.app.BankKeeper, vestingAddr.Bytes(), sdk.NewCoins(sdk.NewCoin(utils.BaseDenom, math.NewInt(100))))
+	err = akilautil.FundAccount(s.ctx, s.app.BankKeeper, vestingAddr.Bytes(), sdk.NewCoins(sdk.NewCoin(utils.BaseDenom, math.NewInt(100))))
 	s.Require().NoError(err)
 	_, err = s.app.VestingKeeper.CreateClawbackVestingAccount(s.ctx, msg)
 	s.Require().NoError(err)
@@ -260,7 +260,7 @@ func (s *PrecompileTestSuite) CreateTestClawbackVestingAccount(funder, vestingAd
 
 // DeployContract deploys a contract that calls the staking precompile's methods for testing purposes.
 func (s *PrecompileTestSuite) DeployContract(contract evmtypes.CompiledContract) (addr common.Address, err error) {
-	addr, err = evmosutil.DeployContract(
+	addr, err = akilautil.DeployContract(
 		s.ctx,
 		s.app,
 		s.privKey,
@@ -310,6 +310,6 @@ func (s *PrecompileTestSuite) GetVestingAccount(addr common.Address) *vestingtyp
 // NextBlock commits the current block and sets up the next block.
 func (s *PrecompileTestSuite) NextBlock() {
 	var err error
-	s.ctx, err = evmosutil.CommitAndCreateNewCtx(s.ctx, s.app, time.Second, nil)
+	s.ctx, err = akilautil.CommitAndCreateNewCtx(s.ctx, s.app, time.Second, nil)
 	Expect(err).To(BeNil(), "failed to commit block")
 }

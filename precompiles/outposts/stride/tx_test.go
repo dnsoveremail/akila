@@ -9,13 +9,13 @@ import (
 
 	"akila/precompiles/erc20"
 
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"akila/utils"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	common "github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/vm"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/outposts/stride"
+	common "github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/vm"
 )
 
 const (
@@ -127,7 +127,7 @@ func (s *PrecompileTestSuite) TestLiquidStake() {
 						ChannelID:       channelID,
 						Sender:          s.keyring.GetAddr(0),
 						Receiver:        s.keyring.GetAddr(0),
-						Token:           common.HexToAddress(erc20.WEVMOSContractTestnet),
+						Token:           common.HexToAddress(erc20.WAKILAContractTestnet),
 						Amount:          big.NewInt(1e18),
 						StrideForwarder: "stride1rhe5leyt5w0mcwd9rpp93zqn99yktsxvyaqgd0",
 					},
@@ -162,9 +162,9 @@ func (s *PrecompileTestSuite) TestLiquidStake() {
 
 func (s *PrecompileTestSuite) TestRedeem() {
 	method := s.precompile.Methods[stride.RedeemStakeMethod]
-	stEvmos := utils.ComputeIBCDenom(portID, channelID, "st"+s.network.GetDenom())
+	stAkila := utils.ComputeIBCDenom(portID, channelID, "st"+s.network.GetDenom())
 
-	denomID := s.network.App.Erc20Keeper.GetDenomMap(s.network.GetContext(), stEvmos)
+	denomID := s.network.App.Erc20Keeper.GetDenomMap(s.network.GetContext(), stAkila)
 	tokenPair, ok := s.network.App.Erc20Keeper.GetTokenPair(s.network.GetContext(), denomID)
 	s.Require().True(ok, "expected token pair to be found")
 

@@ -10,12 +10,12 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"akila/app"
-	evmosd "akila/cmd/evmosd"
+	akilad "akila/cmd/evmosd"
 	"akila/utils"
 )
 
 func TestInitCmd(t *testing.T) {
-	rootCmd, _ := evmosd.NewRootCmd()
+	rootCmd, _ := akilad.NewRootCmd()
 	rootCmd.SetArgs([]string{
 		"init",       // Test the init cmd
 		"evmos-test", // Moniker
@@ -28,7 +28,7 @@ func TestInitCmd(t *testing.T) {
 }
 
 func TestAddKeyLedgerCmd(t *testing.T) {
-	rootCmd, _ := evmosd.NewRootCmd()
+	rootCmd, _ := akilad.NewRootCmd()
 	rootCmd.SetArgs([]string{
 		"keys",
 		"add",

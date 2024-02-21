@@ -7,7 +7,7 @@ import (
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 
 	utils "akila/utils"
 	"akila/x/inflation/v1/types"
@@ -20,7 +20,7 @@ const (
 )
 
 // 200M token at year 4 allocated to the team
-var teamAlloc = math.NewInt(200_000_000).Mul(evmostypes.PowerReduction)
+var teamAlloc = math.NewInt(200_000_000).Mul(akilatypes.PowerReduction)
 
 // MintAndAllocateInflation performs inflation minting and allocation
 func (k Keeper) MintAndAllocateInflation(

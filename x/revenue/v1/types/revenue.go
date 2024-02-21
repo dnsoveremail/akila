@@ -4,9 +4,9 @@
 package types
 
 import (
+	akilatypes "akila/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
-	evmostypes "akila/types"
 )
 
 // NewRevenue returns an instance of Revenue. If the provided withdrawer
@@ -47,7 +47,7 @@ func (fs Revenue) GetWithdrawerAddr() sdk.AccAddress {
 
 // Validate performs a stateless validation of a Revenue
 func (fs Revenue) Validate() error {
-	if err := evmostypes.ValidateNonZeroAddress(fs.ContractAddress); err != nil {
+	if err := akilatypes.ValidateNonZeroAddress(fs.ContractAddress); err != nil {
 		return err
 	}
 

@@ -6,10 +6,10 @@ import (
 
 	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 
-	"github.com/ethereum/go-ethereum/common"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/outposts/stride"
 	"akila/utils"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 const receiver = "stride1rhe5leyt5w0mcwd9rpp93zqn99yktsxvyaqgd0"
@@ -65,9 +65,9 @@ func (s *PrecompileTestSuite) TestRedeemEvent() {
 		BaseDenom: "st" + bondDenom,
 	}
 
-	stEvmos := denomTrace.IBCDenom()
+	stAkila := denomTrace.IBCDenom()
 
-	denomID := s.network.App.Erc20Keeper.GetDenomMap(ctx, stEvmos)
+	denomID := s.network.App.Erc20Keeper.GetDenomMap(ctx, stAkila)
 	tokenPair, ok := s.network.App.Erc20Keeper.GetTokenPair(ctx, denomID)
 	s.Require().True(ok, "expected token pair to be found")
 

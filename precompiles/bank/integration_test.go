@@ -6,19 +6,19 @@ import (
 
 	"akila/precompiles/bank/testdata"
 
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	"github.com/ethereum/go-ethereum/common"
 	"akila/testutil/integration/evmos/factory"
 	"akila/testutil/integration/evmos/grpc"
 	"akila/testutil/integration/evmos/network"
 	"akila/utils"
 	evmtypes "akila/x/evm/types"
 	inflationtypes "akila/x/inflation/v1/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/ethereum/go-ethereum/common"
 
-	evmosutiltx "akila/testutil/tx"
+	akilautiltx "akila/testutil/tx"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"akila/precompiles/bank"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"akila/precompiles/testutil"
 	"akila/testutil/integration/evmos/keyring"
@@ -34,7 +34,7 @@ var is *IntegrationTestSuite
 // unit testis.
 type IntegrationTestSuite struct {
 	bondDenom, tokenDenom string
-	evmosAddr, xmplAddr   common.Address
+	akilaAddr, xmplAddr   common.Address
 
 	// tokenDenom is the specific token denomination used in testing the Bank precompile.
 	// This denomination is used to instantiate the precompile.
@@ -67,13 +67,13 @@ func (is *IntegrationTestSuite) SetupTest() {
 	is.network = integrationNetwork
 
 	// Register EVMOS
-	evmosMetadata, found := is.network.App.BankKeeper.GetDenomMetaData(is.network.GetContext(), is.bondDenom)
+	akilaMetadata, found := is.network.App.BankKeeper.GetDenomMetaData(is.network.GetContext(), is.bondDenom)
 	Expect(found).To(BeTrue(), "failed to get denom metadata")
 
-	tokenPair, err := is.network.App.Erc20Keeper.RegisterCoin(is.network.GetContext(), evmosMetadata)
+	tokenPair, err := is.network.App.Erc20Keeper.RegisterCoin(is.network.GetContext(), akilaMetadata)
 	Expect(err).ToNot(HaveOccurred(), "failed to register coin")
 
-	is.evmosAddr = common.HexToAddress(tokenPair.Erc20Address)
+	is.akilaAddr = common.HexToAddress(tokenPair.Erc20Address)
 
 	// Mint and register a second coin for testing purposes
 	err = is.network.App.BankKeeper.MintCoins(is.network.GetContext(), inflationtypes.ModuleName, sdk.Coins{{Denom: is.tokenDenom, Amount: sdk.NewInt(1e18)}})
@@ -197,7 +197,7 @@ var _ = Describe("Bank Extension -", func() {
 			})
 
 			It("should return no balance for new account", func() {
-				queryArgs, balancesArgs := getTxAndCallArgs(directCall, contractData, bank.BalancesMethod, evmosutiltx.GenerateAddress())
+				queryArgs, balancesArgs := getTxAndCallArgs(directCall, contractData, bank.BalancesMethod, akilautiltx.GenerateAddress())
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, balancesArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 
@@ -238,28 +238,28 @@ var _ = Describe("Bank Extension -", func() {
 				err = is.precompile.UnpackIntoInterface(&balances, bank.TotalSupplyMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
-				evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
 				xmplTotalSupply := amount
 
-				Expect(balances[0].Amount).To(Equal(evmosTotalSupply))
+				Expect(balances[0].Amount).To(Equal(akilaTotalSupply))
 				Expect(balances[1].Amount).To(Equal(xmplTotalSupply))
 			})
 		})
 
 		Context("supplyOf query", func() {
 			It("should return the supply of Evmos", func() {
-				queryArgs, supplyArgs := getTxAndCallArgs(directCall, contractData, bank.SupplyOfMethod, is.evmosAddr)
+				queryArgs, supplyArgs := getTxAndCallArgs(directCall, contractData, bank.SupplyOfMethod, is.akilaAddr)
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 
 				out, err := is.precompile.Unpack(bank.SupplyOfMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
-				evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
 
-				Expect(out[0].(*big.Int)).To(Equal(evmosTotalSupply))
+				Expect(out[0].(*big.Int)).To(Equal(akilaTotalSupply))
 			})
 
 			It("should return the supply of XMPL", func() {
@@ -274,7 +274,7 @@ var _ = Describe("Bank Extension -", func() {
 			})
 
 			It("should return a supply of 0 for a non existing token", func() {
-				queryArgs, supplyArgs := getTxAndCallArgs(directCall, contractData, bank.SupplyOfMethod, evmosutiltx.GenerateAddress())
+				queryArgs, supplyArgs := getTxAndCallArgs(directCall, contractData, bank.SupplyOfMethod, akilautiltx.GenerateAddress())
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 
@@ -341,7 +341,7 @@ var _ = Describe("Bank Extension -", func() {
 			})
 
 			It("should return no balance for new account", func() {
-				queryArgs, balancesArgs := getTxAndCallArgs(contractCall, contractData, BalancesFunction, evmosutiltx.GenerateAddress())
+				queryArgs, balancesArgs := getTxAndCallArgs(contractCall, contractData, BalancesFunction, akilautiltx.GenerateAddress())
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, balancesArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 
@@ -382,28 +382,28 @@ var _ = Describe("Bank Extension -", func() {
 				err = is.precompile.UnpackIntoInterface(&balances, bank.TotalSupplyMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
-				evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
 				xmplTotalSupply := amount
 
-				Expect(balances[0].Amount).To(Equal(evmosTotalSupply))
+				Expect(balances[0].Amount).To(Equal(akilaTotalSupply))
 				Expect(balances[1].Amount).To(Equal(xmplTotalSupply))
 			})
 		})
 
 		Context("supplyOf query", func() {
 			It("should return the supply of Evmos", func() {
-				queryArgs, supplyArgs := getTxAndCallArgs(contractCall, contractData, SupplyOfFunction, is.evmosAddr)
+				queryArgs, supplyArgs := getTxAndCallArgs(contractCall, contractData, SupplyOfFunction, is.akilaAddr)
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 
 				out, err := is.precompile.Unpack(bank.SupplyOfMethod, ethRes.Ret)
 				Expect(err).ToNot(HaveOccurred(), "failed to unpack balances")
 
-				evmosTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
+				akilaTotalSupply, ok := new(big.Int).SetString("11000000000000000000", 10)
 				Expect(ok).To(BeTrue(), "failed to parse evmos total supply")
 
-				Expect(out[0].(*big.Int)).To(Equal(evmosTotalSupply))
+				Expect(out[0].(*big.Int)).To(Equal(akilaTotalSupply))
 			})
 
 			It("should return the supply of XMPL", func() {
@@ -418,7 +418,7 @@ var _ = Describe("Bank Extension -", func() {
 			})
 
 			It("should return a supply of 0 for a non existing token", func() {
-				queryArgs, supplyArgs := getTxAndCallArgs(contractCall, contractData, SupplyOfFunction, evmosutiltx.GenerateAddress())
+				queryArgs, supplyArgs := getTxAndCallArgs(contractCall, contractData, SupplyOfFunction, akilautiltx.GenerateAddress())
 				_, ethRes, err := is.factory.CallContractAndCheckLogs(sender.Priv, queryArgs, supplyArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
 

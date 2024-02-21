@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"math/big"
 
+	cmn "akila/precompiles/common"
+	"akila/precompiles/staking"
+	"akila/precompiles/testutil"
+	akilautiltx "akila/testutil/tx"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	geth "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/staking"
-	"akila/precompiles/testutil"
-	evmosutiltx "akila/testutil/tx"
 )
 
 func (s *PrecompileTestSuite) TestCreateValidator() {
@@ -59,7 +59,7 @@ func (s *PrecompileTestSuite) TestCreateValidator() {
 		{
 			"fail - different origin than delegator",
 			func() []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					description,
 					commission,
@@ -337,7 +337,7 @@ func (s *PrecompileTestSuite) TestDelegate() {
 		{
 			name: "fail - different origin than delegator",
 			malleate: func(operatorAddress string) []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					operatorAddress,
@@ -547,7 +547,7 @@ func (s *PrecompileTestSuite) TestUndelegate() {
 		{
 			name: "fail - different origin than delegator",
 			malleate: func(operatorAddress string) []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					operatorAddress,
@@ -676,7 +676,7 @@ func (s *PrecompileTestSuite) TestRedelegate() {
 		{
 			name: "fail - different origin than delegator",
 			malleate: func(srcOperatorAddr, dstOperatorAddr string) []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					srcOperatorAddr,

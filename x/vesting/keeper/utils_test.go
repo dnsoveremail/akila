@@ -27,7 +27,7 @@ import (
 	"akila/encoding"
 	"akila/testutil"
 	utiltx "akila/testutil/tx"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	"akila/utils"
 	epochstypes "akila/x/epochs/types"
 	evmtypes "akila/x/evm/types"
@@ -81,7 +81,7 @@ func (suite *KeeperTestSuite) DoSetupTest(t require.TestingT) {
 		suite.app.EpochsKeeper.SetEpochInfo(suite.ctx, epoch)
 	}
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: authtypes.NewBaseAccount(sdk.AccAddress(suite.address.Bytes()), nil, 0, 0),
 		CodeHash:    common.BytesToHash(crypto.Keccak256(nil)).String(),
 	}

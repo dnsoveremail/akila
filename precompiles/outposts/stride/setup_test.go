@@ -8,11 +8,11 @@ import (
 
 	"akila/precompiles/erc20"
 
-	"github.com/ethereum/go-ethereum/common"
 	"akila/precompiles/outposts/stride"
 	"akila/testutil/integration/common/grpc"
 	testkeyring "akila/testutil/integration/evmos/keyring"
 	"akila/testutil/integration/evmos/network"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -39,7 +39,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 	)
 
 	precompile, err := stride.NewPrecompile(
-		common.HexToAddress(erc20.WEVMOSContractTestnet),
+		common.HexToAddress(erc20.WAKILAContractTestnet),
 		network.App.TransferKeeper,
 		network.App.Erc20Keeper,
 		network.App.AuthzKeeper,

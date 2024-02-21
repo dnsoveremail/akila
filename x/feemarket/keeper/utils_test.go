@@ -26,7 +26,7 @@ import (
 	"akila/encoding"
 	"akila/testutil"
 	utiltx "akila/testutil/tx"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	evmtypes "akila/x/evm/types"
 	"akila/x/feemarket/types"
 
@@ -60,7 +60,7 @@ func (suite *KeeperTestSuite) SetupApp(checkTx bool, chainID string) {
 	types.RegisterQueryServer(queryHelper, suite.app.FeeMarketKeeper)
 	suite.queryClient = types.NewQueryClient(queryHelper)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: authtypes.NewBaseAccount(sdk.AccAddress(suite.address.Bytes()), nil, 0, 0),
 		CodeHash:    common.BytesToHash(crypto.Keccak256(nil)).String(),
 	}
@@ -150,7 +150,7 @@ func setupChain(localMinGasPricesStr string, chainID string) {
 	// Initialize the app, so we can use SetMinGasPrices to set the
 	// validator-specific min-gas-prices setting
 	db := dbm.NewMemDB()
-	newapp := app.NewEvmos(
+	newapp := app.NewAkila(
 		log.NewNopLogger(),
 		db,
 		nil,

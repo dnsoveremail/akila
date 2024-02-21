@@ -10,7 +10,7 @@ import (
 	rpcclient "github.com/cometbft/cometbft/rpc/client"
 	"github.com/cometbft/cometbft/types"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 )
 
 const (
@@ -23,13 +23,13 @@ const (
 type EVMIndexerService struct {
 	service.BaseService
 
-	txIdxr evmostypes.EVMTxIndexer
+	txIdxr akilatypes.EVMTxIndexer
 	client rpcclient.Client
 }
 
 // NewEVMIndexerService returns a new service instance.
 func NewEVMIndexerService(
-	txIdxr evmostypes.EVMTxIndexer,
+	txIdxr akilatypes.EVMTxIndexer,
 	client rpcclient.Client,
 ) *EVMIndexerService {
 	is := &EVMIndexerService{txIdxr: txIdxr, client: client}

@@ -10,11 +10,11 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/ethereum/go-ethereum/ethclient"
 	"akila/server/config"
 	"akila/testutil/network"
+	"github.com/ethereum/go-ethereum/ethclient"
 
-	evmosnetwork "akila/testutil/network"
+	akilanetwork "akila/testutil/network"
 )
 
 type IntegrationTestSuite struct {
@@ -27,7 +27,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.T().Log("setting up integration test suite")
 
 	var err error
-	cfg := evmosnetwork.DefaultConfig()
+	cfg := akilanetwork.DefaultConfig()
 	cfg.JSONRPCAddress = config.DefaultJSONRPCAddress
 	cfg.NumValidators = 1
 

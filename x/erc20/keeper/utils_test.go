@@ -7,20 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	sdkmath "cosmossdk.io/math"
-	"github.com/cosmos/cosmos-sdk/baseapp"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
-	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
-	ibcgotesting "github.com/cosmos/ibc-go/v7/testing"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"akila/app"
 	"akila/contracts"
 	"akila/crypto/ethsecp256k1"
@@ -35,6 +21,20 @@ import (
 	evm "akila/x/evm/types"
 	feemarkettypes "akila/x/feemarket/types"
 	inflationtypes "akila/x/inflation/v1/types"
+	sdkmath "cosmossdk.io/math"
+	"github.com/cosmos/cosmos-sdk/baseapp"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
+	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
+	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
+	ibcgotesting "github.com/cosmos/ibc-go/v7/testing"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -138,48 +138,48 @@ func (suite *KeeperTestSuite) DoSetupTest(t require.TestingT) {
 func (suite *KeeperTestSuite) SetupIBCTest() {
 	// initializes 3 test chains
 	suite.coordinator = ibctesting.NewCoordinator(suite.T(), 1, 2)
-	suite.EvmosChain = suite.coordinator.GetChain(ibcgotesting.GetChainID(1))
+	suite.AkilaChain = suite.coordinator.GetChain(ibcgotesting.GetChainID(1))
 	suite.IBCOsmosisChain = suite.coordinator.GetChain(ibcgotesting.GetChainID(2))
 	suite.IBCCosmosChain = suite.coordinator.GetChain(ibcgotesting.GetChainID(3))
-	suite.coordinator.CommitNBlocks(suite.EvmosChain, 2)
+	suite.coordinator.CommitNBlocks(suite.AkilaChain, 2)
 	suite.coordinator.CommitNBlocks(suite.IBCOsmosisChain, 2)
 	suite.coordinator.CommitNBlocks(suite.IBCCosmosChain, 2)
 
-	s.app = suite.EvmosChain.App.(*app.Evmos)
-	evmParams := s.app.EvmKeeper.GetParams(s.EvmosChain.GetContext())
+	s.app = suite.AkilaChain.App.(*app.Akila)
+	evmParams := s.app.EvmKeeper.GetParams(s.AkilaChain.GetContext())
 	evmParams.EvmDenom = utils.BaseDenom
-	err := s.app.EvmKeeper.SetParams(s.EvmosChain.GetContext(), evmParams)
+	err := s.app.EvmKeeper.SetParams(s.AkilaChain.GetContext(), evmParams)
 	suite.Require().NoError(err)
 
 	// s.app.FeeMarketKeeper.SetBaseFee(s.EvmosChain.GetContext(), big.NewInt(1))
 
 	// Set block proposer once, so its carried over on the ibc-go-testing suite
-	validators := s.app.StakingKeeper.GetValidators(suite.EvmosChain.GetContext(), 2)
+	validators := s.app.StakingKeeper.GetValidators(suite.AkilaChain.GetContext(), 2)
 	cons, err := validators[0].GetConsAddr()
 	suite.Require().NoError(err)
-	suite.EvmosChain.CurrentHeader.ProposerAddress = cons.Bytes()
+	suite.AkilaChain.CurrentHeader.ProposerAddress = cons.Bytes()
 
-	err = s.app.StakingKeeper.SetValidatorByConsAddr(suite.EvmosChain.GetContext(), validators[0])
+	err = s.app.StakingKeeper.SetValidatorByConsAddr(suite.AkilaChain.GetContext(), validators[0])
 	suite.Require().NoError(err)
 
-	_, err = s.app.EvmKeeper.GetCoinbaseAddress(suite.EvmosChain.GetContext(), sdk.ConsAddress(suite.EvmosChain.CurrentHeader.ProposerAddress))
+	_, err = s.app.EvmKeeper.GetCoinbaseAddress(suite.AkilaChain.GetContext(), sdk.ConsAddress(suite.AkilaChain.CurrentHeader.ProposerAddress))
 	suite.Require().NoError(err)
 	// Mint coins locked on the evmos account generated with secp.
 	amt, ok := sdkmath.NewIntFromString("1000000000000000000000")
 	suite.Require().True(ok)
-	coinEvmos := sdk.NewCoin(utils.BaseDenom, amt)
-	coins := sdk.NewCoins(coinEvmos)
-	err = s.app.BankKeeper.MintCoins(suite.EvmosChain.GetContext(), inflationtypes.ModuleName, coins)
+	coinAkila := sdk.NewCoin(utils.BaseDenom, amt)
+	coins := sdk.NewCoins(coinAkila)
+	err = s.app.BankKeeper.MintCoins(suite.AkilaChain.GetContext(), inflationtypes.ModuleName, coins)
 	suite.Require().NoError(err)
-	err = s.app.BankKeeper.SendCoinsFromModuleToAccount(suite.EvmosChain.GetContext(), inflationtypes.ModuleName, suite.EvmosChain.SenderAccount.GetAddress(), coins)
+	err = s.app.BankKeeper.SendCoinsFromModuleToAccount(suite.AkilaChain.GetContext(), inflationtypes.ModuleName, suite.AkilaChain.SenderAccount.GetAddress(), coins)
 	suite.Require().NoError(err)
 
 	// we need some coins in the bankkeeper to be able to register the coins later
 	coins = sdk.NewCoins(sdk.NewCoin(teststypes.UosmoIbcdenom, sdkmath.NewInt(100)))
-	err = s.app.BankKeeper.MintCoins(s.EvmosChain.GetContext(), types.ModuleName, coins)
+	err = s.app.BankKeeper.MintCoins(s.AkilaChain.GetContext(), types.ModuleName, coins)
 	s.Require().NoError(err)
 	coins = sdk.NewCoins(sdk.NewCoin(teststypes.UatomIbcdenom, sdkmath.NewInt(100)))
-	err = s.app.BankKeeper.MintCoins(s.EvmosChain.GetContext(), types.ModuleName, coins)
+	err = s.app.BankKeeper.MintCoins(s.AkilaChain.GetContext(), types.ModuleName, coins)
 	s.Require().NoError(err)
 
 	// Mint coins on the osmosis side which we'll use to unlock our aevmos
@@ -213,24 +213,24 @@ func (suite *KeeperTestSuite) SetupIBCTest() {
 
 	params := types.DefaultParams()
 	params.EnableErc20 = true
-	err = s.app.Erc20Keeper.SetParams(suite.EvmosChain.GetContext(), params)
+	err = s.app.Erc20Keeper.SetParams(suite.AkilaChain.GetContext(), params)
 	suite.Require().NoError(err)
 
-	suite.pathOsmosisEvmos = ibctesting.NewTransferPath(suite.IBCOsmosisChain, suite.EvmosChain) // clientID, connectionID, channelID empty
-	suite.pathCosmosEvmos = ibctesting.NewTransferPath(suite.IBCCosmosChain, suite.EvmosChain)
+	suite.pathOsmosisAkila = ibctesting.NewTransferPath(suite.IBCOsmosisChain, suite.AkilaChain) // clientID, connectionID, channelID empty
+	suite.pathCosmosAkila = ibctesting.NewTransferPath(suite.IBCCosmosChain, suite.AkilaChain)
 	suite.pathOsmosisCosmos = ibctesting.NewTransferPath(suite.IBCCosmosChain, suite.IBCOsmosisChain)
-	ibctesting.SetupPath(suite.coordinator, suite.pathOsmosisEvmos) // clientID, connectionID, channelID filled
-	ibctesting.SetupPath(suite.coordinator, suite.pathCosmosEvmos)
+	ibctesting.SetupPath(suite.coordinator, suite.pathOsmosisAkila) // clientID, connectionID, channelID filled
+	ibctesting.SetupPath(suite.coordinator, suite.pathCosmosAkila)
 	ibctesting.SetupPath(suite.coordinator, suite.pathOsmosisCosmos)
-	suite.Require().Equal("07-tendermint-0", suite.pathOsmosisEvmos.EndpointA.ClientID)
-	suite.Require().Equal("connection-0", suite.pathOsmosisEvmos.EndpointA.ConnectionID)
-	suite.Require().Equal("channel-0", suite.pathOsmosisEvmos.EndpointA.ChannelID)
+	suite.Require().Equal("07-tendermint-0", suite.pathOsmosisAkila.EndpointA.ClientID)
+	suite.Require().Equal("connection-0", suite.pathOsmosisAkila.EndpointA.ConnectionID)
+	suite.Require().Equal("channel-0", suite.pathOsmosisAkila.EndpointA.ChannelID)
 
-	coinEvmos = sdk.NewCoin(utils.BaseDenom, sdkmath.NewInt(1000000000000000000))
-	coins = sdk.NewCoins(coinEvmos)
-	err = s.app.BankKeeper.MintCoins(suite.EvmosChain.GetContext(), types.ModuleName, coins)
+	coinAkila = sdk.NewCoin(utils.BaseDenom, sdkmath.NewInt(1000000000000000000))
+	coins = sdk.NewCoins(coinAkila)
+	err = s.app.BankKeeper.MintCoins(suite.AkilaChain.GetContext(), types.ModuleName, coins)
 	suite.Require().NoError(err)
-	err = s.app.BankKeeper.SendCoinsFromModuleToModule(suite.EvmosChain.GetContext(), types.ModuleName, authtypes.FeeCollectorName, coins)
+	err = s.app.BankKeeper.SendCoinsFromModuleToModule(suite.AkilaChain.GetContext(), types.ModuleName, authtypes.FeeCollectorName, coins)
 	suite.Require().NoError(err)
 }
 
@@ -353,9 +353,9 @@ func (suite *KeeperTestSuite) DeployContractDirectBalanceManipulation() (common.
 // to the Evmos chain (used on IBC tests)
 func (suite *KeeperTestSuite) DeployContractToChain(name, symbol string, decimals uint8) (common.Address, error) {
 	return testutil.DeployContract(
-		s.EvmosChain.GetContext(),
-		s.EvmosChain.App.(*app.Evmos),
-		suite.EvmosChain.SenderPrivKey,
+		s.AkilaChain.GetContext(),
+		s.AkilaChain.App.(*app.Akila),
+		suite.AkilaChain.SenderPrivKey,
 		suite.queryClientEvm,
 		contracts.ERC20MinterBurnerDecimalsContract,
 		name, symbol, decimals,

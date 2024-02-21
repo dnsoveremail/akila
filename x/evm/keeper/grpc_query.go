@@ -29,7 +29,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/vm"
 	ethparams "github.com/ethereum/go-ethereum/params"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	"akila/x/evm/statedb"
 	"akila/x/evm/types"
 )
@@ -46,7 +46,7 @@ func (k Keeper) Account(c context.Context, req *types.QueryAccountRequest) (*typ
 		return nil, status.Error(codes.InvalidArgument, "empty request")
 	}
 
-	if err := evmostypes.ValidateAddress(req.Address); err != nil {
+	if err := akilatypes.ValidateAddress(req.Address); err != nil {
 		return nil, status.Error(
 			codes.InvalidArgument, err.Error(),
 		)
@@ -69,7 +69,7 @@ func (k Keeper) CosmosAccount(c context.Context, req *types.QueryCosmosAccountRe
 		return nil, status.Error(codes.InvalidArgument, "empty request")
 	}
 
-	if err := evmostypes.ValidateAddress(req.Address); err != nil {
+	if err := akilatypes.ValidateAddress(req.Address); err != nil {
 		return nil, status.Error(
 			codes.InvalidArgument, err.Error(),
 		)
@@ -134,7 +134,7 @@ func (k Keeper) Balance(c context.Context, req *types.QueryBalanceRequest) (*typ
 		return nil, status.Error(codes.InvalidArgument, "empty request")
 	}
 
-	if err := evmostypes.ValidateAddress(req.Address); err != nil {
+	if err := akilatypes.ValidateAddress(req.Address); err != nil {
 		return nil, status.Error(
 			codes.InvalidArgument,
 			types.ErrZeroAddress.Error(),
@@ -156,7 +156,7 @@ func (k Keeper) Storage(c context.Context, req *types.QueryStorageRequest) (*typ
 		return nil, status.Error(codes.InvalidArgument, "empty request")
 	}
 
-	if err := evmostypes.ValidateAddress(req.Address); err != nil {
+	if err := akilatypes.ValidateAddress(req.Address); err != nil {
 		return nil, status.Error(
 			codes.InvalidArgument,
 			types.ErrZeroAddress.Error(),
@@ -182,7 +182,7 @@ func (k Keeper) Code(c context.Context, req *types.QueryCodeRequest) (*types.Que
 		return nil, status.Error(codes.InvalidArgument, "empty request")
 	}
 
-	if err := evmostypes.ValidateAddress(req.Address); err != nil {
+	if err := akilatypes.ValidateAddress(req.Address); err != nil {
 		return nil, status.Error(
 			codes.InvalidArgument,
 			types.ErrZeroAddress.Error(),
@@ -372,7 +372,7 @@ func (k Keeper) EstimateGasInternal(c context.Context, req *types.EthCallRequest
 				return true, nil, err
 			}
 			// resetting the gasMeter after increasing the sequence to have an accurate gas estimation on EVM extensions transactions
-			gasMeter := evmostypes.NewInfiniteGasMeterWithLimit(msg.Gas())
+			gasMeter := akilatypes.NewInfiniteGasMeterWithLimit(msg.Gas())
 			tmpCtx = tmpCtx.WithGasMeter(gasMeter).
 				WithKVGasConfig(storetypes.GasConfig{}).
 				WithTransientKVGasConfig(storetypes.GasConfig{})
@@ -476,7 +476,7 @@ func (k Keeper) TraceTx(c context.Context, req *types.QueryTraceTxRequest) (*typ
 		txConfig.TxHash = ethTx.Hash()
 		txConfig.TxIndex = uint(i)
 		// reset gas meter for each transaction
-		ctx = ctx.WithGasMeter(evmostypes.NewInfiniteGasMeterWithLimit(msg.Gas())).
+		ctx = ctx.WithGasMeter(akilatypes.NewInfiniteGasMeterWithLimit(msg.Gas())).
 			WithKVGasConfig(storetypes.GasConfig{}).
 			WithTransientKVGasConfig(storetypes.GasConfig{})
 		rsp, err := k.ApplyMessageWithConfig(ctx, msg, types.NewNoOpTracer(), true, cfg, txConfig)
@@ -670,7 +670,7 @@ func (k *Keeper) traceTx(
 	// and not kvstore actions
 	// 3. Setup an empty transient KV gas config for transient gas to be
 	// calculated by opcodes
-	ctx = ctx.WithGasMeter(evmostypes.NewInfiniteGasMeterWithLimit(msg.Gas())).
+	ctx = ctx.WithGasMeter(akilatypes.NewInfiniteGasMeterWithLimit(msg.Gas())).
 		WithKVGasConfig(storetypes.GasConfig{}).
 		WithTransientKVGasConfig(storetypes.GasConfig{})
 	res, err := k.ApplyMessageWithConfig(ctx, msg, tracer, commitMessage, cfg, txConfig)
@@ -707,7 +707,7 @@ func (k Keeper) BaseFee(c context.Context, _ *types.QueryBaseFeeRequest) (*types
 // getChainID parse chainID from current context if not provided
 func getChainID(ctx sdk.Context, chainID int64) (*big.Int, error) {
 	if chainID == 0 {
-		return evmostypes.ParseChainID(ctx.ChainID())
+		return akilatypes.ParseChainID(ctx.ChainID())
 	}
 	return big.NewInt(chainID), nil
 }

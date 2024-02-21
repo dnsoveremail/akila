@@ -12,6 +12,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/testutil/mock"
 
+	epochstypes "akila/x/epochs/types"
+	infltypes "akila/x/inflation/v1/types"
 	sdkmath "cosmossdk.io/math"
 	dbm "github.com/cometbft/cometbft-db"
 	"github.com/cometbft/cometbft/libs/log"
@@ -23,8 +25,6 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	epochstypes "akila/x/epochs/types"
-	infltypes "akila/x/inflation/v1/types"
 )
 
 // createValidatorSetAndSigners creates validator set with the amount of validators specified
@@ -73,7 +73,7 @@ func createBalances(accounts []sdktypes.AccAddress, coin sdktypes.Coin) []bankty
 }
 
 // createEvmosApp creates an evmos app
-func createEvmosApp(chainID string) *app.Evmos {
+func createAkilaApp(chainID string) *app.Akila {
 	// Create evmos app
 	db := dbm.NewMemDB()
 	logger := log.NewNopLogger()
@@ -85,7 +85,7 @@ func createEvmosApp(chainID string) *app.Evmos {
 	appOptions := simutils.NewAppOptionsWithFlagHome(app.DefaultNodeHome)
 	baseAppOptions := []func(*baseapp.BaseApp){baseapp.SetChainID(chainID)}
 
-	return app.NewEvmos(
+	return app.NewAkila(
 		logger,
 		db,
 		nil,
@@ -163,30 +163,30 @@ type StakingCustomGenesisState struct {
 }
 
 // setStakingGenesisState sets the staking genesis state
-func setStakingGenesisState(evmosApp *app.Evmos, genesisState simapp.GenesisState, overwriteParams StakingCustomGenesisState) simapp.GenesisState {
+func setStakingGenesisState(akilaApp *app.Akila, genesisState simapp.GenesisState, overwriteParams StakingCustomGenesisState) simapp.GenesisState {
 	// Set staking params
 	stakingParams := stakingtypes.DefaultParams()
 	stakingParams.BondDenom = overwriteParams.denom
 
 	stakingGenesis := stakingtypes.NewGenesisState(stakingParams, overwriteParams.validators, overwriteParams.delegations)
-	genesisState[stakingtypes.ModuleName] = evmosApp.AppCodec().MustMarshalJSON(stakingGenesis)
+	genesisState[stakingtypes.ModuleName] = akilaApp.AppCodec().MustMarshalJSON(stakingGenesis)
 	return genesisState
 }
 
 // setAuthGenesisState sets the auth genesis state
-func setAuthGenesisState(evmosApp *app.Evmos, genesisState simapp.GenesisState, genAccounts []authtypes.GenesisAccount) simapp.GenesisState {
+func setAuthGenesisState(akilaApp *app.Akila, genesisState simapp.GenesisState, genAccounts []authtypes.GenesisAccount) simapp.GenesisState {
 	authGenesis := authtypes.NewGenesisState(authtypes.DefaultParams(), genAccounts)
-	genesisState[authtypes.ModuleName] = evmosApp.AppCodec().MustMarshalJSON(authGenesis)
+	genesisState[authtypes.ModuleName] = akilaApp.AppCodec().MustMarshalJSON(authGenesis)
 	return genesisState
 }
 
 // setInflationGenesisState sets the inflation genesis state
-func setInflationGenesisState(evmosApp *app.Evmos, genesisState simapp.GenesisState) simapp.GenesisState {
+func setInflationGenesisState(akilaApp *app.Akila, genesisState simapp.GenesisState) simapp.GenesisState {
 	inflationParams := infltypes.DefaultParams()
 	inflationParams.EnableInflation = false
 
 	inflationGenesis := infltypes.NewGenesisState(inflationParams, uint64(0), epochstypes.DayEpochID, 365, 0)
-	genesisState[infltypes.ModuleName] = evmosApp.AppCodec().MustMarshalJSON(&inflationGenesis)
+	genesisState[infltypes.ModuleName] = akilaApp.AppCodec().MustMarshalJSON(&inflationGenesis)
 	return genesisState
 }
 
@@ -196,7 +196,7 @@ type BankCustomGenesisState struct {
 }
 
 // setBankGenesisState sets the bank genesis state
-func setBankGenesisState(evmosApp *app.Evmos, genesisState simapp.GenesisState, overwriteParams BankCustomGenesisState) simapp.GenesisState {
+func setBankGenesisState(akilaApp *app.Akila, genesisState simapp.GenesisState, overwriteParams BankCustomGenesisState) simapp.GenesisState {
 	bankGenesis := banktypes.NewGenesisState(
 		banktypes.DefaultGenesisState().Params,
 		overwriteParams.balances,
@@ -204,7 +204,7 @@ func setBankGenesisState(evmosApp *app.Evmos, genesisState simapp.GenesisState, 
 		[]banktypes.Metadata{},
 		[]banktypes.SendEnabled{},
 	)
-	genesisState[banktypes.ModuleName] = evmosApp.AppCodec().MustMarshalJSON(bankGenesis)
+	genesisState[banktypes.ModuleName] = akilaApp.AppCodec().MustMarshalJSON(bankGenesis)
 	return genesisState
 }
 

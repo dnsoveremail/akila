@@ -8,6 +8,12 @@ import (
 
 	"akila/utils"
 
+	cmn "akila/precompiles/common"
+	"akila/precompiles/distribution"
+	"akila/precompiles/testutil"
+	"akila/precompiles/testutil/contracts"
+	akilautil "akila/testutil"
+	testutiltx "akila/testutil/tx"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
@@ -15,12 +21,6 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/distribution"
-	"akila/precompiles/testutil"
-	"akila/precompiles/testutil/contracts"
-	evmosutil "akila/testutil"
-	testutiltx "akila/testutil/tx"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
@@ -313,7 +313,7 @@ var _ = Describe("Calling distribution precompile from EOA", func() {
 		It("should get validator distribution info - validatorDistributionInfo query", func() {
 			addr := sdk.AccAddress(s.validators[0].GetOperator())
 			// fund validator account to make self-delegation
-			err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, addr, 10)
+			err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, addr, 10)
 			Expect(err).To(BeNil())
 			// make a self delegation
 			_, err = s.app.StakingKeeper.Delegate(s.ctx, addr, math.NewInt(1), stakingtypes.Unspecified, s.validators[0], true)
@@ -1045,7 +1045,7 @@ var _ = Describe("Calling distribution precompile from another contract", func()
 			BeforeEach(func() {
 				addr := sdk.AccAddress(s.validators[0].GetOperator())
 				// fund validator account to make self-delegation
-				err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, addr, 10)
+				err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, addr, 10)
 				Expect(err).To(BeNil())
 				// make a self delegation
 				_, err = s.app.StakingKeeper.Delegate(s.ctx, addr, math.NewInt(1), stakingtypes.Unspecified, s.validators[0], true)

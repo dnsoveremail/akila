@@ -12,13 +12,6 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
-	"cosmossdk.io/math"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/query"
-	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/vm"
 	compiledcontracts "akila/contracts"
 	"akila/precompiles/authorization"
 	cmn "akila/precompiles/common"
@@ -27,8 +20,15 @@ import (
 	"akila/precompiles/staking/testdata"
 	"akila/precompiles/testutil"
 	"akila/precompiles/testutil/contracts"
-	evmosutil "akila/testutil"
+	akilautil "akila/testutil"
 	testutiltx "akila/testutil/tx"
+	"cosmossdk.io/math"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/query"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/vm"
 )
 
 // General variables used for integration tests
@@ -378,7 +378,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 
 			// set up an approval with a different key than the one used to sign the transaction.
 			differentAddr, differentPriv := testutiltx.NewAddrKey()
-			err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, differentAddr.Bytes(), 1e18)
+			err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, differentAddr.Bytes(), 1e18)
 			Expect(err).To(BeNil(), "error while funding account")
 
 			s.NextBlock()
@@ -1619,7 +1619,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 
 			It("should not delegate when sending from a different address", func() {
 				newAddr, newPriv := testutiltx.NewAccAddressAndKey()
-				err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
+				err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
 				Expect(err).To(BeNil(), "error while funding account: %v", err)
 
 				s.NextBlock()
@@ -1747,7 +1747,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 
 			It("should not undelegate when called from a different address", func() {
 				newAddr, newPriv := testutiltx.NewAccAddressAndKey()
-				err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
+				err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
 				Expect(err).To(BeNil(), "error while funding account: %v", err)
 
 				s.NextBlock()
@@ -1851,7 +1851,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 
 			It("should not redelegate when calling from a different address", func() {
 				newAddr, newPriv := testutiltx.NewAccAddressAndKey()
-				err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
+				err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
 				Expect(err).To(BeNil(), "error while funding account: %v", err)
 
 				s.NextBlock()
@@ -1996,7 +1996,7 @@ var _ = Describe("Calling staking precompile via Solidity", func() {
 
 			It("should not cancel unbonding delegations when calling from a different address", func() {
 				newAddr, newPriv := testutiltx.NewAccAddressAndKey()
-				err := evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
+				err := akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, newAddr, 1e18)
 				Expect(err).To(BeNil(), "error while funding account: %v", err)
 
 				s.NextBlock()
@@ -2719,11 +2719,11 @@ var _ = Describe("Batching cosmos and eth interactions", func() {
 		s.NextBlock()
 
 		// Deploy StakingCaller contract
-		contractAddr, err = evmosutil.DeployContract(s.ctx, s.app, s.privKey, s.queryClientEVM, testdata.StakingCallerContract)
+		contractAddr, err = akilautil.DeployContract(s.ctx, s.app, s.privKey, s.queryClientEVM, testdata.StakingCallerContract)
 		Expect(err).To(BeNil(), "error while deploying the StakingCaller contract")
 
 		// Deploy ERC20 contract
-		erc20ContractAddr, err = evmosutil.DeployContract(s.ctx, s.app, s.privKey, s.queryClientEVM, erc20Contract,
+		erc20ContractAddr, err = akilautil.DeployContract(s.ctx, s.app, s.privKey, s.queryClientEVM, erc20Contract,
 			erc20Name, erc20Token, erc20Decimals,
 		)
 		Expect(err).To(BeNil(), "error while deploying the ERC20 contract")

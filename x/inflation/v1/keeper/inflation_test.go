@@ -3,12 +3,12 @@ package keeper_test
 import (
 	"fmt"
 
+	akilatypes "akila/types"
+	inflationkeeper "akila/x/inflation/v1/keeper"
+	"akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	evmostypes "akila/types"
-	inflationkeeper "akila/x/inflation/v1/keeper"
-	"akila/x/inflation/v1/types"
 )
 
 func (suite *KeeperTestSuite) TestMintAndAllocateInflation() {
@@ -76,7 +76,7 @@ func (suite *KeeperTestSuite) TestMintAndAllocateInflation() {
 func (suite *KeeperTestSuite) TestGetCirculatingSupplyAndInflationRate() {
 	// the total bonded tokens for the 2 accounts initialized on the setup
 	bondedAmt := math.NewInt(1000100000000000000)
-	bondedCoins := sdk.NewDecCoin(evmostypes.AttoEvmos, bondedAmt)
+	bondedCoins := sdk.NewDecCoin(akilatypes.AttoAkila, bondedAmt)
 
 	testCases := []struct {
 		name             string
@@ -86,7 +86,7 @@ func (suite *KeeperTestSuite) TestGetCirculatingSupplyAndInflationRate() {
 	}{
 		{
 			"no epochs per period",
-			sdk.TokensFromConsensusPower(400_000_000, evmostypes.PowerReduction).Sub(bondedAmt),
+			sdk.TokensFromConsensusPower(400_000_000, akilatypes.PowerReduction).Sub(bondedAmt),
 			func() {
 				suite.app.InflationKeeper.SetEpochsPerPeriod(suite.ctx, 0)
 			},
@@ -94,19 +94,19 @@ func (suite *KeeperTestSuite) TestGetCirculatingSupplyAndInflationRate() {
 		},
 		{
 			"high supply",
-			sdk.TokensFromConsensusPower(800_000_000, evmostypes.PowerReduction).Sub(bondedAmt),
+			sdk.TokensFromConsensusPower(800_000_000, akilatypes.PowerReduction).Sub(bondedAmt),
 			func() {},
 			math.LegacyMustNewDecFromStr("51.562500000000000000").Quo(math.LegacyNewDec(inflationkeeper.ReductionFactor)),
 		},
 		{
 			"low supply",
-			sdk.TokensFromConsensusPower(400_000_000, evmostypes.PowerReduction).Sub(bondedAmt),
+			sdk.TokensFromConsensusPower(400_000_000, akilatypes.PowerReduction).Sub(bondedAmt),
 			func() {},
 			math.LegacyMustNewDecFromStr("154.687500000000000000").Quo(math.LegacyNewDec(inflationkeeper.ReductionFactor)),
 		},
 		{
 			"zero circulating supply",
-			sdk.TokensFromConsensusPower(200_000_000, evmostypes.PowerReduction).Sub(bondedAmt),
+			sdk.TokensFromConsensusPower(200_000_000, akilatypes.PowerReduction).Sub(bondedAmt),
 			func() {},
 			math.LegacyZeroDec(),
 		},
@@ -130,7 +130,7 @@ func (suite *KeeperTestSuite) TestGetCirculatingSupplyAndInflationRate() {
 
 			teamAlloc := sdk.NewDecCoin(
 				types.DefaultInflationDenom,
-				sdk.TokensFromConsensusPower(int64(200_000_000), evmostypes.PowerReduction),
+				sdk.TokensFromConsensusPower(int64(200_000_000), akilatypes.PowerReduction),
 			)
 
 			circulatingSupply := s.app.InflationKeeper.GetCirculatingSupply(suite.ctx, types.DefaultInflationDenom)

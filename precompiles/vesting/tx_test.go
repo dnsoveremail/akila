@@ -7,27 +7,27 @@ import (
 	"math/big"
 	"time"
 
+	"akila/precompiles/testutil"
 	"cosmossdk.io/math"
 	"github.com/ethereum/go-ethereum/core/vm"
-	"akila/precompiles/testutil"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/vesting"
-	evmosutil "akila/testutil"
-	evmosutiltx "akila/testutil/tx"
-	evmostypes "akila/types"
+	akilautil "akila/testutil"
+	akilautiltx "akila/testutil/tx"
+	akilatypes "akila/types"
 	"akila/utils"
 	vestingtypes "akila/x/vesting/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 var (
 	balances         = []cmn.Coin{{Denom: utils.BaseDenom, Amount: big.NewInt(1000)}}
 	quarter          = []cmn.Coin{{Denom: utils.BaseDenom, Amount: big.NewInt(250)}}
 	balancesSdkCoins = sdk.NewCoins(sdk.NewInt64Coin(utils.BaseDenom, 1000))
-	toAddr           = evmosutiltx.GenerateAddress()
-	funderAddr       = evmosutiltx.GenerateAddress()
-	diffFunderAddr   = evmosutiltx.GenerateAddress()
+	toAddr           = akilautiltx.GenerateAddress()
+	funderAddr       = akilautiltx.GenerateAddress()
+	diffFunderAddr   = akilautiltx.GenerateAddress()
 	lockupPeriods    = []vesting.Period{{Length: 5000, Amount: balances}}
 	vestingPeriods   = []vesting.Period{
 		{Length: 2000, Amount: quarter},
@@ -61,7 +61,7 @@ func (s *PrecompileTestSuite) TestCreateClawbackVestingAccount() {
 		{
 			name: "fail - different origin than vesting address",
 			malleate: func() []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					funderAddr,
 					differentAddr,
@@ -137,7 +137,7 @@ func (s *PrecompileTestSuite) TestFundVestingAccount() {
 		{
 			name: "fail - different origin than funder address",
 			malleate: func() []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					toAddr,
@@ -154,7 +154,7 @@ func (s *PrecompileTestSuite) TestFundVestingAccount() {
 			"success",
 			func() []interface{} {
 				s.CreateTestClawbackVestingAccount(s.address, toAddr)
-				err = evmosutil.FundAccount(s.ctx, s.app.BankKeeper, toAddr.Bytes(), sdk.NewCoins(sdk.NewCoin(utils.BaseDenom, math.NewInt(100))))
+				err = akilautil.FundAccount(s.ctx, s.app.BankKeeper, toAddr.Bytes(), sdk.NewCoins(sdk.NewCoin(utils.BaseDenom, math.NewInt(100))))
 				return []interface{}{
 					s.address,
 					toAddr,
@@ -224,7 +224,7 @@ func (s *PrecompileTestSuite) TestClawback() {
 		{
 			name: "fail - different origin than funder address",
 			malleate: func() []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					toAddr,
@@ -302,7 +302,7 @@ func (s *PrecompileTestSuite) TestUpdateVestingFunder() {
 		{
 			name: "fail - different origin than funder address",
 			malleate: func() []interface{} {
-				differentAddr := evmosutiltx.GenerateAddress()
+				differentAddr := akilautiltx.GenerateAddress()
 				return []interface{}{
 					differentAddr,
 					toAddr,
@@ -413,7 +413,7 @@ func (s *PrecompileTestSuite) TestConvertVestingAccount() {
 
 				// Check if the vesting account was converted back to an EthAccountI
 				account := s.app.AccountKeeper.GetAccount(s.ctx, toAddr.Bytes())
-				_, ok := account.(evmostypes.EthAccountI)
+				_, ok := account.(akilatypes.EthAccountI)
 				s.Require().True(ok)
 			},
 			false,

@@ -5,16 +5,16 @@ package vesting_test
 import (
 	"testing"
 
+	akilaapp "akila/app"
+	"akila/precompiles/vesting"
+	"akila/x/evm/statedb"
+	evmtypes "akila/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmosapp "akila/app"
-	"akila/precompiles/vesting"
-	"akila/x/evm/statedb"
-	evmtypes "akila/x/evm/types"
 	"github.com/stretchr/testify/suite"
 
 	//nolint:revive // dot imports are fine for Ginkgo
@@ -29,7 +29,7 @@ type PrecompileTestSuite struct {
 	suite.Suite
 
 	ctx        sdk.Context
-	app        *evmosapp.Evmos
+	app        *akilaapp.Akila
 	address    common.Address
 	validators []stakingtypes.Validator
 	ethSigner  ethtypes.Signer

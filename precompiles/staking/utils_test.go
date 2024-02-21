@@ -8,6 +8,19 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
+	akilaapp "akila/app"
+	"akila/precompiles/authorization"
+	cmn "akila/precompiles/common"
+	"akila/precompiles/staking"
+	"akila/precompiles/testutil"
+	"akila/precompiles/testutil/contracts"
+	akilautil "akila/testutil"
+	testutiltx "akila/testutil/tx"
+	akilatypes "akila/types"
+	"akila/utils"
+	"akila/x/evm/statedb"
+	evmtypes "akila/x/evm/types"
+	inflationtypes "akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/crypto/tmhash"
@@ -25,19 +38,6 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmosapp "akila/app"
-	"akila/precompiles/authorization"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/staking"
-	"akila/precompiles/testutil"
-	"akila/precompiles/testutil/contracts"
-	evmosutil "akila/testutil"
-	testutiltx "akila/testutil/tx"
-	evmostypes "akila/types"
-	"akila/utils"
-	"akila/x/evm/statedb"
-	evmtypes "akila/x/evm/types"
-	inflationtypes "akila/x/inflation/v1/types"
 	"golang.org/x/exp/slices"
 )
 
@@ -46,8 +46,8 @@ import (
 // of one consensus engine unit (10^6) in the default token of the simapp from first genesis
 // account. A Nop logger is set in SimApp.
 func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, balances ...banktypes.Balance) {
-	appI, genesisState := evmosapp.SetupTestingApp(cmn.DefaultChainID)()
-	app, ok := appI.(*evmosapp.Evmos)
+	appI, genesisState := akilaapp.SetupTestingApp(cmn.DefaultChainID)()
+	app, ok := appI.(*akilaapp.Akila)
 	s.Require().True(ok)
 
 	// set genesis accounts
@@ -57,7 +57,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	validators := make([]stakingtypes.Validator, 0, len(valSet.Validators))
 	delegations := make([]stakingtypes.Delegation, 0, len(valSet.Validators))
 
-	bondAmt := sdk.TokensFromConsensusPower(1, evmostypes.PowerReduction)
+	bondAmt := sdk.TokensFromConsensusPower(1, akilatypes.PowerReduction)
 
 	for _, val := range valSet.Validators {
 		pk, err := cryptocodec.FromTmPubKeyInterface(val.PubKey)
@@ -112,7 +112,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	stateBytes, err := json.MarshalIndent(genesisState, "", " ")
 	s.Require().NoError(err)
 
-	header := evmosutil.NewHeader(
+	header := akilautil.NewHeader(
 		2,
 		time.Now().UTC(),
 		cmn.DefaultChainID,
@@ -126,7 +126,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 		abci.RequestInitChain{
 			ChainId:         cmn.DefaultChainID,
 			Validators:      []abci.ValidatorUpdate{},
-			ConsensusParams: evmosapp.DefaultConsensusParams,
+			ConsensusParams: akilaapp.DefaultConsensusParams,
 			AppStateBytes:   stateBytes,
 		},
 	)
@@ -165,12 +165,12 @@ func (s *PrecompileTestSuite) DoSetupTest() {
 
 	baseAcc := authtypes.NewBaseAccount(priv.PubKey().Address().Bytes(), priv.PubKey(), 0, 0)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: baseAcc,
 		CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 	}
 
-	amount := sdk.TokensFromConsensusPower(5, evmostypes.PowerReduction)
+	amount := sdk.TokensFromConsensusPower(5, akilatypes.PowerReduction)
 
 	balance := banktypes.Balance{
 		Address: acc.GetAddress().String(),
@@ -351,7 +351,7 @@ func (s *PrecompileTestSuite) SetupApprovalWithContractCalls(approvalArgs contra
 
 // DeployContract deploys a contract that calls the staking precompile's methods for testing purposes.
 func (s *PrecompileTestSuite) DeployContract(contract evmtypes.CompiledContract) (addr common.Address, err error) {
-	addr, err = evmosutil.DeployContract(
+	addr, err = akilautil.DeployContract(
 		s.ctx,
 		s.app,
 		s.privKey,
@@ -364,7 +364,7 @@ func (s *PrecompileTestSuite) DeployContract(contract evmtypes.CompiledContract)
 // NextBlock commits the current block and sets up the next block.
 func (s *PrecompileTestSuite) NextBlock() {
 	var err error
-	s.ctx, err = evmosutil.CommitAndCreateNewCtx(s.ctx, s.app, time.Second, nil)
+	s.ctx, err = akilautil.CommitAndCreateNewCtx(s.ctx, s.app, time.Second, nil)
 	Expect(err).To(BeNil(), "failed to commit block")
 }
 

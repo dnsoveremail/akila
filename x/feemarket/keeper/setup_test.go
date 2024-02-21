@@ -8,15 +8,15 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
+	"akila/app"
+	"akila/utils"
+	"akila/x/feemarket/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"akila/app"
-	"akila/utils"
-	"akila/x/feemarket/types"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -24,7 +24,7 @@ type KeeperTestSuite struct {
 	suite.Suite
 
 	ctx         sdk.Context
-	app         *app.Evmos
+	app         *app.Akila
 	queryClient types.QueryClient
 	address     common.Address
 	consAddress sdk.ConsAddress

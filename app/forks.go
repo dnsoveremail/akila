@@ -15,7 +15,7 @@ import (
 //
 //  1. Release a non-breaking patch version so that the chain can set the scheduled upgrade plan at upgrade-height.
 //  2. Release the software defined in the upgrade-info
-func (app *Evmos) ScheduleForkUpgrade(_ sdk.Context) {
+func (app *Akila) ScheduleForkUpgrade(_ sdk.Context) {
 	// NOTE: there are no scheduled forks at the moment
 
 	// upgradePlan := upgradetypes.Plan{

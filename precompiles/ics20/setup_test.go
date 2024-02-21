@@ -6,6 +6,11 @@ import (
 	"testing"
 	"time"
 
+	akilaapp "akila/app"
+	akilaibc "akila/ibc/testing"
+	"akila/precompiles/ics20"
+	"akila/x/evm/statedb"
+	evmtypes "akila/x/evm/types"
 	tmtypes "github.com/cometbft/cometbft/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -14,11 +19,6 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v7/testing"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	evmosapp "akila/app"
-	evmosibc "akila/ibc/testing"
-	"akila/precompiles/ics20"
-	"akila/x/evm/statedb"
-	evmtypes "akila/x/evm/types"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
@@ -34,7 +34,7 @@ type PrecompileTestSuite struct {
 	suite.Suite
 
 	ctx           sdk.Context
-	app           *evmosapp.Evmos
+	app           *akilaapp.Akila
 	address       common.Address
 	differentAddr common.Address
 	validators    []stakingtypes.Validator
@@ -50,7 +50,7 @@ type PrecompileTestSuite struct {
 	coordinator    *ibctesting.Coordinator
 	chainA         *ibctesting.TestChain
 	chainB         *ibctesting.TestChain
-	transferPath   *evmosibc.Path
+	transferPath   *akilaibc.Path
 	queryClientEVM evmtypes.QueryClient
 
 	defaultExpirationDuration time.Time

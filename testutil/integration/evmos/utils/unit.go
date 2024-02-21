@@ -8,15 +8,15 @@ package utils
 import (
 	"fmt"
 
-	"cosmossdk.io/math"
 	"akila/utils"
+	"cosmossdk.io/math"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 	"akila/testutil/integration/evmos/network"
 	erc20types "akila/x/erc20/types"
 	inflationtypes "akila/x/inflation/v1/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 )
 
 const (
@@ -27,7 +27,7 @@ const (
 // ERC20 token. The function performs all the required steps for the registration
 // like registering the denom trace in the transfer keeper and minting the token
 // with the bank. Returns the TokenPair or an error.
-func RegisterEvmosERC20Coins(
+func RegisterAkilaERC20Coins(
 	network network.UnitTestNetwork,
 	tokenReceiver sdk.AccAddress,
 ) (erc20types.TokenPair, error) {
@@ -52,18 +52,18 @@ func RegisterEvmosERC20Coins(
 		return erc20types.TokenPair{}, err
 	}
 
-	evmosMetadata, found := network.App.BankKeeper.GetDenomMetaData(network.GetContext(), utils.BaseDenom)
+	akilaMetadata, found := network.App.BankKeeper.GetDenomMetaData(network.GetContext(), utils.BaseDenom)
 	if !found {
 		return erc20types.TokenPair{}, fmt.Errorf("expected evmos denom metadata")
 	}
 
-	_, err = network.App.Erc20Keeper.RegisterCoin(network.GetContext(), evmosMetadata)
+	_, err = network.App.Erc20Keeper.RegisterCoin(network.GetContext(), akilaMetadata)
 	if err != nil {
 		return erc20types.TokenPair{}, err
 	}
 
-	evmosDenomID := network.App.Erc20Keeper.GetDenomMap(network.GetContext(), bondDenom)
-	tokenPair, ok := network.App.Erc20Keeper.GetTokenPair(network.GetContext(), evmosDenomID)
+	akilaDenomID := network.App.Erc20Keeper.GetDenomMap(network.GetContext(), bondDenom)
+	tokenPair, ok := network.App.Erc20Keeper.GetTokenPair(network.GetContext(), akilaDenomID)
 	if !ok {
 		return erc20types.TokenPair{}, fmt.Errorf("expected evmos erc20 token pair")
 	}

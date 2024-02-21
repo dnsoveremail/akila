@@ -8,14 +8,14 @@ import (
 
 	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 
-	"cosmossdk.io/math"
 	"akila/utils"
+	"cosmossdk.io/math"
 
+	"akila/precompiles/ics20"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	"akila/precompiles/ics20"
 )
 
 const (
@@ -61,8 +61,8 @@ func (p Precompile) LiquidStake(
 	}
 
 	// WEVMOS address is the only supported token for liquid staking
-	if token != p.wevmosAddress {
-		return nil, fmt.Errorf(ErrUnsupportedToken, token, p.wevmosAddress)
+	if token != p.wakilaAddress {
+		return nil, fmt.Errorf(ErrUnsupportedToken, token, p.wakilaAddress)
 	}
 
 	bondDenom := p.stakingKeeper.BondDenom(ctx)

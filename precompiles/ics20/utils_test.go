@@ -7,6 +7,23 @@ import (
 	"math/big"
 	"time"
 
+	akilaapp "akila/app"
+	akilacontracts "akila/contracts"
+	akilaibc "akila/ibc/testing"
+	"akila/precompiles/authorization"
+	cmn "akila/precompiles/common"
+	"akila/precompiles/erc20"
+	"akila/precompiles/ics20"
+	"akila/precompiles/testutil"
+	"akila/precompiles/testutil/contracts"
+	akilautil "akila/testutil"
+	akilautiltx "akila/testutil/tx"
+	akilatypes "akila/types"
+	"akila/utils"
+	"akila/x/evm/statedb"
+	evmtypes "akila/x/evm/types"
+	feemarkettypes "akila/x/feemarket/types"
+	inflationtypes "akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/crypto/tmhash"
@@ -30,23 +47,6 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	evmosapp "akila/app"
-	evmoscontracts "akila/contracts"
-	evmosibc "akila/ibc/testing"
-	"akila/precompiles/authorization"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/erc20"
-	"akila/precompiles/ics20"
-	"akila/precompiles/testutil"
-	"akila/precompiles/testutil/contracts"
-	evmosutil "akila/testutil"
-	evmosutiltx "akila/testutil/tx"
-	evmostypes "akila/types"
-	"akila/utils"
-	"akila/x/evm/statedb"
-	evmtypes "akila/x/evm/types"
-	feemarkettypes "akila/x/feemarket/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
@@ -80,8 +80,8 @@ var (
 // of one consensus engine unit (10^6) in the default token of the simapp from first genesis
 // account. A Nop logger is set in SimApp.
 func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, balances ...banktypes.Balance) {
-	appI, genesisState := evmosapp.SetupTestingApp(cmn.DefaultChainID)()
-	app, ok := appI.(*evmosapp.Evmos)
+	appI, genesisState := akilaapp.SetupTestingApp(cmn.DefaultChainID)()
+	app, ok := appI.(*akilaapp.Akila)
 	s.Require().True(ok)
 
 	// set genesis accounts
@@ -91,7 +91,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	validators := make([]stakingtypes.Validator, 0, len(valSet.Validators))
 	delegations := make([]stakingtypes.Delegation, 0, len(valSet.Validators))
 
-	bondAmt := sdk.TokensFromConsensusPower(1, evmostypes.PowerReduction)
+	bondAmt := sdk.TokensFromConsensusPower(1, akilatypes.PowerReduction)
 
 	for _, val := range valSet.Validators {
 		pk, err := cryptocodec.FromTmPubKeyInterface(val.PubKey)
@@ -151,7 +151,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 		abci.RequestInitChain{
 			ChainId:         cmn.DefaultChainID,
 			Validators:      []abci.ValidatorUpdate{},
-			ConsensusParams: evmosapp.DefaultConsensusParams,
+			ConsensusParams: akilaapp.DefaultConsensusParams,
 			AppStateBytes:   stateBytes,
 		},
 	)
@@ -160,7 +160,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 	app.Commit()
 
 	// instantiate new header
-	header := evmosutil.NewHeader(
+	header := akilautil.NewHeader(
 		2,
 		time.Now().UTC(),
 		cmn.DefaultChainID,
@@ -224,21 +224,21 @@ func (s *PrecompileTestSuite) DoSetupTest() {
 
 func (s *PrecompileTestSuite) NewTestChainWithValSet(coord *ibctesting.Coordinator, valSet *tmtypes.ValidatorSet, signers map[string]tmtypes.PrivValidator) *ibctesting.TestChain {
 	// generate genesis account
-	addr, priv := evmosutiltx.NewAddrKey()
+	addr, priv := akilautiltx.NewAddrKey()
 	s.privKey = priv
 	s.address = addr
 	// differentAddr is an address generated for testing purposes that e.g. raises the different origin error
-	s.differentAddr = evmosutiltx.GenerateAddress()
-	s.signer = evmosutiltx.NewSigner(priv)
+	s.differentAddr = akilautiltx.GenerateAddress()
+	s.signer = akilautiltx.NewSigner(priv)
 
 	baseAcc := authtypes.NewBaseAccount(priv.PubKey().Address().Bytes(), priv.PubKey(), 0, 0)
 
-	acc := &evmostypes.EthAccount{
+	acc := &akilatypes.EthAccount{
 		BaseAccount: baseAcc,
 		CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 	}
 
-	amount := sdk.TokensFromConsensusPower(5, evmostypes.PowerReduction)
+	amount := sdk.TokensFromConsensusPower(5, akilatypes.PowerReduction)
 
 	balance := banktypes.Balance{
 		Address: acc.GetAddress().String(),
@@ -316,7 +316,7 @@ func (s *PrecompileTestSuite) NewPrecompileContract(gas uint64) *vm.Contract {
 }
 
 // NewTransferAuthorizationWithAllocations creates a new allocation for the given grantee and granter and the given coins
-func (s *PrecompileTestSuite) NewTransferAuthorizationWithAllocations(ctx sdk.Context, app *evmosapp.Evmos, grantee, granter common.Address, allocations []transfertypes.Allocation) error {
+func (s *PrecompileTestSuite) NewTransferAuthorizationWithAllocations(ctx sdk.Context, app *akilaapp.Akila, grantee, granter common.Address, allocations []transfertypes.Allocation) error {
 	transferAuthz := &transfertypes.TransferAuthorization{Allocations: allocations}
 	if err := transferAuthz.ValidateBasic(); err != nil {
 		return err
@@ -327,7 +327,7 @@ func (s *PrecompileTestSuite) NewTransferAuthorizationWithAllocations(ctx sdk.Co
 }
 
 // NewTransferAuthorization creates a new transfer authorization for the given grantee and granter and the given coins
-func (s *PrecompileTestSuite) NewTransferAuthorization(ctx sdk.Context, app *evmosapp.Evmos, grantee, granter common.Address, path *ibctesting.Path, coins sdk.Coins, allowList []string) error {
+func (s *PrecompileTestSuite) NewTransferAuthorization(ctx sdk.Context, app *akilaapp.Akila, grantee, granter common.Address, path *ibctesting.Path, coins sdk.Coins, allowList []string) error {
 	allocations := []transfertypes.Allocation{
 		{
 			SourcePort:    path.EndpointA.ChannelConfig.PortID,
@@ -398,7 +398,7 @@ func (s *PrecompileTestSuite) setupIBCTest() {
 	s.coordinator.CommitNBlocks(s.chainA, 2)
 	s.coordinator.CommitNBlocks(s.chainB, 2)
 
-	s.app = s.chainA.App.(*evmosapp.Evmos)
+	s.app = s.chainA.App.(*akilaapp.Akila)
 	evmParams := s.app.EvmKeeper.GetParams(s.chainA.GetContext())
 	evmParams.EvmDenom = utils.BaseDenom
 	err := s.app.EvmKeeper.SetParams(s.chainA.GetContext(), evmParams)
@@ -419,15 +419,15 @@ func (s *PrecompileTestSuite) setupIBCTest() {
 	// Mint coins locked on the evmos account generated with secp.
 	amt, ok := math.NewIntFromString("1000000000000000000000")
 	s.Require().True(ok)
-	coinEvmos := sdk.NewCoin(utils.BaseDenom, amt)
-	coins := sdk.NewCoins(coinEvmos)
+	coinAkila := sdk.NewCoin(utils.BaseDenom, amt)
+	coins := sdk.NewCoins(coinAkila)
 	err = s.app.BankKeeper.MintCoins(s.chainA.GetContext(), inflationtypes.ModuleName, coins)
 	s.Require().NoError(err)
 	err = s.app.BankKeeper.SendCoinsFromModuleToAccount(s.chainA.GetContext(), inflationtypes.ModuleName, s.chainA.SenderAccount.GetAddress(), coins)
 	s.Require().NoError(err)
 
-	s.transferPath = evmosibc.NewTransferPath(s.chainA, s.chainB) // clientID, connectionID, channelID empty
-	evmosibc.SetupPath(s.coordinator, s.transferPath)             // clientID, connectionID, channelID filled
+	s.transferPath = akilaibc.NewTransferPath(s.chainA, s.chainB) // clientID, connectionID, channelID empty
+	akilaibc.SetupPath(s.coordinator, s.transferPath)             // clientID, connectionID, channelID filled
 	s.Require().Equal("07-tendermint-0", s.transferPath.EndpointA.ClientID)
 	s.Require().Equal("connection-0", s.transferPath.EndpointA.ConnectionID)
 	s.Require().Equal("channel-0", s.transferPath.EndpointA.ChannelID)
@@ -506,16 +506,16 @@ func (s *PrecompileTestSuite) setupAllocationsForTesting() {
 // compiled contract data and constructor arguments
 func DeployContract(
 	ctx sdk.Context,
-	evmosApp *evmosapp.Evmos,
+	akilaApp *akilaapp.Akila,
 	priv cryptotypes.PrivKey,
 	gasPrice *big.Int,
 	queryClientEvm evmtypes.QueryClient,
 	contract evmtypes.CompiledContract,
 	constructorArgs ...interface{},
 ) (common.Address, error) {
-	chainID := evmosApp.EvmKeeper.ChainID()
+	chainID := akilaApp.EvmKeeper.ChainID()
 	from := common.BytesToAddress(priv.PubKey().Address().Bytes())
-	nonce := evmosApp.EvmKeeper.GetNonce(ctx, from)
+	nonce := akilaApp.EvmKeeper.GetNonce(ctx, from)
 
 	ctorArgs, err := contract.ABI.Pack("", constructorArgs...)
 	if err != nil {
@@ -523,7 +523,7 @@ func DeployContract(
 	}
 
 	data := append(contract.Bin, ctorArgs...) //nolint:gocritic
-	gas, err := evmosutiltx.GasLimit(ctx, from, data, queryClientEvm)
+	gas, err := akilautiltx.GasLimit(ctx, from, data, queryClientEvm)
 	if err != nil {
 		return common.Address{}, err
 	}
@@ -532,7 +532,7 @@ func DeployContract(
 		ChainID:   chainID,
 		Nonce:     nonce,
 		GasLimit:  gas,
-		GasFeeCap: evmosApp.FeeMarketKeeper.GetBaseFee(ctx),
+		GasFeeCap: akilaApp.FeeMarketKeeper.GetBaseFee(ctx),
 		GasTipCap: big.NewInt(1),
 		GasPrice:  gasPrice,
 		Input:     data,
@@ -540,12 +540,12 @@ func DeployContract(
 	})
 	msgEthereumTx.From = from.String()
 
-	res, err := evmosutil.DeliverEthTx(evmosApp, priv, msgEthereumTx)
+	res, err := akilautil.DeliverEthTx(akilaApp, priv, msgEthereumTx)
 	if err != nil {
 		return common.Address{}, err
 	}
 
-	if _, err := evmosutil.CheckEthTxResponse(res, evmosApp.AppCodec()); err != nil {
+	if _, err := akilautil.CheckEthTxResponse(res, akilaApp.AppCodec()); err != nil {
 		return common.Address{}, err
 	}
 
@@ -560,7 +560,7 @@ func (s *PrecompileTestSuite) DeployERC20Contract(chain *ibctesting.TestChain, n
 		s.privKey,
 		gasPrice,
 		s.queryClientEVM,
-		evmoscontracts.ERC20MinterBurnerDecimalsContract,
+		akilacontracts.ERC20MinterBurnerDecimalsContract,
 		name,
 		symbol,
 		decimals,
@@ -579,7 +579,7 @@ func (s *PrecompileTestSuite) setupERC20ContractTests(amount *big.Int) common.Ad
 
 	defaultERC20CallArgs := contracts.CallArgs{
 		ContractAddr: erc20Addr,
-		ContractABI:  evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+		ContractABI:  akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 		PrivKey:      s.privKey,
 		GasPrice:     gasPrice,
 	}
@@ -590,7 +590,7 @@ func (s *PrecompileTestSuite) setupERC20ContractTests(amount *big.Int) common.Ad
 		WithArgs(s.address, amount)
 
 	mintCheck := testutil.LogCheckArgs{
-		ABIEvents: evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI.Events,
+		ABIEvents: akilacontracts.ERC20MinterBurnerDecimalsContract.ABI.Events,
 		ExpEvents: []string{erc20.EventTypeTransfer}, // upon minting the tokens are sent to the receiving address
 		ExpPass:   true,
 	}
@@ -604,7 +604,7 @@ func (s *PrecompileTestSuite) setupERC20ContractTests(amount *big.Int) common.Ad
 	// unregistered token pairs do not show up in the bank keeper
 	balance := s.app.Erc20Keeper.BalanceOf(
 		s.chainA.GetContext(),
-		evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+		akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 		erc20Addr,
 		s.address,
 	)

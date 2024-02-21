@@ -230,13 +230,13 @@ func CreateOnFailedDeliveryField(address string) interface{} {
 // ValidateInputOutput validates the input and output tokens used in the Osmosis swap.
 func ValidateInputOutput(
 	inputDenom, outputDenom, stakingDenom string,
-	evmosChannel IBCChannel,
+	akilaChannel IBCChannel,
 ) error {
 	if outputDenom == inputDenom {
 		return fmt.Errorf(ErrInputEqualOutput, inputDenom)
 	}
 
-	osmoIBCDenom := utils.ComputeIBCDenom(evmosChannel.PortID, evmosChannel.ChannelID, OsmosisDenom)
+	osmoIBCDenom := utils.ComputeIBCDenom(akilaChannel.PortID, akilaChannel.ChannelID, OsmosisDenom)
 
 	// acceptedTokens are the tokens accepted as input or output of the swap.
 	acceptedTokens := []string{stakingDenom, osmoIBCDenom}
@@ -258,11 +258,11 @@ func ValidateInputOutput(
 // representation of aevmos and uosmo. Return an error if the denom is different from one these two.
 func ConvertToOsmosisRepresentation(
 	denom, stakingDenom string,
-	evmosChannel, osmosisChannel IBCChannel,
+	akilaChannel, osmosisChannel IBCChannel,
 ) (denomOsmosis string, err error) {
 	osmoIBCDenom := utils.ComputeIBCDenom(
-		evmosChannel.PortID,
-		evmosChannel.ChannelID,
+		akilaChannel.PortID,
+		akilaChannel.ChannelID,
 		OsmosisDenom,
 	)
 

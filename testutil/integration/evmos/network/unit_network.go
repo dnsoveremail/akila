@@ -3,9 +3,9 @@
 package network
 
 import (
-	"github.com/ethereum/go-ethereum/common"
 	"akila/app"
 	"akila/x/evm/statedb"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // UnitTestNetwork is the implementation of the Network interface for unit tests.
@@ -13,7 +13,7 @@ import (
 // makes the App public for easier testing.
 type UnitTestNetwork struct {
 	IntegrationNetwork
-	App *app.Evmos
+	App *app.Akila
 }
 
 var _ Network = (*UnitTestNetwork)(nil)

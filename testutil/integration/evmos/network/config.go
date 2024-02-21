@@ -8,8 +8,8 @@ import (
 	testtx "akila/testutil/tx"
 	"akila/utils"
 
+	akilatypes "akila/types"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
-	evmostypes "akila/types"
 )
 
 // Config defines the configuration for a chain.
@@ -43,7 +43,7 @@ type ConfigOption func(*Config)
 
 // WithChainID sets a custom chainID for the network. It panics if the chainID is invalid.
 func WithChainID(chainID string) ConfigOption {
-	chainIDNum, err := evmostypes.ParseChainID(chainID)
+	chainIDNum, err := akilatypes.ParseChainID(chainID)
 	if err != nil {
 		panic(err)
 	}

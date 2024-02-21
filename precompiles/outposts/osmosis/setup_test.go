@@ -8,11 +8,11 @@ import (
 
 	"akila/precompiles/erc20"
 
-	"github.com/ethereum/go-ethereum/common"
 	"akila/precompiles/outposts/osmosis"
 	"akila/testutil/integration/evmos/grpc"
 	testkeyring "akila/testutil/integration/evmos/keyring"
 	"akila/testutil/integration/evmos/network"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -43,7 +43,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 	)
 
 	precompile, err := osmosis.NewPrecompile(
-		common.HexToAddress(erc20.WEVMOSContractTestnet),
+		common.HexToAddress(erc20.WAKILAContractTestnet),
 		unitNetwork.App.AuthzKeeper,
 		unitNetwork.App.BankKeeper,
 		unitNetwork.App.TransferKeeper,

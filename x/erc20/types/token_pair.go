@@ -4,10 +4,10 @@
 package types
 
 import (
+	akilatypes "akila/types"
 	"github.com/cometbft/cometbft/crypto/tmhash"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
-	evmostypes "akila/types"
 )
 
 // NewTokenPair returns an instance of TokenPair
@@ -37,7 +37,7 @@ func (tp TokenPair) Validate() error {
 		return err
 	}
 
-	return evmostypes.ValidateAddress(tp.Erc20Address)
+	return akilatypes.ValidateAddress(tp.Erc20Address)
 }
 
 // IsNativeCoin returns true if the owner of the ERC20 contract is the

@@ -16,8 +16,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/suite"
 
-	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	evm "akila/x/evm/types"
+	ethtypes "github.com/ethereum/go-ethereum/core/types"
 
 	"akila/app"
 	"akila/x/vesting/types"
@@ -40,7 +40,7 @@ type KeeperTestSuite struct {
 	suite.Suite
 
 	ctx            sdk.Context
-	app            *app.Evmos
+	app            *app.Akila
 	queryClientEvm evm.QueryClient
 	queryClient    types.QueryClient
 	address        common.Address

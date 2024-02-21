@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"math/big"
 
+	cmn "akila/precompiles/common"
+	"akila/precompiles/ics20"
+	akilautil "akila/testutil"
+	testutiltx "akila/testutil/tx"
+	"akila/utils"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 	channeltypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/ics20"
-	evmosutil "akila/testutil"
-	testutiltx "akila/testutil/tx"
-	"akila/utils"
 )
 
 var (
@@ -146,7 +146,7 @@ func (s *PrecompileTestSuite) TestTransfer() {
 				err := s.NewTransferAuthorization(s.ctx, s.app, common.BytesToAddress(sender), common.BytesToAddress(sender), path, defaultCoins, nil)
 				s.Require().NoError(err)
 				// fund another user's account
-				err = evmosutil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, differentAddress.Bytes(), amt)
+				err = akilautil.FundAccountWithBaseDenom(s.ctx, s.app.BankKeeper, differentAddress.Bytes(), amt)
 				s.Require().NoError(err)
 
 				return []interface{}{

@@ -9,10 +9,10 @@ import (
 
 	"akila/testutil/integration/evmos/factory"
 
+	akilatypes "akila/types"
+	evmtypes "akila/x/evm/types"
 	abcitypes "github.com/cometbft/cometbft/abci/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	evmostypes "akila/types"
-	evmtypes "akila/x/evm/types"
 )
 
 // CheckTxTopics checks if all expected topics are present in the transaction response
@@ -39,12 +39,12 @@ func CheckTxTopics(res abcitypes.ResponseDeliverTx, expectedTopics []string) err
 
 // IsContractAccount checks if the given account is a contract account
 func IsContractAccount(acc authtypes.AccountI) error {
-	contractETHAccount, ok := acc.(evmostypes.EthAccountI)
+	contractETHAccount, ok := acc.(akilatypes.EthAccountI)
 	if !ok {
 		return fmt.Errorf("account is not an eth account")
 	}
 
-	if contractETHAccount.Type() != evmostypes.AccountTypeContract {
+	if contractETHAccount.Type() != akilatypes.AccountTypeContract {
 		return fmt.Errorf("account is not a contract account")
 	}
 	return nil

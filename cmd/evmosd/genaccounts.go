@@ -26,7 +26,7 @@ import (
 	"akila/types"
 	evmtypes "akila/x/evm/types"
 
-	evmoskr "akila/crypto/keyring"
+	akilakr "akila/crypto/keyring"
 
 	vestingcli "akila/x/vesting/client/cli"
 	vestingtypes "akila/x/vesting/types"
@@ -69,7 +69,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 						clientCtx.HomeDir,
 						inBuf,
 						clientCtx.Codec,
-						evmoskr.Option(),
+						akilakr.Option(),
 					)
 					if err != nil {
 						return err

@@ -31,6 +31,8 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 
+	"akila/app"
+	"akila/crypto/hd"
 	"cosmossdk.io/simapp"
 	"cosmossdk.io/simapp/params"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -52,12 +54,10 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"akila/app"
-	"akila/crypto/hd"
 
 	"akila/encoding"
 	"akila/server/config"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 	evmtypes "akila/x/evm/types"
 )
 
@@ -115,10 +115,10 @@ func DefaultConfig() Config {
 		ChainID:           chainID,
 		NumValidators:     4,
 		BondDenom:         "aevmos",
-		MinGasPrices:      fmt.Sprintf("0.000006%s", evmostypes.AttoEvmos),
-		AccountTokens:     sdk.TokensFromConsensusPower(1000000000000000000, evmostypes.PowerReduction),
-		StakingTokens:     sdk.TokensFromConsensusPower(500000000000000000, evmostypes.PowerReduction),
-		BondedTokens:      sdk.TokensFromConsensusPower(100000000000000000, evmostypes.PowerReduction),
+		MinGasPrices:      fmt.Sprintf("0.000006%s", akilatypes.AttoAkila),
+		AccountTokens:     sdk.TokensFromConsensusPower(1000000000000000000, akilatypes.PowerReduction),
+		StakingTokens:     sdk.TokensFromConsensusPower(500000000000000000, akilatypes.PowerReduction),
+		BondedTokens:      sdk.TokensFromConsensusPower(100000000000000000, akilatypes.PowerReduction),
 		PruningStrategy:   pruningtypes.PruningOptionNothing,
 		CleanupDir:        true,
 		SigningAlgo:       string(hd.EthSecp256k1Type),
@@ -130,7 +130,7 @@ func DefaultConfig() Config {
 // NewAppConstructor returns a new Evmos AppConstructor
 func NewAppConstructor(encodingCfg params.EncodingConfig, chainID string) AppConstructor {
 	return func(val Validator) servertypes.Application {
-		return app.NewEvmos(
+		return app.NewAkila(
 			val.Ctx.Logger, dbm.NewMemDB(), nil, true, make(map[int64]bool), val.Ctx.Config.RootDir, 0,
 			encodingCfg,
 			simutils.NewAppOptionsWithFlagHome(val.Ctx.Config.RootDir),
@@ -222,7 +222,7 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 	l.Log("acquiring test network lock")
 	lock.Lock()
 
-	if !evmostypes.IsValidChainID(cfg.ChainID) {
+	if !akilatypes.IsValidChainID(cfg.ChainID) {
 		return nil, fmt.Errorf("invalid chain-id: %s", cfg.ChainID)
 	}
 
@@ -417,7 +417,7 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 
 		genFiles = append(genFiles, tmCfg.GenesisFile())
 		genBalances = append(genBalances, banktypes.Balance{Address: addr.String(), Coins: balances.Sort()})
-		genAccounts = append(genAccounts, &evmostypes.EthAccount{
+		genAccounts = append(genAccounts, &akilatypes.EthAccount{
 			BaseAccount: authtypes.NewBaseAccount(addr, nil, 0, 0),
 			CodeHash:    common.BytesToHash(evmtypes.EmptyCodeHash).Hex(),
 		})
@@ -475,7 +475,7 @@ func New(l Logger, baseDir string, cfg Config) (*Network, error) {
 			return nil, err
 		}
 
-		customAppTemplate, _ := config.AppConfig(evmostypes.AttoEvmos)
+		customAppTemplate, _ := config.AppConfig(akilatypes.AttoAkila)
 		srvconfig.SetConfigTemplate(customAppTemplate)
 		srvconfig.WriteConfigFile(filepath.Join(nodeDir, "config/app.toml"), appCfg)
 

@@ -12,13 +12,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
+	akilatypes "akila/types"
+	"akila/x/vesting/types"
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
 	sdkvesting "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
-	evmostypes "akila/types"
-	"akila/x/vesting/types"
 )
 
 var _ types.MsgServer = &Keeper{}
@@ -63,7 +63,7 @@ func (k Keeper) CreateClawbackVestingAccount(
 	}
 
 	// Initialize the vesting account
-	ethAcc, ok := acc.(*evmostypes.EthAccount)
+	ethAcc, ok := acc.(*akilatypes.EthAccount)
 	if !ok {
 		return nil, errorsmod.Wrapf(errortypes.ErrInvalidRequest,
 			"account %s is not an Ethereum account", msg.VestingAddress,
@@ -375,7 +375,7 @@ func (k Keeper) ConvertVestingAccount(
 	// if no entry is found for the address, this will no-op
 	k.DeleteGovClawbackDisabled(ctx, address)
 
-	ethAccount := evmostypes.ProtoAccount().(*evmostypes.EthAccount)
+	ethAccount := akilatypes.ProtoAccount().(*akilatypes.EthAccount)
 	ethAccount.BaseAccount = vestingAcc.BaseAccount
 	k.accountKeeper.SetAccount(ctx, ethAccount)
 
@@ -451,7 +451,7 @@ func (k Keeper) transferClawback(
 	// NOTE: this is necessary to allow the bank keeper to send the locked coins away to the
 	// destination address. If the account is not converted, the coins will still be seen as locked,
 	// and can therefore not be transferred.
-	ethAccount := evmostypes.ProtoAccount().(*evmostypes.EthAccount)
+	ethAccount := akilatypes.ProtoAccount().(*akilatypes.EthAccount)
 	ethAccount.BaseAccount = updatedAcc.BaseAccount
 
 	// set the account with the updated values of the vesting schedule

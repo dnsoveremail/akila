@@ -54,14 +54,14 @@ var _ = Describe("Ledger CLI and keyring functionality: ", func() {
 	ledgerKey := "ledger_key"
 
 	s.SetupTest()
-	s.SetupEvmosApp()
+	s.SetupAkilaApp()
 
 	Describe("Adding a key from ledger using the CLI", func() {
 		BeforeEach(func() {
 			krHome = s.T().TempDir()
 			encCfg = encoding.MakeConfig(app.ModuleBasics)
 
-			cmd = s.evmosAddKeyCmd()
+			cmd = s.akilaAddKeyCmd()
 
 			mockedIn = sdktestutil.ApplyMockIODiscardOutErr(cmd)
 
@@ -109,7 +109,7 @@ var _ = Describe("Ledger CLI and keyring functionality: ", func() {
 			var err error
 
 			// create add key command
-			cmd = s.evmosAddKeyCmd()
+			cmd = s.akilaAddKeyCmd()
 
 			mockedIn = sdktestutil.ApplyMockIODiscardOutErr(cmd)
 			mocks.MGetAddressPubKeySECP256K1(s.ledger, s.accAddr, s.pubKey)

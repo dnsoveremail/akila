@@ -9,14 +9,14 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
-	"github.com/cosmos/cosmos-sdk/client"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"akila/app"
 	"akila/crypto/ethsecp256k1"
 	"akila/encoding"
 	"akila/testutil"
 	"akila/utils"
 	feemarkettypes "akila/x/feemarket/types"
+	"github.com/cosmos/cosmos-sdk/client"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 )
@@ -28,7 +28,7 @@ type AnteTestSuite struct {
 
 	ctx       sdk.Context
 	clientCtx client.Context
-	app       *app.Evmos
+	app       *app.Akila
 	denom     string
 }
 

@@ -6,6 +6,19 @@ import (
 	"fmt"
 	"math/big"
 
+	akilacontracts "akila/contracts"
+	akilatesting "akila/ibc/testing"
+	"akila/precompiles/authorization"
+	cmn "akila/precompiles/common"
+	"akila/precompiles/erc20"
+	"akila/precompiles/ics20"
+	"akila/precompiles/testutil"
+	"akila/precompiles/testutil/contracts"
+	akilautil "akila/testutil"
+	teststypes "akila/types/tests"
+	"akila/utils"
+	erc20types "akila/x/erc20/types"
+	inflationtypes "akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
@@ -14,19 +27,6 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v7/testing"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	evmoscontracts "akila/contracts"
-	evmostesting "akila/ibc/testing"
-	"akila/precompiles/authorization"
-	cmn "akila/precompiles/common"
-	"akila/precompiles/erc20"
-	"akila/precompiles/ics20"
-	"akila/precompiles/testutil"
-	"akila/precompiles/testutil/contracts"
-	evmosutil "akila/testutil"
-	teststypes "akila/types/tests"
-	"akila/utils"
-	erc20types "akila/x/erc20/types"
-	inflationtypes "akila/x/inflation/v1/types"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
@@ -482,7 +482,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 
 				// To submit a timeoutMsg, the TimeoutPacket function
 				// uses a default fee amount
-				timeoutMsgFee := math.NewInt(evmostesting.DefaultFeeAmt * 2)
+				timeoutMsgFee := math.NewInt(akilatesting.DefaultFeeAmt * 2)
 				fees = fees.Add(timeoutMsgFee)
 
 				finalBalance = s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
@@ -493,7 +493,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 				// initialBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
 
 				// fund senders account
-				err := evmosutil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, s.differentAddr.Bytes(), amt)
+				err := akilautil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, s.differentAddr.Bytes(), amt)
 				Expect(err).To(BeNil())
 				senderInitialBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.differentAddr.Bytes(), s.bondDenom)
 				Expect(senderInitialBalance.Amount).To(Equal(math.NewInt(amt)))
@@ -551,7 +551,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 				Expect(err).To(BeNil())
 
 				// fund the account from which funds will be sent
-				err = evmosutil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, s.differentAddr.Bytes(), amt)
+				err = akilautil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, s.differentAddr.Bytes(), amt)
 				Expect(err).To(BeNil())
 				senderInitialBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.differentAddr.Bytes(), s.bondDenom)
 				Expect(senderInitialBalance.Amount).To(Equal(math.NewInt(amt)))
@@ -649,7 +649,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check Erc20 balance was reduced by sent amount
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -660,7 +660,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// mint some ERC20 to the sender's account
 					defaultERC20CallArgs := contracts.CallArgs{
 						ContractAddr: erc20Addr,
-						ContractABI:  evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						ContractABI:  akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						PrivKey:      s.privKey,
 						GasPrice:     gasPrice,
 					}
@@ -671,7 +671,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 						WithArgs(s.differentAddr, defaultCmnCoins[0].Amount)
 
 					mintCheck := testutil.LogCheckArgs{
-						ABIEvents: evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI.Events,
+						ABIEvents: akilacontracts.ERC20MinterBurnerDecimalsContract.ABI.Events,
 						ExpEvents: []string{erc20.EventTypeTransfer}, // upon minting the tokens are sent to the receiving address
 						ExpPass:   true,
 					}
@@ -701,7 +701,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check funds were not transferred
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.differentAddr,
 					)
@@ -745,7 +745,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check Erc20 balance was reduced by sent amount (escrowed on ibc escrow account)
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -777,7 +777,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check escrowed funds are refunded to sender
 					finalERC20balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -823,7 +823,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check Erc20 balance was reduced by sent amount
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -860,7 +860,7 @@ var _ = Describe("IBCTransfer Precompile", func() {
 					// check escrowed funds are refunded to sender
 					finalERC20balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -1330,7 +1330,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 				})
 
 				It("should transfer IBC coin", func() {
-					initialEvmosBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
+					initialAkilaBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
 
 					logCheckArgs := passCheck.WithExpEvents(ics20.EventTypeIBCTransfer)
 
@@ -1354,7 +1354,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 					// check only fees were deducted from sending account
 					fees := math.NewIntFromBigInt(gasPrice).MulRaw(res.GasUsed)
 					finalBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
-					Expect(finalBalance.Amount).To(Equal(initialEvmosBalance.Amount.Sub(fees)))
+					Expect(finalBalance.Amount).To(Equal(initialAkilaBalance.Amount.Sub(fees)))
 
 					// check sent tokens were deducted from sending account
 					finalOsmoBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), ibcDenom)
@@ -1411,7 +1411,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 					// check Erc20 balance remained unchaged by sent amount
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -1483,7 +1483,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 					// check Erc20 balance was reduced by sent amount
 					balance := s.app.Erc20Keeper.BalanceOf(
 						s.chainA.GetContext(),
-						evmoscontracts.ERC20MinterBurnerDecimalsContract.ABI,
+						akilacontracts.ERC20MinterBurnerDecimalsContract.ABI,
 						erc20Addr,
 						s.address,
 					)
@@ -1503,15 +1503,15 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 		})
 
 		Context("transfer 'aevmos", func() {
-			var defaultTransferEvmosArgs contracts.CallArgs
+			var defaultTransferAkilaArgs contracts.CallArgs
 			BeforeEach(func() {
 				// send some funds to the contract from which the funds will be sent
-				err = evmosutil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, contractAddr.Bytes(), amt)
+				err = akilautil.FundAccountWithBaseDenom(s.chainA.GetContext(), s.app.BankKeeper, contractAddr.Bytes(), amt)
 				Expect(err).To(BeNil())
 				senderInitialBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), contractAddr.Bytes(), s.bondDenom)
 				Expect(senderInitialBalance.Amount).To(Equal(math.NewInt(amt)))
 
-				defaultTransferEvmosArgs = defaultTransferArgs.WithArgs(
+				defaultTransferAkilaArgs = defaultTransferArgs.WithArgs(
 					s.transferPath.EndpointA.ChannelConfig.PortID,
 					s.transferPath.EndpointA.ChannelID,
 					s.bondDenom,
@@ -1527,7 +1527,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 				It("should not transfer funds", func() {
 					initialBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), contractAddr.Bytes(), s.bondDenom)
 
-					_, _, err := contracts.CallContractAndCheckLogs(s.chainA.GetContext(), s.app, defaultTransferEvmosArgs, execRevertedCheck)
+					_, _, err := contracts.CallContractAndCheckLogs(s.chainA.GetContext(), s.app, defaultTransferAkilaArgs, execRevertedCheck)
 					Expect(err).To(HaveOccurred(), "error while calling the smart contract: %v", err)
 
 					// check sent tokens remained unchanged from sending account (contract)
@@ -1547,7 +1547,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 
 					logCheckArgs := passCheck.WithExpEvents(ics20.EventTypeIBCTransfer)
 
-					res, ethRes, err := contracts.CallContractAndCheckLogs(s.chainA.GetContext(), s.app, defaultTransferEvmosArgs, logCheckArgs)
+					res, ethRes, err := contracts.CallContractAndCheckLogs(s.chainA.GetContext(), s.app, defaultTransferAkilaArgs, logCheckArgs)
 					Expect(err).To(BeNil(), "error while calling the smart contract: %v", err)
 
 					out, err := s.precompile.Unpack(ics20.TransferMethod, ethRes.Ret)

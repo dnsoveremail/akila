@@ -9,6 +9,10 @@ import (
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/gomega"
 
+	"akila/app"
+	ibctesting "akila/ibc/testing"
+	"akila/x/erc20/types"
+	evm "akila/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -17,10 +21,6 @@ import (
 	ibcgotesting "github.com/cosmos/ibc-go/v7/testing"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"akila/app"
-	ibctesting "akila/ibc/testing"
-	"akila/x/erc20/types"
-	evm "akila/x/evm/types"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -28,7 +28,7 @@ type KeeperTestSuite struct {
 	suite.Suite
 
 	ctx              sdk.Context
-	app              *app.Evmos
+	app              *app.Akila
 	queryClientEvm   evm.QueryClient
 	queryClient      types.QueryClient
 	address          common.Address
@@ -43,12 +43,12 @@ type KeeperTestSuite struct {
 	coordinator *ibcgotesting.Coordinator
 
 	// testing chains used for convenience and readability
-	EvmosChain      *ibcgotesting.TestChain
+	AkilaChain      *ibcgotesting.TestChain
 	IBCOsmosisChain *ibcgotesting.TestChain
 	IBCCosmosChain  *ibcgotesting.TestChain
 
-	pathOsmosisEvmos  *ibctesting.Path
-	pathCosmosEvmos   *ibctesting.Path
+	pathOsmosisAkila  *ibctesting.Path
+	pathCosmosAkila   *ibctesting.Path
 	pathOsmosisCosmos *ibctesting.Path
 
 	suiteIBCTesting bool

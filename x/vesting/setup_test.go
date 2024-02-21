@@ -3,12 +3,12 @@ package vesting_test
 import (
 	"testing"
 
+	"akila/app"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/common"
-	"akila/app"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -16,7 +16,7 @@ type VestingTestSuite struct {
 	suite.Suite
 
 	ctx        sdk.Context
-	app        *app.Evmos
+	app        *app.Akila
 	address    common.Address
 	validators []stakingtypes.Validator
 	privKey    cryptotypes.PrivKey

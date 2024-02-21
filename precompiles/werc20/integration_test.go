@@ -3,12 +3,11 @@ package werc20_test
 import (
 	"math/big"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	auth "akila/precompiles/authorization"
 	"akila/precompiles/erc20"
-	evmosutiltx "akila/testutil/tx"
+	akilautiltx "akila/testutil/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/ethereum/go-ethereum/common"
 	"akila/precompiles/testutil"
 	"akila/precompiles/werc20"
 	"akila/precompiles/werc20/testdata"
@@ -16,6 +15,7 @@ import (
 	"akila/testutil/integration/evmos/keyring"
 	erc20types "akila/x/erc20/types"
 	evmtypes "akila/x/evm/types"
+	"github.com/ethereum/go-ethereum/common"
 
 	//nolint:revive // dot imports are fine for Ginkgo
 	. "github.com/onsi/ginkgo/v2"
@@ -26,7 +26,7 @@ import (
 var _ = Describe("WEVMOS Extension -", func() {
 	var (
 		WERC20ContractAddr         common.Address
-		WEVMOSOriginalContractAddr common.Address
+		WAKILAOriginalContractAddr common.Address
 		err                        error
 		sender                     keyring.Key
 		amount                     *big.Int
@@ -49,7 +49,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 			sender.Priv,
 			evmtypes.EvmTxArgs{}, // NOTE: passing empty struct to use default values
 			factory.ContractDeploymentData{
-				Contract:        testdata.WEVMOSContract,
+				Contract:        testdata.WAKILAContract,
 				ConstructorArgs: []interface{}{},
 			},
 		)
@@ -75,7 +75,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 		contractData = ContractData{
 			ownerPriv:      sender.Priv,
 			erc20Addr:      WERC20ContractAddr,
-			erc20ABI:       testdata.WEVMOSContract.ABI,
+			erc20ABI:       testdata.WAKILAContract.ABI,
 			precompileAddr: s.precompile.Address(),
 			precompileABI:  s.precompile.ABI,
 		}
@@ -235,19 +235,19 @@ var _ = Describe("WEVMOS Extension -", func() {
 
 	Context("Comparing to original WEVMOS contract", func() {
 		BeforeEach(func() {
-			WEVMOSOriginalContractAddr, err = s.factory.DeployContract(
+			WAKILAOriginalContractAddr, err = s.factory.DeployContract(
 				sender.Priv,
 				evmtypes.EvmTxArgs{}, // NOTE: passing empty struct to use default values
 				factory.ContractDeploymentData{
-					Contract:        testdata.WEVMOSContract,
+					Contract:        testdata.WAKILAContract,
 					ConstructorArgs: []interface{}{},
 				},
 			)
 			Expect(err).ToNot(HaveOccurred(), "failed to deploy contract")
 			contractDataOriginal = ContractData{
 				ownerPriv: sender.Priv,
-				erc20Addr: WEVMOSOriginalContractAddr,
-				erc20ABI:  testdata.WEVMOSContract.ABI,
+				erc20Addr: WAKILAOriginalContractAddr,
+				erc20ABI:  testdata.WAKILAContract.ABI,
 			}
 		})
 
@@ -460,7 +460,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 
 			It("should return a 0 balance new address", func() {
 				// Query the balance
-				txArgs, balancesArgs := s.getTxAndCallArgs(directCall, contractData, erc20.BalanceOfMethod, evmosutiltx.GenerateAddress())
+				txArgs, balancesArgs := s.getTxAndCallArgs(directCall, contractData, erc20.BalanceOfMethod, akilautiltx.GenerateAddress())
 
 				_, ethRes, err := s.factory.CallContractAndCheckLogs(sender.Priv, txArgs, balancesArgs, passCheck)
 				Expect(err).ToNot(HaveOccurred(), "unexpected result calling contract")
@@ -474,7 +474,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 
 		When("querying allowance", func() {
 			It("should return an existing allowance", func() {
-				grantee := evmosutiltx.GenerateAddress()
+				grantee := akilautiltx.GenerateAddress()
 				granter := sender
 				authzCoins := sdk.Coins{sdk.NewInt64Coin(s.tokenDenom, 100)}
 
@@ -492,7 +492,7 @@ var _ = Describe("WEVMOS Extension -", func() {
 			})
 
 			It("should return zero if no balance exists", func() {
-				address := evmosutiltx.GenerateAddress()
+				address := akilautiltx.GenerateAddress()
 
 				// Query the balance
 				txArgs, balancesArgs := s.getTxAndCallArgs(directCall, contractData, erc20.BalanceOfMethod, address)

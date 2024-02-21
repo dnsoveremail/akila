@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
+	akilaibc "akila/ibc/testing"
+	"akila/testutil/integration/common/network"
+	ibcchain "akila/testutil/integration/ibc/chain"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	ibctesting "github.com/cosmos/ibc-go/v7/testing"
-	evmosibc "akila/ibc/testing"
-	"akila/testutil/integration/common/network"
-	ibcchain "akila/testutil/integration/ibc/chain"
 )
 
 // Coordinator is the interface that defines the methods that are used to
@@ -116,8 +116,8 @@ func (c *IntegrationCoordinator) Setup(a, b string) IBCConnection {
 	chainA := c.coord.GetChain(a)
 	chainB := c.coord.GetChain(b)
 
-	path := evmosibc.NewTransferPath(chainA, chainB)
-	evmosibc.SetupPath(c.coord, path)
+	path := akilaibc.NewTransferPath(chainA, chainB)
+	akilaibc.SetupPath(c.coord, path)
 
 	return IBCConnection{
 		EndpointA: Endpoint{

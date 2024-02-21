@@ -19,7 +19,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 
 	"akila/x/erc20/types"
 )
@@ -63,7 +63,7 @@ func NewConvertCoinCmd() *cobra.Command {
 
 			if len(args) == 2 {
 				receiver = args[1]
-				if err := evmostypes.ValidateAddress(receiver); err != nil {
+				if err := akilatypes.ValidateAddress(receiver); err != nil {
 					return fmt.Errorf("invalid receiver hex address %w", err)
 				}
 			} else {
@@ -101,7 +101,7 @@ func NewConvertERC20Cmd() *cobra.Command {
 			}
 
 			contract := args[0]
-			if err := evmostypes.ValidateAddress(contract); err != nil {
+			if err := akilatypes.ValidateAddress(contract); err != nil {
 				return fmt.Errorf("invalid ERC20 contract address %w", err)
 			}
 

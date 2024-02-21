@@ -54,7 +54,7 @@ import (
 	ethdebug "akila/rpc/namespaces/ethereum/debug"
 	"akila/server/config"
 	srvflags "akila/server/flags"
-	evmostypes "akila/types"
+	akilatypes "akila/types"
 )
 
 // DBOpener is a function to open `application.db`, potentially with customized options.
@@ -409,7 +409,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, opts StartOpt
 		ethmetricsexp.Setup(config.JSONRPC.MetricsAddress)
 	}
 
-	var idxer evmostypes.EVMTxIndexer
+	var idxer akilatypes.EVMTxIndexer
 	if config.JSONRPC.EnableIndexer {
 		idxDB, err := OpenIndexerDB(home, server.GetAppDBBackend(ctx.Viper))
 		if err != nil {
