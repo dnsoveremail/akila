@@ -20,5 +20,5 @@ done
 
 # move proto files to the right places
 cp -r akila/v*/* ./
-rm -rf github.com
+rm -rf akila
 
