@@ -124,7 +124,6 @@ import (
 	"akila/app/ante"
 	ethante "akila/app/ante/evm"
 	"akila/app/post"
-	v16 "akila/app/upgrades/v16"
 	"akila/encoding"
 	"akila/ethereum/eip712"
 	"akila/precompiles/common"
@@ -1136,19 +1135,6 @@ func initParamsKeeper(
 
 func (app *Evmos) setupUpgradeHandlers() {
 
-	// v16 upgrade handler
-	app.UpgradeKeeper.SetUpgradeHandler(
-		v16.UpgradeName,
-		v16.CreateUpgradeHandler(
-			app.mm, app.configurator,
-			app.AccountKeeper,
-			app.BankKeeper,
-			app.EvmKeeper,
-			app.GovKeeper,
-			app.InflationKeeper,
-		),
-	)
-
 	// When a planned update height is reached, the old binary will panic
 	// writing on disk the height and name of the update that triggered it
 	// This will read that value, and execute the preparations for the upgrade.
@@ -1162,15 +1148,6 @@ func (app *Evmos) setupUpgradeHandlers() {
 	}
 
 	var storeUpgrades *storetypes.StoreUpgrades
-
-	switch upgradeInfo.Name {
-
-	case v16.UpgradeName:
-		// recovery and incentives modules are deprecated in v16
-		storeUpgrades = &storetypes.StoreUpgrades{
-			Deleted: []string{"recoveryv1", "incentives", "claims"},
-		}
-	}
 
 	if storeUpgrades != nil {
 		// configure store loader that checks if version == upgradeHeight and applies store upgrades
