@@ -7,7 +7,7 @@ DATA_DIR=$(mktemp -d -t evmos-datadir.XXXXX)
 
 echo "create and add new keys"
 ./evmosd keys add $KEY --home $DATA_DIR --no-backup --chain-id $CHAINID --algo "eth_secp256k1" --keyring-backend test
-echo "init Evmos with moniker=$MONIKER and chain-id=$CHAINID"
+echo "init Akila with moniker=$MONIKER and chain-id=$CHAINID"
 ./evmosd init $MONIKER --chain-id $CHAINID --home $DATA_DIR
 echo "prepare genesis: Allocate genesis accounts"
 ./evmosd add-genesis-account \

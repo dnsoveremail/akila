@@ -15,7 +15,7 @@ from .utils import memiavl_config, supervisorctl, wait_for_port
 DEFAULT_CHAIN_BINARY = "evmosd"
 
 
-class Evmos:
+class Akila:
     def __init__(self, base_dir, chain_binary=DEFAULT_CHAIN_BINARY):
         self._w3 = None
         self.base_dir = base_dir
@@ -25,7 +25,7 @@ class Evmos:
         self.chain_binary = chain_binary
 
     def copy(self):
-        return Evmos(self.base_dir)
+        return Akila(self.base_dir)
 
     @property
     def w3_http_endpoint(self, i=0):
@@ -126,7 +126,7 @@ def create_snapshots_dir(path, base_port, config, n_nodes=2):
 
 def setup_evmos_rocksdb(path, base_port, long_timeout_commit=False):
     """
-    setup_evmos_rocksdb returns an Evmos chain compiled with RocksDB
+    setup_evmos_rocksdb returns an Akila chain compiled with RocksDB
     and configured to use memIAVL + versionDB.
     """
     config = memiavl_config(
@@ -198,7 +198,7 @@ def setup_custom_evmos(
         if wait_port:
             wait_for_port(ports.evmrpc_port(base_port))
             wait_for_port(ports.evmrpc_ws_port(base_port))
-        yield Evmos(
+        yield Akila(
             path / "evmos_9000-1", chain_binary=chain_binary or DEFAULT_CHAIN_BINARY
         )
     finally:
@@ -209,7 +209,7 @@ def setup_custom_evmos(
 def build_patched_evmosd(patch_nix_file):
     """
     build the binary modified for a custom scenario
-    e.g. allow to register WEVMOS token
+    e.g. allow to register WAKILA token
     (removes a validation check in erc20 gov proposals)
     """
     cmd = [

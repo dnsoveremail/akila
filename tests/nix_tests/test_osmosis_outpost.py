@@ -3,19 +3,19 @@ import json
 import pytest
 
 from .ibc_utils import (
-    EVMOS_IBC_DENOM,
+    AKILA_IBC_DENOM,
     OSMO_IBC_DENOM,
     assert_ready,
     get_balance,
     prepare_network,
 )
-from .network import CosmosChain, Evmos
+from .network import CosmosChain, Akila
 from .utils import (
     ADDRS,
     KEYS,
     OSMOSIS_POOLS,
     WASM_CONTRACTS,
-    WEVMOS_ADDRESS,
+    WAKILA_ADDRESS,
     approve_proposal,
     erc20_balance,
     eth_to_bech32,
@@ -43,7 +43,7 @@ def ibc(request, tmp_path_factory):
 
 def test_osmosis_swap(ibc):
     assert_ready(ibc)
-    evmos: Evmos = ibc.chains["evmos"]
+    evmos: Akila = ibc.chains["evmos"]
     osmosis: CosmosChain = ibc.chains["osmosis"]
 
     evmos_addr = ADDRS["signer2"]
@@ -57,7 +57,7 @@ def test_osmosis_swap(ibc):
 
     xcs_contract = setup_osmos_chains(ibc)
 
-    # --------- Transfer Osmo to Evmos
+    # --------- Transfer Osmo to Akila
     transfer_osmo_to_evmos(ibc, osmosis_addr, evmos_addr)
 
     # --------- Register Osmosis ERC20 token
@@ -68,7 +68,7 @@ def test_osmosis_swap(ibc):
     testSlippagePercentage = 20
     testWindowSeconds = 10
 
-    # --------- Swap Osmo to Evmos
+    # --------- Swap Osmo to Akila
     w3 = evmos.w3
     pc = get_precompile_contract(w3, "IOsmosisOutpost")
     evmos_gas_price = w3.eth.gas_price
@@ -76,7 +76,7 @@ def test_osmosis_swap(ibc):
         "channelID": "channel-0",
         "xcsContract": xcs_contract,
         "sender": evmos_addr,
-        "input": WEVMOS_ADDRESS,
+        "input": WAKILA_ADDRESS,
         "output": osmo_erc20_addr,
         "amount": amt,
         "slippagePercentage": testSlippagePercentage,
@@ -113,7 +113,7 @@ def setup_osmos_chains(ibc):
     '''
     Helper function to setup a cross-chain swap contract
     '''
-    # Send Evmos to Osmosis to be able to set up pools
+    # Send Akila to Osmosis to be able to set up pools
     send_evmos_to_osmos(ibc)
 
     osmosis = ibc.chains["osmosis"]
@@ -122,7 +122,7 @@ def setup_osmos_chains(ibc):
 
     # create evmos <> osmo pool
     pool_id = create_osmosis_pool(
-        osmosis_cli, osmosis_addr, OSMOSIS_POOLS["Evmos_Osmo"]
+        osmosis_cli, osmosis_addr, OSMOSIS_POOLS["Akila_Osmo"]
     )
 
     contracts_to_store = {
@@ -160,7 +160,7 @@ def setup_osmos_chains(ibc):
     # in the router one execute function `set_route` to have a route for evmos within the swap router contract
     # set input 'aevmos', output 'uosmo' route
     set_swap_route(
-        osmosis_cli, osmosis_addr, swap_contract_addr, pool_id, EVMOS_IBC_DENOM, "uosmo"
+        osmosis_cli, osmosis_addr, swap_contract_addr, pool_id, AKILA_IBC_DENOM, "uosmo"
     )
 
     return xcs_addr
@@ -178,7 +178,7 @@ def send_evmos_to_osmos(ibc):
     src_denom = "aevmos"
 
     old_src_balance = get_balance(src_chain, src_addr, src_denom)
-    old_dst_balance = get_balance(dst_chain, dst_addr, EVMOS_IBC_DENOM)
+    old_dst_balance = get_balance(dst_chain, dst_addr, AKILA_IBC_DENOM)
 
     pc = get_precompile_contract(src_chain.w3, "ICS20I")
     evmos_gas_price = src_chain.w3.eth.gas_price
@@ -207,7 +207,7 @@ def send_evmos_to_osmos(ibc):
 
     def check_balance_change():
         nonlocal new_dst_balance
-        new_dst_balance = get_balance(dst_chain, dst_addr, EVMOS_IBC_DENOM)
+        new_dst_balance = get_balance(dst_chain, dst_addr, AKILA_IBC_DENOM)
         return old_dst_balance != new_dst_balance
 
     wait_for_fn("balance change", check_balance_change)
@@ -218,7 +218,7 @@ def send_evmos_to_osmos(ibc):
 
 def transfer_osmo_to_evmos(ibc, src_addr, dst_addr):
     src_chain: CosmosChain = ibc.chains["osmosis"]
-    dst_chain: Evmos = ibc.chains["evmos"]
+    dst_chain: Akila = ibc.chains["evmos"]
 
     cli = src_chain.cosmos_cli()
     src_addr = cli.address("signer2")
@@ -270,7 +270,7 @@ def register_osmo_token(evmos):
 
     proposal = {
         "title": "Register Osmosis ERC20 token",
-        "description": "The IBC representation of OSMO on Evmos chain",
+        "description": "The IBC representation of OSMO on Akila chain",
         "metadata": [ERC_OSMO_META],
         "deposit": "1aevmos",
     }

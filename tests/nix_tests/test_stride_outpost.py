@@ -1,10 +1,10 @@
 import pytest
 
-from .ibc_utils import EVMOS_IBC_DENOM, assert_ready, get_balance, prepare_network
+from .ibc_utils import AKILA_IBC_DENOM, assert_ready, get_balance, prepare_network
 from .utils import (
     ADDRS,
     KEYS,
-    WEVMOS_ADDRESS,
+    WAKILA_ADDRESS,
     get_precompile_contract,
     register_host_zone,
     send_transaction,
@@ -46,7 +46,7 @@ def test_liquid_stake(ibc):
         "connection-0",
         src_denom,
         "evmos",
-        EVMOS_IBC_DENOM,
+        AKILA_IBC_DENOM,
         "channel-0",
         1000000,
     )
@@ -61,7 +61,7 @@ def test_liquid_stake(ibc):
         "channelID": "channel-0",
         "sender": sender_addr,
         "receiver": sender_addr,
-        "token": WEVMOS_ADDRESS,
+        "token": WAKILA_ADDRESS,
         "amount": amt,
         "strideForwarder": dst_addr,
     }
@@ -93,5 +93,5 @@ def test_liquid_stake(ibc):
     assert old_dst_balance + amt == new_dst_balance
     new_src_balance = get_balance(ibc.chains["evmos"], src_addr, src_denom)
     # NOTE the 'amt' is deducted from the 'aevmos' native coin
-    # not from WEVMOS balance
+    # not from WAKILA balance
     assert old_src_balance - amt - fee == new_src_balance

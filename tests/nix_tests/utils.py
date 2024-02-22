@@ -30,9 +30,9 @@ ACCOUNTS = {
 }
 KEYS = {name: account.key for name, account in ACCOUNTS.items()}
 ADDRS = {name: account.address for name, account in ACCOUNTS.items()}
-EVMOS_ADDRESS_PREFIX = "evmos"
+AKILA_ADDRESS_PREFIX = "evmos"
 DEFAULT_DENOM = "aevmos"
-WEVMOS_ADDRESS = Web3.toChecksumAddress("0xcc491f589b45d4a3c679016195b3fb87d7848210")
+WAKILA_ADDRESS = Web3.toChecksumAddress("0xcc491f589b45d4a3c679016195b3fb87d7848210")
 TEST_CONTRACTS = {
     "TestERC20A": "TestERC20A.sol",
     "Greeter": "Greeter.sol",
@@ -50,7 +50,7 @@ TEST_CONTRACTS = {
 }
 
 OSMOSIS_POOLS = {
-    "Evmos_Osmo": Path(__file__).parent / "osmosis/evmosOsmosisPool.json",
+    "Akila_Osmo": Path(__file__).parent / "osmosis/evmosOsmosisPool.json",
 }
 
 # If need to update these binaries
@@ -359,7 +359,7 @@ def send_successful_transaction(w3, i=0):
     return txhash
 
 
-def eth_to_bech32(addr, prefix=EVMOS_ADDRESS_PREFIX):
+def eth_to_bech32(addr, prefix=AKILA_ADDRESS_PREFIX):
     bz = bech32.convertbits(HexBytes(addr), 8, 5)
     return bech32.bech32_encode(prefix, bz)
 

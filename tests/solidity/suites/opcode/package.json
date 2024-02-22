@@ -5,7 +5,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "test-ganache": "yarn truffle test",
-    "test-evmos": "yarn truffle test --network evmos"
+    "test-akila": "yarn truffle test --network akila"
   },
   "devDependencies": {
     "truffle-assertions": "^0.9.2"

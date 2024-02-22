@@ -3,7 +3,7 @@ FROM golang:1.21.4-alpine3.18 AS build-env
 ARG DB_BACKEND=goleveldb
 ARG ROCKSDB_VERSION="8.5.3"
 
-WORKDIR /go/src/github.com/evmos/evmos
+WORKDIR /go/src/github.com/akila/akila
 
 COPY go.mod go.sum ./
 
@@ -35,7 +35,7 @@ FROM alpine:3.18
 
 WORKDIR /root
 
-COPY --from=build-env /go/src/github.com/evmos/evmos/build/evmosd /usr/bin/evmosd
+COPY --from=build-env /go/src/github.com/akila/akila/build/akilad /usr/bin/akilad
 COPY --from=build-env /go/bin/toml-cli /usr/bin/toml-cli
 
 # required for rocksdb build
@@ -44,12 +44,12 @@ COPY --from=build-env /target/usr/local/lib /usr/local/lib
 COPY --from=build-env /target/usr/include /usr/include
 
 RUN apk add --no-cache ca-certificates=20230506-r0 jq=1.6-r4 curl=8.5.0-r0 bash=5.2.15-r5 vim=9.0.2073-r0 lz4=1.9.4-r4 rclone=1.62.2-r6 \
-    && addgroup -g 1000 evmos \
-    && adduser -S -h /home/evmos -D evmos -u 1000 -G evmos
+    && addgroup -g 1000 akila \
+    && adduser -S -h /home/akila -D akila -u 1000 -G akila
 
 USER 1000
-WORKDIR /home/evmos
+WORKDIR /home/akila
 
 EXPOSE 26656 26657 1317 9090 8545 8546
 
-CMD ["evmosd"]
+CMD ["akilad"]

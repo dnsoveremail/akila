@@ -8,7 +8,7 @@ import pytest
 import requests
 from pystarport import ports
 
-from .network import Evmos, create_snapshots_dir, setup_custom_evmos
+from .network import Akila, create_snapshots_dir, setup_custom_evmos
 from .utils import (
     CONTRACTS,
     decode_bech32,
@@ -71,7 +71,7 @@ def grpc_eth_call(port: int, args: dict, chain_id=None, proposer_address=None):
     return requests.get(f"http://localhost:{port}/evmos/evm/v1/eth_call", params).json()
 
 
-def test_grpc_mode(evmos_cluster: Evmos):
+def test_grpc_mode(evmos_cluster: Akila):
     """
     - restart a fullnode in grpc-only mode
     - test the grpc queries all works

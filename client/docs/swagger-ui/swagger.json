@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Evmos Chain - gRPC Gateway docs",
+    "title": "Akila Chain - gRPC Gateway docs",
     "description": "A REST interface for state queries and transactions",
     "version": "1.0.0"
   },
@@ -26319,7 +26319,7 @@
         }
       },
       "evmos.inflation.v1.InflationDistribution": {
-        "title": "InflationDistribution defines the distribution in which inflation is\nallocated through minting on each epoch (staking, incentives, community). It\nexcludes the team vesting distribution, as this is minted once at genesis.\nThe initial InflationDistribution can be calculated from the Evmos Token\nModel like this:\nmintDistribution1 = distribution1 / (1 - teamVestingDistribution)\n0.5333333         = 40%           / (1 - 25%)",
+        "title": "InflationDistribution defines the distribution in which inflation is\nallocated through minting on each epoch (staking, incentives, community). It\nexcludes the team vesting distribution, as this is minted once at genesis.\nThe initial InflationDistribution can be calculated from the Akila Token\nModel like this:\nmintDistribution1 = distribution1 / (1 - teamVestingDistribution)\n0.5333333         = 40%           / (1 - 25%)",
         "type": "object",
         "properties": {
           "staking_rewards": {

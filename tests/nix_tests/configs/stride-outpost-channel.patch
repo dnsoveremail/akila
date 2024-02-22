@@ -11,5 +11,5 @@ index e50fbd2b..b0101768 100644
 +	// a connection with Stride chain on channel-0
 +	strideChannelID = "channel-0"
  	strideOutpost, err := strideoutpost.NewPrecompile(
- 		WEVMOSAddress,
+ 		WAKILAAddress,
  		transfertypes.PortID,

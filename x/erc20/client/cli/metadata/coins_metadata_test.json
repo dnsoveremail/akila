@@ -1,21 +1,21 @@
 {
   "metadata": [
     {
-      "description": "The native staking and governance token of the Evmos chain",
+      "description": "The native staking and governance token of the Akila chain",
       "denom_units": [
         {
-          "denom": "aevmos",
+          "denom": "aakila",
           "exponent": 0
         },
         {
-          "denom": "evmos",
+          "denom": "akila",
           "exponent": 18
         }
       ],
-      "base": "aevmos",
-      "display": "aevmos",
-      "name": "aevmos",
-      "symbol": "EVMOS"
+      "base": "aakila",
+      "display": "aakila",
+      "name": "aakila",
+      "symbol": "AKILA"
     },
     {
       "description": "The native staking and governance token of the Osmosis chain",

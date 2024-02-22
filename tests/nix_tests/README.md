@@ -2,7 +2,7 @@
 
 The RPC integration test suite uses nix for reproducible and configurable
 builds allowing to run integration tests using python web3 library against
-different Evmos and [Geth](https://github.com/ethereum/go-ethereum) clients with multiple configurations.
+different Akila and [Geth](https://github.com/ethereum/go-ethereum) clients with multiple configurations.
 
 ## Installation
 
