@@ -20,7 +20,6 @@ config
 # Build
 *.test
 .glide/
-vendor
 build
 bin
 tools/bin/*
