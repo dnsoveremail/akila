@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	//go:embed WEVMOS.json
+	//go:embed WAKILA.json
 	WakilaJSON []byte
 
 	// WEVMOSContract is the compiled contract of WEVMOS
