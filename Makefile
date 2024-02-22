@@ -503,7 +503,7 @@ localnet-build:
 
 # Start a 4-node testnet locally
 localnet-start: localnet-stop localnet-build
-	@if ! [ -f build/node0/$(AKILA_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/akila:Z evmos/node "./evmosd testnet init-files --v 4 -o /evmos --keyring-backend=test --starting-ip-address 192.167.10.2"; fi
+	@if ! [ -f build/node0/$(AKILA_BINARY)/config/genesis.json ]; then docker run --rm -v $(CURDIR)/build:/akila:Z akila/node "./akilad testnet init-files --v 4 -o /akila --keyring-backend=test --starting-ip-address 192.167.10.2"; fi
 	docker-compose up -d
 
 # Stop testnet
@@ -519,15 +519,15 @@ localnet-clean:
 localnet-unsafe-reset:
 	docker-compose down
 ifeq ($(OS),Windows_NT)
-	@docker run --rm -v $(CURDIR)\build\node0\evmosd:/evmos\Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)\build\node1\evmosd:/evmos\Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)\build\node2\evmosd:/evmos\Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)\build\node3\evmosd:/evmos\Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
+	@docker run --rm -v $(CURDIR)\build\node0\akilad:/akila\Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)\build\node1\akilad:/akila\Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)\build\node2\akilad:/akila\Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)\build\node3\akilad:/akila\Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
 else
-	@docker run --rm -v $(CURDIR)/build/node0/evmosd:/evmos:Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)/build/node1/evmosd:/evmos:Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)/build/node2/evmosd:/evmos:Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
-	@docker run --rm -v $(CURDIR)/build/node3/evmosd:/evmos:Z evmos/node "./evmosd tendermint unsafe-reset-all --home=/evmos"
+	@docker run --rm -v $(CURDIR)/build/node0/akilad:/akila:Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)/build/node1/akilad:/akila:Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)/build/node2/akilad:/akila:Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
+	@docker run --rm -v $(CURDIR)/build/node3/akilad:/akila:Z akila/node "./akilad tendermint unsafe-reset-all --home=/akila"
 endif
 
 # Clean testnet
@@ -540,7 +540,7 @@ localnet-show-logstream:
 ###                                Releasing                                ###
 ###############################################################################
 
-PACKAGE_NAME:=github.com/evmos/evmos
+PACKAGE_NAME:=github.com/akila/akila
 GOLANG_CROSS_VERSION  = v1.20
 GOPATH ?= '$(HOME)/go'
 release-dry-run:

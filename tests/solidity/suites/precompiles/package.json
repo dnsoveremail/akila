@@ -4,10 +4,10 @@
   "author": "Akila team",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "get-contracts": "mkdir -p ./contracts/evmos && rsync -avm --include='*/' --exclude='**/ERC20Minter_OpenZeppelinV5.sol' --exclude='**/WAKILA.sol' --exclude='**/ERC20NoMetadata.sol' --include='*.sol' --exclude='*' ../../../../precompiles/ ./contracts/evmos/",
-    "clean-contracts": "rm -rf ./contracts/evmos/*",
+    "get-contracts": "mkdir -p ./contracts/akila && rsync -avm --include='*/' --exclude='**/ERC20Minter_OpenZeppelinV5.sol' --exclude='**/WAKILA.sol' --exclude='**/ERC20NoMetadata.sol' --include='*.sol' --exclude='*' ../../../../precompiles/ ./contracts/akila/",
+    "clean-contracts": "rm -rf ./contracts/akila/*",
     "test-ganache": "yarn hardhat test",
-    "test-evmos": "yarn get-contracts && yarn hardhat test --network evmos && yarn clean-contracts"
+    "test-akila": "yarn get-contracts && yarn hardhat test --network akila && yarn clean-contracts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.2",

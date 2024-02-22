@@ -146,8 +146,8 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 	jq '.app_state["claims"]["params"]["duration_until_decay"]="100000s"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Claim module account:
-	# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || akila15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz
-	jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"akila15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz","coins":[{"denom":"aakila", "amount":$amount_to_claim}]}]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || akila15cvq3ljql6utxseh0zau9m8ve2j8erz8gdtg3y
+	jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"akila15cvq3ljql6utxseh0zau9m8ve2j8erz8gdtg3y","coins":[{"denom":"aakila", "amount":$amount_to_claim}]}]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Set base fee in genesis
 	jq '.app_state["feemarket"]["params"]["base_fee"]="'${BASEFEE}'"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"

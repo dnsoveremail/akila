@@ -196,19 +196,19 @@ function setupNetwork ({ runConfig, timeout }) {
 
   const spawnPromise = new Promise((resolve, reject) => {
     const serverStartedLog = 'Starting JSON-RPC server'
-    const serverStartedMsg = 'evmosd started'
+    const serverStartedMsg = 'akilad started'
 
-    const evmosdProc = spawn('../e2e/init-node.sh', {
+    const akiladProc = spawn('../e2e/init-node.sh', {
       cwd: __dirname,
       stdio: ['ignore', 'pipe', 'pipe']
     })
 
-    logger.info(`Starting evmosd process... timeout: ${timeout}ms`)
+    logger.info(`Starting akilad process... timeout: ${timeout}ms`)
     if (runConfig.verboseLog) {
-      evmosdProc.stdout.pipe(process.stdout)
+      akiladProc.stdout.pipe(process.stdout)
     }
 
-    evmosdProc.stdout.on('data', (d) => {
+    akiladProc.stdout.on('data', (d) => {
       const oLine = d.toString()
       if (runConfig.verboseLog) {
         process.stdout.write(oLine)
@@ -216,11 +216,11 @@ function setupNetwork ({ runConfig, timeout }) {
 
       if (oLine.indexOf(serverStartedLog) !== -1) {
         logger.info(serverStartedMsg)
-        resolve(evmosdProc)
+        resolve(akiladProc)
       }
     })
 
-    evmosdProc.stderr.on('data', (d) => {
+    akiladProc.stderr.on('data', (d) => {
       const oLine = d.toString()
       if (runConfig.verboseLog) {
         process.stdout.write(oLine)
@@ -228,13 +228,13 @@ function setupNetwork ({ runConfig, timeout }) {
 
       if (oLine.indexOf(serverStartedLog) !== -1) {
         logger.info(serverStartedMsg)
-        resolve(evmosdProc)
+        resolve(akiladProc)
       }
     })
   })
 
   const timeoutPromise = new Promise((resolve, reject) => {
-    setTimeout(() => reject(new Error('Start evmosd timeout!')), timeout)
+    setTimeout(() => reject(new Error('Start akilad timeout!')), timeout)
   })
   return Promise.race([spawnPromise, timeoutPromise])
 }
