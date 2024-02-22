@@ -19,9 +19,9 @@
 
 pragma solidity >=0.4.22 <0.6;
 
-contract WEVMOS9 {
-    string public name     = "Wrapped Evmos";
-    string public symbol   = "WEVMOS";
+contract WAKILA9 {
+    string public name     = "Wrapped Akila";
+    string public symbol   = "WAKILA";
     uint8  public decimals = 18;
 
     event  Approval(address indexed src, address indexed guy, uint wad);
