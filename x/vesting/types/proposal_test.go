@@ -34,7 +34,7 @@ func (suite *ProposalTestSuite) TestClawbackProposal() {
 			msg:         "Clawback proposal - valid address",
 			title:       "test",
 			description: "test desc",
-			address:     "akila19y7d5jz7q0v86zw5m0300mhprpvu0ccc4x6xgg",
+			address:     "akila19y7d5jz7q0v86zw5m0300mhprpvu0ccccs9q0w",
 			expectPass:  true,
 		},
 		// Invalid - Missing params

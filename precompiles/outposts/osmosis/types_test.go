@@ -431,7 +431,7 @@ func TestConvertToOsmosisRepresentation(t *testing.T) {
 			name:     "pass - correct conversion of aakila",
 			denom:    utils.BaseDenom,
 			expPass:  true,
-			expDenom: "ibc/8EAC8061F4499F03D2D1419A3E73D346289AE9DB89CAB1486B72539572B1915E",
+			expDenom: "ibc/6B5C6D50CD0B865A185C33D5E9246462E535A7230CE3261F137E1603CDE6C864",
 		}, {
 			name:     "pass - correct conversion of ibc uosmo",
 			denom:    osmoIBCDenom,
