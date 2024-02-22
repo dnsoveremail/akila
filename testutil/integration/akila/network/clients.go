@@ -1,8 +1,15 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package network
 
 import (
+	"akila/app"
+	"akila/encoding"
+	erc20types "akila/x/erc20/types"
+	evmtypes "akila/x/evm/types"
+	feemarkettypes "akila/x/feemarket/types"
+	infltypes "akila/x/inflation/v1/types"
+	revtypes "akila/x/revenue/v1/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -11,13 +18,6 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"akila/app"
-	"akila/encoding"
-	erc20types "akila/x/erc20/types"
-	evmtypes "akila/x/evm/types"
-	feemarkettypes "akila/x/feemarket/types"
-	infltypes "akila/x/inflation/v1/types"
-	revtypes "akila/x/revenue/v1/types"
 )
 
 func getQueryHelper(ctx sdktypes.Context) *baseapp.QueryServiceTestHelper {

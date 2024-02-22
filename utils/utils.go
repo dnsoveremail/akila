@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package utils
 
@@ -21,20 +21,20 @@ import (
 )
 
 const (
-	// MainnetChainID defines the Evmos EIP155 chain ID for mainnet
+	// MainnetChainID defines the Akila EIP155 chain ID for mainnet
 	MainnetChainID = "akila_9001"
-	// TestnetChainID defines the Evmos EIP155 chain ID for testnet
+	// TestnetChainID defines the Akila EIP155 chain ID for testnet
 	TestnetChainID = "akila_9000"
-	// BaseDenom defines the Evmos mainnet denomination
+	// BaseDenom defines the Akila mainnet denomination
 	BaseDenom = "aakila"
 )
 
-// IsMainnet returns true if the chain-id has the Evmos mainnet EIP155 chain prefix.
+// IsMainnet returns true if the chain-id has the Akila mainnet EIP155 chain prefix.
 func IsMainnet(chainID string) bool {
 	return strings.HasPrefix(chainID, MainnetChainID)
 }
 
-// IsTestnet returns true if the chain-id has the Evmos testnet EIP155 chain prefix.
+// IsTestnet returns true if the chain-id has the Akila testnet EIP155 chain prefix.
 func IsTestnet(chainID string) bool {
 	return strings.HasPrefix(chainID, TestnetChainID)
 }
@@ -67,9 +67,9 @@ func IsSupportedKey(pubkey cryptotypes.PubKey) bool {
 	}
 }
 
-// GetEvmosAddressFromBech32 returns the sdk.Account address of given address,
+// GetAkilaAddressFromBech32 returns the sdk.Account address of given address,
 // while also changing bech32 human readable prefix (HRP) to the value set on
-// the global sdk.Config (eg: `evmos`).
+// the global sdk.Config (eg: `akila`).
 // The function fails if the provided bech32 address is invalid.
 func GetAkilaAddressFromBech32(address string) (sdk.AccAddress, error) {
 	bech32Prefix := strings.SplitN(address, "1", 2)[0]

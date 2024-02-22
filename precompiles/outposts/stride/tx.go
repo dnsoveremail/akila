@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package stride
 
@@ -60,7 +60,7 @@ func (p Precompile) LiquidStake(
 		return nil, err
 	}
 
-	// WEVMOS address is the only supported token for liquid staking
+	// WAKILA address is the only supported token for liquid staking
 	if token != p.wakilaAddress {
 		return nil, fmt.Errorf(ErrUnsupportedToken, token, p.wakilaAddress)
 	}

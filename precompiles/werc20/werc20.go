@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package werc20
 
@@ -10,12 +10,12 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	cmn "akila/precompiles/common"
 	erc20 "akila/precompiles/erc20"
 	erc20types "akila/x/erc20/types"
 	transferkeeper "akila/x/ibc/transfer/keeper"
+	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 )
 
 // abiPath defines the path to the WERC-20 precompile ABI JSON file.
@@ -73,8 +73,8 @@ func (p Precompile) Address() common.Address {
 
 // RequiredGas calculates the contract gas use.
 func (p Precompile) RequiredGas(input []byte) uint64 {
-	// TODO: these values were obtained from Remix using the WEVMOS9.sol.
-	// We should execute the transactions from Evmos testnet
+	// TODO: these values were obtained from Remix using the WAKILA9.sol.
+	// We should execute the transactions from Akila testnet
 	// to ensure parity in the values.
 
 	// If there is no method ID, then it's the fallback or receive case

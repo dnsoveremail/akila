@@ -22,7 +22,7 @@ struct Period {
     Coin[] amount;
 }
 
-/// @author Evmos Team
+/// @author Akila Team
 /// @title Vesting Precompiled Contract
 /// @dev The interface through which solidity contracts will interact with vesting.
 /// We follow this same interface including four-byte function selectors, in the precompile that

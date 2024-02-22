@@ -151,7 +151,7 @@ func (suite *KeeperTestSuite) SetupIBCTest() {
 	err := s.app.EvmKeeper.SetParams(s.AkilaChain.GetContext(), evmParams)
 	suite.Require().NoError(err)
 
-	// s.app.FeeMarketKeeper.SetBaseFee(s.EvmosChain.GetContext(), big.NewInt(1))
+	// s.app.FeeMarketKeeper.SetBaseFee(s.AkilaChain.GetContext(), big.NewInt(1))
 
 	// Set block proposer once, so its carried over on the ibc-go-testing suite
 	validators := s.app.StakingKeeper.GetValidators(suite.AkilaChain.GetContext(), 2)
@@ -164,7 +164,7 @@ func (suite *KeeperTestSuite) SetupIBCTest() {
 
 	_, err = s.app.EvmKeeper.GetCoinbaseAddress(suite.AkilaChain.GetContext(), sdk.ConsAddress(suite.AkilaChain.CurrentHeader.ProposerAddress))
 	suite.Require().NoError(err)
-	// Mint coins locked on the evmos account generated with secp.
+	// Mint coins locked on the akila account generated with secp.
 	amt, ok := sdkmath.NewIntFromString("1000000000000000000000")
 	suite.Require().True(ok)
 	coinAkila := sdk.NewCoin(utils.BaseDenom, amt)
@@ -182,7 +182,7 @@ func (suite *KeeperTestSuite) SetupIBCTest() {
 	err = s.app.BankKeeper.MintCoins(s.AkilaChain.GetContext(), types.ModuleName, coins)
 	s.Require().NoError(err)
 
-	// Mint coins on the osmosis side which we'll use to unlock our aevmos
+	// Mint coins on the osmosis side which we'll use to unlock our aakila
 	coinOsmo := sdk.NewCoin("uosmo", sdkmath.NewInt(10000000))
 	coins = sdk.NewCoins(coinOsmo)
 	err = suite.IBCOsmosisChain.GetSimApp().BankKeeper.MintCoins(suite.IBCOsmosisChain.GetContext(), minttypes.ModuleName, coins)
@@ -190,7 +190,7 @@ func (suite *KeeperTestSuite) SetupIBCTest() {
 	err = suite.IBCOsmosisChain.GetSimApp().BankKeeper.SendCoinsFromModuleToAccount(suite.IBCOsmosisChain.GetContext(), minttypes.ModuleName, suite.IBCOsmosisChain.SenderAccount.GetAddress(), coins)
 	suite.Require().NoError(err)
 
-	// Mint coins on the cosmos side which we'll use to unlock our aevmos
+	// Mint coins on the cosmos side which we'll use to unlock our aakila
 	coinAtom := sdk.NewCoin("uatom", sdkmath.NewInt(10))
 	coins = sdk.NewCoins(coinAtom)
 	err = suite.IBCCosmosChain.GetSimApp().BankKeeper.MintCoins(suite.IBCCosmosChain.GetContext(), minttypes.ModuleName, coins)
@@ -350,7 +350,7 @@ func (suite *KeeperTestSuite) DeployContractDirectBalanceManipulation() (common.
 }
 
 // DeployContractToChain deploys the ERC20MinterBurnerDecimalsContract
-// to the Evmos chain (used on IBC tests)
+// to the Akila chain (used on IBC tests)
 func (suite *KeeperTestSuite) DeployContractToChain(name, symbol string, decimals uint8) (common.Address, error) {
 	return testutil.DeployContract(
 		s.AkilaChain.GetContext(),
@@ -403,7 +403,7 @@ func (suite *KeeperTestSuite) SendAndReceiveMessage(path *ibctesting.Path, origi
 	suite.sendAndReceiveMessage(path, path.EndpointA, path.EndpointB, origin, coin, amount, sender, receiver, seq, ibcCoinMetadata)
 }
 
-// Send back coins (from path endpoint B to A). In case of IBC coins need to provide ibcCoinMetadata (<port>/<channel>/<denom>, e.g.: "transfer/channel-0/aevmos") as input parameter.
+// Send back coins (from path endpoint B to A). In case of IBC coins need to provide ibcCoinMetadata (<port>/<channel>/<denom>, e.g.: "transfer/channel-0/aakila") as input parameter.
 // We need this to instantiate properly a FungibleTokenPacketData https://github.com/cosmos/ibc-go/blob/main/docs/architecture/adr-001-coin-source-tracing.md
 func (suite *KeeperTestSuite) SendBackCoins(path *ibctesting.Path, origin *ibcgotesting.TestChain, coin string, amount int64, sender, receiver string, seq uint64, ibcCoinMetadata string) {
 	// Send coin from B to A

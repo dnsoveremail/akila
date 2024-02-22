@@ -1,12 +1,12 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package network
 
 import (
+	inflationtypes "akila/x/inflation/v1/types"
 	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	inflationtypes "akila/x/inflation/v1/types"
 )
 
 // FundAccount funds the given account with the given amount of coins.

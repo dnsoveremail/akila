@@ -1,4 +1,4 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
+// Copyright Tharsis Labs Ltd.(Akila)
 // SPDX-License-Identifier:LGPL-3.0-only
 
 package revenue

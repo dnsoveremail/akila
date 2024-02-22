@@ -1,22 +1,22 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package vesting
 
 import (
 	"fmt"
 	"time"
 
-	"cosmossdk.io/math"
 	"akila/precompiles/authorization"
+	"cosmossdk.io/math"
 
 	"github.com/ethereum/go-ethereum/common"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 
-	cosmosvestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 	cmn "akila/precompiles/common"
 	vestingtypes "akila/x/vesting/types"
+	cosmosvestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 )
 
 // LockupPeriods is a struct used to parse the LockupPeriods parameter

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package bank
 
@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"math/big"
 
+	cmn "akila/precompiles/common"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/common"
-	cmn "akila/precompiles/common"
 )
 
 // Balance contains the amount for a corresponding ERC-20 contract address

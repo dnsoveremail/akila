@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package keyring
 
 import (
@@ -7,9 +7,9 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
+	utiltx "akila/testutil/tx"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
-	utiltx "akila/testutil/tx"
 )
 
 type Key struct {

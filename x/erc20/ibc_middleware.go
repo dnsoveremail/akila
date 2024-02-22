@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package erc20
 
@@ -12,9 +12,9 @@ import (
 	porttypes "github.com/cosmos/ibc-go/v7/modules/core/05-port/types"
 	"github.com/cosmos/ibc-go/v7/modules/core/exported"
 
-	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
 	"akila/ibc"
 	"akila/x/erc20/keeper"
+	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var _ porttypes.IBCModule = &IBCMiddleware{}

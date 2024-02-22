@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 //
 // This file contains all utility function that require the access to the unit
 // test network and should only be used in unit tests.
@@ -23,7 +23,7 @@ const (
 	TokenToMint = 1e18
 )
 
-// RegisterEvmosERC20Coins uses the UnitNetwork to register the evmos token as an
+// RegisterAkilaERC20Coins uses the UnitNetwork to register the akila token as an
 // ERC20 token. The function performs all the required steps for the registration
 // like registering the denom trace in the transfer keeper and minting the token
 // with the bank. Returns the TokenPair or an error.

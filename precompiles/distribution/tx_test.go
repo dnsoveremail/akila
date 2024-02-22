@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"math/big"
 
+	"akila/precompiles/testutil"
 	"cosmossdk.io/math"
 	"github.com/ethereum/go-ethereum/core/vm"
-	"akila/precompiles/testutil"
 
 	"github.com/ethereum/go-ethereum/common"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/x/distribution/types"
 	cmn "akila/precompiles/common"
 	"akila/precompiles/distribution"
 	utiltx "akila/testutil/tx"
 	"akila/utils"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/distribution/types"
 )
 
 func (s *PrecompileTestSuite) TestSetWithdrawAddress() {
@@ -199,7 +199,7 @@ func (s *PrecompileTestSuite) TestWithdrawDelegatorRewards() {
 		s.Run(tc.name, func() {
 			s.SetupTest()
 
-			// sanity check to make sure the starting balance is always 5 EVMOS
+			// sanity check to make sure the starting balance is always 5 AKILA
 			balance := s.app.BankKeeper.GetBalance(s.ctx, s.address.Bytes(), utils.BaseDenom)
 			s.Require().Equal(balance.Amount.BigInt(), big.NewInt(5000000000000000000))
 
@@ -395,11 +395,11 @@ func (s *PrecompileTestSuite) TestClaimRewards() {
 			var contract *vm.Contract
 			contract, s.ctx = testutil.NewPrecompileContract(s.T(), s.ctx, s.address, s.precompile, tc.gas)
 
-			// Sanity check to make sure the starting balance is always 5 EVMOS
+			// Sanity check to make sure the starting balance is always 5 AKILA
 			balance := s.app.BankKeeper.GetBalance(s.ctx, s.address.Bytes(), utils.BaseDenom)
 			s.Require().Equal(balance.Amount.BigInt(), big.NewInt(5e18))
 
-			// Distribute rewards to the 2 validators, 1 EVMOS each
+			// Distribute rewards to the 2 validators, 1 AKILA each
 			for _, val := range s.validators {
 				coins := sdk.NewCoins(sdk.NewCoin(utils.BaseDenom, math.NewInt(1e18)))
 				s.app.DistrKeeper.AllocateTokensToValidator(s.ctx, val, sdk.NewDecCoinsFromCoins(coins...))

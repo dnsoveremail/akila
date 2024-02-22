@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package vesting
 
@@ -12,14 +12,14 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	cmn "akila/precompiles/common"
+	vestingkeeper "akila/x/vesting/keeper"
 	"github.com/cometbft/cometbft/libs/log"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	cmn "akila/precompiles/common"
-	vestingkeeper "akila/x/vesting/keeper"
 )
 
 var _ vm.PrecompiledContract = &Precompile{}

@@ -1,16 +1,16 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package evm
 
 import (
 	"math/big"
 
+	evmtypes "akila/x/evm/types"
+	vestingtypes "akila/x/vesting/types"
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
-	evmtypes "akila/x/evm/types"
-	vestingtypes "akila/x/vesting/types"
 )
 
 // EthVestingTransactionDecorator validates if clawback vesting accounts are

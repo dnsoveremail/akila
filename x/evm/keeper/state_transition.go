@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package keeper
 
 import (
@@ -31,7 +31,7 @@ import (
 // beneficiary of the coinbase transaction (since we're not mining).
 //
 // NOTE: the RANDOM opcode is currently not supported since it requires
-// RANDAO implementation. See https://github.com/evmos/ethermint/pull/1520#pullrequestreview-1200504697
+// RANDAO implementation. See https://github.com/akila/ethermint/pull/1520#pullrequestreview-1200504697
 // for more information.
 
 func (k *Keeper) NewEVM(
@@ -430,7 +430,7 @@ func (k *Keeper) ApplyMessageWithConfig(ctx sdk.Context,
 
 	// calculate a minimum amount of gas to be charged to sender if GasLimit
 	// is considerably higher than GasUsed to stay more aligned with Tendermint gas mechanics
-	// for more info https://github.com/evmos/ethermint/issues/1085
+	// for more info https://github.com/akila/ethermint/issues/1085
 	gasLimit := math.LegacyNewDec(int64(msg.Gas()))
 	minGasMultiplier := k.GetMinGasMultiplier(ctx)
 	minimumGasUsed := gasLimit.Mul(minGasMultiplier)

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package erc20
 
@@ -10,6 +10,8 @@ import (
 	"math/big"
 	"time"
 
+	auth "akila/precompiles/authorization"
+	cmn "akila/precompiles/common"
 	sdkerrors "cosmossdk.io/errors"
 	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -18,8 +20,6 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	auth "akila/precompiles/authorization"
-	cmn "akila/precompiles/common"
 )
 
 // Approve sets the given amount as the allowance of the spender address over

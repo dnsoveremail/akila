@@ -1,17 +1,17 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package factory
 
 import (
+	evmtypes "akila/x/evm/types"
 	sdkmath "cosmossdk.io/math"
 	sdktypes "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	evmtypes "akila/x/evm/types"
 )
 
 // CosmosTxArgs contains the params to create a cosmos tx
 type CosmosTxArgs struct {
-	// ChainID is the chain's id in cosmos format, e.g. 'evmos_9000-1'
+	// ChainID is the chain's id in cosmos format, e.g. 'akila_9000-1'
 	ChainID string
 	// Gas to be used on the tx
 	Gas uint64

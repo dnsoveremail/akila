@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package ics20_test
 
 import (
@@ -75,7 +75,7 @@ var (
 	}
 )
 
-// SetupWithGenesisValSet initializes a new EvmosApp with a validator set and genesis accounts
+// SetupWithGenesisValSet initializes a new AkilaApp with a validator set and genesis accounts
 // that also act as delegators. For simplicity, each validator is bonded with a delegation
 // of one consensus engine unit (10^6) in the default token of the simapp from first genesis
 // account. A Nop logger is set in SimApp.
@@ -118,7 +118,7 @@ func (s *PrecompileTestSuite) SetupWithGenesisValSet(valSet *tmtypes.ValidatorSe
 
 	// set validators and delegations
 	stakingParams := stakingtypes.DefaultParams()
-	// set bond demon to be aevmos
+	// set bond demon to be aakila
 	stakingParams.BondDenom = utils.BaseDenom
 	stakingGenesis := stakingtypes.NewGenesisState(stakingParams, validators, delegations)
 	genesisState[stakingtypes.ModuleName] = app.AppCodec().MustMarshalJSON(stakingGenesis)
@@ -206,7 +206,7 @@ func (s *PrecompileTestSuite) DoSetupTest() {
 		// NOTE: This year has to be updated otherwise the client will be shown as expired
 		CurrentTime: time.Date(time.Now().Year()+1, 1, 2, 0, 0, 0, 0, time.UTC),
 	}
-	// Create 2 Evmos chains
+	// Create 2 Akila chains
 	chains[cmn.DefaultChainID] = s.NewTestChainWithValSet(s.coordinator, s.valSet, signersByAddress)
 	// TODO: Figure out if we want to make the second chain keepers accessible to the tests to check the state
 	chainID2 := utils.MainnetChainID + "-2"
@@ -416,7 +416,7 @@ func (s *PrecompileTestSuite) setupIBCTest() {
 	_, err = s.app.EvmKeeper.GetCoinbaseAddress(s.chainA.GetContext(), sdk.ConsAddress(s.chainA.CurrentHeader.ProposerAddress))
 	s.Require().NoError(err)
 
-	// Mint coins locked on the evmos account generated with secp.
+	// Mint coins locked on the akila account generated with secp.
 	amt, ok := math.NewIntFromString("1000000000000000000000")
 	s.Require().True(ok)
 	coinAkila := sdk.NewCoin(utils.BaseDenom, amt)
@@ -501,7 +501,7 @@ func (s *PrecompileTestSuite) setupAllocationsForTesting() {
 	}
 }
 
-// TODO upstream this change to evmos (adding gasPrice)
+// TODO upstream this change to akila (adding gasPrice)
 // DeployContract deploys a contract with the provided private key,
 // compiled contract data and constructor arguments
 func DeployContract(

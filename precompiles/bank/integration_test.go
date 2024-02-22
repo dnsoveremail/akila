@@ -66,7 +66,7 @@ func (is *IntegrationTestSuite) SetupTest() {
 	is.keyring = keyring
 	is.network = integrationNetwork
 
-	// Register EVMOS
+	// Register AKILA
 	akilaMetadata, found := is.network.App.BankKeeper.GetDenomMetaData(is.network.GetContext(), is.bondDenom)
 	Expect(found).To(BeTrue(), "failed to get denom metadata")
 

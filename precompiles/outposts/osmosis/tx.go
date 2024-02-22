@@ -1,7 +1,7 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 //
-// Osmosis package contains the logic of the Osmosis outpost on the Evmos chain.
+// Osmosis package contains the logic of the Osmosis outpost on the Akila chain.
 // This outpost uses the ics20 precompile to relay IBC packets to the Osmosis
 // chain, targeting the Cross-Chain Swap Contract V1 (XCS V1)
 
@@ -63,7 +63,7 @@ func (p Precompile) Swap(
 	bondDenom := p.stakingKeeper.GetParams(ctx).BondDenom
 	var inputDenom, outputDenom string
 
-	// Case 1. Input has to be either the address of Osmosis or WEVMOS
+	// Case 1. Input has to be either the address of Osmosis or WAKILA
 	switch input {
 	case p.wakilaAddress:
 		inputDenom = bondDenom
@@ -74,7 +74,7 @@ func (p Precompile) Swap(
 		}
 	}
 
-	// Case 2. Output has to be either the address of Osmosis or WEVMOS
+	// Case 2. Output has to be either the address of Osmosis or WAKILA
 	switch output {
 	case p.wakilaAddress:
 		outputDenom = bondDenom
@@ -91,7 +91,7 @@ func (p Precompile) Swap(
 		return nil, err
 	}
 
-	// Retrieve Osmosis channel and port associated with Evmos transfer app. We need these information
+	// Retrieve Osmosis channel and port associated with Akila transfer app. We need these information
 	// to reconstruct the output denom in the Osmosis chain.
 
 	channel, found := p.channelKeeper.GetChannel(ctx, akilaChannel.PortID, akilaChannel.ChannelID)

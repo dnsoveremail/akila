@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package network
 
 import (
@@ -18,7 +18,7 @@ type UnitTestNetwork struct {
 
 var _ Network = (*UnitTestNetwork)(nil)
 
-// NewUnitTestNetwork configures and initializes a new Evmos Network instance with
+// NewUnitTestNetwork configures and initializes a new Akila Network instance with
 // the given configuration options. If no configuration options are provided
 // it uses the default configuration.
 //

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package types
 
 import (
@@ -254,7 +254,7 @@ func CheckTxFee(gasPrice *big.Int, gas uint64, cap float64) error {
 		return nil
 	}
 	totalfee := new(big.Float).SetInt(new(big.Int).Mul(gasPrice, new(big.Int).SetUint64(gas)))
-	// 1 evmos in 10^18 aevmos
+	// 1 akila in 10^18 aakila
 	oneToken := new(big.Float).SetInt(big.NewInt(params.Ether))
 	// quo = rounded(x/y)
 	feeEth := new(big.Float).Quo(totalfee, oneToken)

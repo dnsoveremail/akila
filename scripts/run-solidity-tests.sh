@@ -5,7 +5,7 @@ export PATH="$PATH":"$GOPATH"/bin
 # remove existing data
 rm -rf "$HOME"/.evmosd
 
-# build evmos binary
+# build akila binary
 make install
 
 cd tests/solidity || exit

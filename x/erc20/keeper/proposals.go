@@ -1,4 +1,4 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
+// Copyright Tharsis Labs Ltd.(Akila)
 // SPDX-License-Identifier:LGPL-3.0-only
 
 package keeper
@@ -82,7 +82,7 @@ func (k Keeper) RegisterERC20(
 }
 
 // CreateCoinMetadata generates the metadata to represent the ERC20 token on
-// evmos.
+// akila.
 func (k Keeper) CreateCoinMetadata(
 	ctx sdk.Context,
 	contract common.Address,

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package v5
 
 import (
@@ -33,7 +33,7 @@ func MigrateStore(
 	extraEIPsBz := store.Get(types.ParamStoreKeyExtraEIPs)
 	cdc.MustUnmarshal(extraEIPsBz, &extraEIPs)
 
-	// revert ExtraEIP change for Evmos testnet
+	// revert ExtraEIP change for Akila testnet
 	if ctx.ChainID() == "akila_9000-4" {
 		extraEIPs.EIPs = []int64{}
 	}

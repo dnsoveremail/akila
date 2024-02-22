@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package config
 
@@ -31,7 +31,7 @@ const (
 const (
 	// DisplayDenom defines the denomination displayed to users in client applications.
 	DisplayDenom = "akila"
-	// BaseDenom defines to the default denomination used in Evmos (staking, EVM, governance, etc.)
+	// BaseDenom defines to the default denomination used in Akila (staking, EVM, governance, etc.)
 	BaseDenom = "aakila"
 )
 

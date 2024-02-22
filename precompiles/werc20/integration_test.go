@@ -339,7 +339,7 @@ var _ = Describe("WAKILA Extension -", func() {
 
 		When("calling withdraw", func() {
 			BeforeEach(func() {
-				// Deposit into the WEVMOS contract to have something to withdraw
+				// Deposit into the WAKILA contract to have something to withdraw
 				depositCheck := passCheck.WithExpPass(true).WithExpEvents(werc20.EventTypeDeposit)
 				txArgsContract, callArgsContract := s.getTxAndCallArgs(erc20Call, contractDataOriginal, werc20.DepositMethod)
 				txArgsContract.Amount = amount

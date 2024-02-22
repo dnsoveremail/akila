@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package testutil
 
 import (
@@ -41,7 +41,7 @@ type ContractCallArgs struct {
 	Contract ContractArgs
 	// Nonce is the nonce to use for the transaction.
 	Nonce *big.Int
-	// Amount is the aevmos amount to send in the transaction.
+	// Amount is the aakila amount to send in the transaction.
 	Amount *big.Int
 	// GasLimit to use for the transaction
 	GasLimit uint64

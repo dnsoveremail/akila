@@ -77,7 +77,7 @@ func (suite *AnteTestSuite) SetupTest() {
 	suite.ctx = suite.ctx.WithMinGasPrices(sdk.NewDecCoins(sdk.NewDecCoin(evmtypes.DefaultEVMDenom, sdkmath.OneInt())))
 	suite.ctx = suite.ctx.WithBlockGasMeter(sdk.NewGasMeter(1000000000000000000))
 
-	// set staking denomination to Evmos denom
+	// set staking denomination to Akila denom
 	params := suite.app.StakingKeeper.GetParams(suite.ctx)
 	params.BondDenom = utils.BaseDenom
 	err := suite.app.StakingKeeper.SetParams(suite.ctx, params)

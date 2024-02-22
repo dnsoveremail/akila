@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package types
 
@@ -42,9 +42,9 @@ func CalculateEpochMintProvision(
 	// epochProvision = periodProvision / epochsPerPeriod
 	epochProvision := periodProvision.Quo(math.LegacyNewDec(epochsPerPeriod))
 
-	// Multiply epochMintProvision with power reduction (10^18 for evmos) as the
-	// calculation is based on `evmos` and the issued tokens need to be given in
-	// `aevmos`
+	// Multiply epochMintProvision with power reduction (10^18 for akila) as the
+	// calculation is based on `akila` and the issued tokens need to be given in
+	// `aakila`
 	epochProvision = epochProvision.Mul(math.LegacyNewDecFromInt(akilatypes.PowerReduction))
 	return epochProvision
 }

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package erc20
 
@@ -13,12 +13,12 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	auth "akila/precompiles/authorization"
 	erc20types "akila/x/erc20/types"
 	transferkeeper "akila/x/ibc/transfer/keeper"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	authzkeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 )
 
 const (
@@ -98,7 +98,7 @@ func (p Precompile) RequiredGas(input []byte) uint64 {
 	}
 
 	// TODO: these values were obtained from Remix using the ERC20.sol from OpenZeppelin.
-	// We should execute the transactions using the ERC20MinterBurnerDecimals.sol from Evmos testnet
+	// We should execute the transactions using the ERC20MinterBurnerDecimals.sol from Akila testnet
 	// to ensure parity in the values.
 	switch method.Name {
 	// ERC-20 transactions

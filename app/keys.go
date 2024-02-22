@@ -1,9 +1,16 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package app
 
 import (
+	epochstypes "akila/x/epochs/types"
+	erc20types "akila/x/erc20/types"
+	evmtypes "akila/x/evm/types"
+	feemarkettypes "akila/x/feemarket/types"
+	inflationtypes "akila/x/inflation/v1/types"
+	revenuetypes "akila/x/revenue/v1/types"
+	vestingtypes "akila/x/vesting/types"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -22,13 +29,6 @@ import (
 	icahosttypes "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/host/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
 	ibcexported "github.com/cosmos/ibc-go/v7/modules/core/exported"
-	epochstypes "akila/x/epochs/types"
-	erc20types "akila/x/erc20/types"
-	evmtypes "akila/x/evm/types"
-	feemarkettypes "akila/x/feemarket/types"
-	inflationtypes "akila/x/inflation/v1/types"
-	revenuetypes "akila/x/revenue/v1/types"
-	vestingtypes "akila/x/vesting/types"
 )
 
 // StoreKeys returns the application store keys,
@@ -51,7 +51,7 @@ func StoreKeys() (
 		icahosttypes.StoreKey,
 		// ethermint keys
 		evmtypes.StoreKey, feemarkettypes.StoreKey,
-		// evmos keys
+		// akila keys
 		inflationtypes.StoreKey, erc20types.StoreKey,
 		epochstypes.StoreKey, vestingtypes.StoreKey,
 		revenuetypes.StoreKey,

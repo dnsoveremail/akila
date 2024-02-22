@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package bank
 
@@ -7,12 +7,12 @@ import (
 	"embed"
 	"fmt"
 
+	cmn "akila/precompiles/common"
+	erc20keeper "akila/x/erc20/keeper"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	cmn "akila/precompiles/common"
-	erc20keeper "akila/x/erc20/keeper"
 )
 
 const (

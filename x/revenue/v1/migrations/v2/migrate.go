@@ -1,14 +1,14 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
+// Copyright Tharsis Labs Ltd.(Akila)
 // SPDX-License-Identifier:LGPL-3.0-only
 
 package v2
 
 import (
+	v2types "akila/x/revenue/v1/migrations/v2/types"
+	"akila/x/revenue/v1/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	v2types "akila/x/revenue/v1/migrations/v2/types"
-	"akila/x/revenue/v1/types"
 )
 
 // MigrateStore migrates the x/revenue module state from the consensus version 1 to

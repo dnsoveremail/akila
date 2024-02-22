@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package staking_test
 
 import (
@@ -1192,7 +1192,7 @@ var _ = Describe("Calling staking precompile directly", func() {
 
 		It("should return an empty array if no redelegation is found for the given source validator", func() {
 			// NOTE: the way that the functionality is implemented in the Cosmos SDK, the following combinations are
-			// possible (see https://github.com/evmos/cosmos-sdk/blob/e773cf768844c87245d0c737cda1893a2819dd89/x/staking/keeper/querier.go#L361-L373):
+			// possible (see https://github.com/akila/cosmos-sdk/blob/e773cf768844c87245d0c737cda1893a2819dd89/x/staking/keeper/querier.go#L361-L373):
 			//
 			// - delegator is NOT empty, source validator is empty, destination validator is empty
 			//   --> filtering for all redelegations of the given delegator

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package p256_test
 
 import (
@@ -7,10 +7,10 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 
+	"akila/precompiles/p256"
 	"github.com/cometbft/cometbft/crypto"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/vm"
-	"akila/precompiles/p256"
 )
 
 var trueValue = common.LeftPadBytes(common.Big1.Bytes(), 32)

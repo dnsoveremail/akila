@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package staking
 
@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"math/big"
 
+	cmn "akila/precompiles/common"
 	"cosmossdk.io/math"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -18,7 +19,6 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
-	cmn "akila/precompiles/common"
 )
 
 // EventCreateValidator defines the event data for the staking CreateValidator transaction.
@@ -120,7 +120,7 @@ func NewMsgCreateValidator(args []interface{}, denom string) (*stakingtypes.MsgC
 		return nil, common.Address{}, fmt.Errorf(cmn.ErrInvalidType, "validatorAddress", "string", args[4])
 	}
 
-	// use cli `evmosd tendermint show-validator` get pubkey
+	// use cli `akilad tendermint show-validator` get pubkey
 	pubkeyBase64Str, ok := args[5].(string)
 	if !ok {
 		return nil, common.Address{}, fmt.Errorf(cmn.ErrInvalidType, "pubkey", "string", args[5])

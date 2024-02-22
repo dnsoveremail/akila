@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package osmosis
 
@@ -146,7 +146,7 @@ func (r RawPacketMetadata) Validate() error {
 		return fmt.Errorf(ErrEmptyOnFailedDelivery)
 	}
 
-	// Check if account is a valid bech32 evmos address.
+	// Check if account is a valid bech32 akila address.
 	if _, err := sdk.AccAddressFromBech32(osmosisSwap.Receiver); err != nil {
 		return fmt.Errorf(ErrReceiverAddress, "not a valid akila address")
 	}
@@ -241,12 +241,12 @@ func ValidateInputOutput(
 	// acceptedTokens are the tokens accepted as input or output of the swap.
 	acceptedTokens := []string{stakingDenom, osmoIBCDenom}
 
-	// Check that the input token is aevmos or uosmo.
+	// Check that the input token is aakila or uosmo.
 	if !slices.Contains(acceptedTokens, inputDenom) {
 		return fmt.Errorf(ErrDenomNotSupported, acceptedTokens)
 	}
 
-	// Check that the output token is aevmos or uosmo.
+	// Check that the output token is aakila or uosmo.
 	if !slices.Contains(acceptedTokens, outputDenom) {
 		return fmt.Errorf(ErrDenomNotSupported, acceptedTokens)
 	}
@@ -254,8 +254,8 @@ func ValidateInputOutput(
 	return nil
 }
 
-// ConvertToOsmosisRepresentation returns the Osmosis representation of the denom from the Evmos
-// representation of aevmos and uosmo. Return an error if the denom is different from one these two.
+// ConvertToOsmosisRepresentation returns the Osmosis representation of the denom from the Akila
+// representation of aakila and uosmo. Return an error if the denom is different from one these two.
 func ConvertToOsmosisRepresentation(
 	denom, stakingDenom string,
 	akilaChannel, osmosisChannel IBCChannel,

@@ -11,7 +11,7 @@ import (
 )
 
 func (s *PrecompileTestSuite) TestSwapEvent() {
-	// random common.Address that represents the evmos ERC20 token address and
+	// random common.Address that represents the akila ERC20 token address and
 	// the IBC OSMO ERC20 token address.
 	akilaAddress := akilautiltx.GenerateAddress()
 	osmoAddress := akilautiltx.GenerateAddress()

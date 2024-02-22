@@ -54,7 +54,7 @@ func (is *IntegrationTestSuite) SetupTest() {
 	gh := grpc.NewIntegrationHandler(nw)
 	tf := factory.New(nw, gh)
 
-	// Set up min deposit in Evmos
+	// Set up min deposit in Akila
 	params, err := gh.GetGovParams("deposit")
 	Expect(err).ToNot(HaveOccurred(), "failed to get gov params")
 	Expect(params).ToNot(BeNil(), "returned gov params are nil")
@@ -819,7 +819,7 @@ var _ = Describe("ERC20 Extension -", func() {
 				// querying allowance and reducing allowance on a transferFrom transaction is not possible without
 				// changes to the Cosmos SDK.
 				//
-				// For reference see this comment: https://github.com/evmos/evmos/pull/2088#discussion_r1407646217
+				// For reference see this comment: https://github.com/akila/akila/pull/2088#discussion_r1407646217
 				It("should return the maxUint256 value when calling the EVM extension", func() {
 					grantee := is.keyring.GetAddr(0)
 					granter := is.keyring.GetKey(0)
@@ -1129,7 +1129,7 @@ var _ = Describe("ERC20 Extension -", func() {
 					// querying allowance and reducing allowance on a transferFrom transaction is not possible without
 					// changes to the Cosmos SDK.
 					//
-					// For reference see this comment: https://github.com/evmos/evmos/pull/2088#discussion_r1407646217
+					// For reference see this comment: https://github.com/akila/akila/pull/2088#discussion_r1407646217
 					It("should return an error when calling the EVM extension", func() {
 						grantee := is.keyring.GetKey(0)
 						granter := is.keyring.GetKey(0)
@@ -1325,7 +1325,7 @@ var _ = Describe("ERC20 Extension -", func() {
 					// querying allowance and reducing allowance on a transferFrom transaction is not possible without
 					// changes to the Cosmos SDK.
 					//
-					// For reference see this comment: https://github.com/evmos/evmos/pull/2088#discussion_r1407646217
+					// For reference see this comment: https://github.com/akila/akila/pull/2088#discussion_r1407646217
 					It("should return an error when calling the EVM extension", func() {
 						callType := contractCall
 						sender := is.keyring.GetKey(0)
@@ -1574,7 +1574,7 @@ var _ = Describe("ERC20 Extension -", func() {
 			// querying allowance and reducing allowance on a transferFrom transaction is not possible without
 			// changes to the Cosmos SDK.
 			//
-			// For reference see this comment: https://github.com/evmos/evmos/pull/2088#discussion_r1407646217
+			// For reference see this comment: https://github.com/akila/akila/pull/2088#discussion_r1407646217
 			Context("increasing allowance", func() {
 				It("should return an error when calling the EVM extension", func() {
 					granter := is.keyring.GetKey(0)

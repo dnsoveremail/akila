@@ -1,12 +1,12 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
+// Copyright Tharsis Labs Ltd.(Akila)
 // SPDX-License-Identifier:LGPL-3.0-only
 
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	v2 "akila/x/revenue/v1/migrations/v2"
 	"akila/x/revenue/v1/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // Migrator is a struct for handling in-place store migrations.

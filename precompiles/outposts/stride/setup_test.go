@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package stride_test
 
@@ -55,6 +55,6 @@ func (s *PrecompileTestSuite) SetupTest() {
 	s.keyring = keyring
 	s.precompile = precompile
 
-	// Register stEvmos Coin as an ERC20 token
+	// Register stAkila Coin as an ERC20 token
 	s.registerStrideCoinERC20()
 }

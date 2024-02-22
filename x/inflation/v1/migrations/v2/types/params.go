@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package types
 
@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"strings"
 
+	evm "akila/x/evm/types"
+	"akila/x/inflation/v1/types"
 	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	evm "akila/x/evm/types"
-	"akila/x/inflation/v1/types"
 )
 
 var _ types.LegacyParams = &V2Params{}

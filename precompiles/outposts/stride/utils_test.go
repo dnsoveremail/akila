@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package stride_test
 
 import (
@@ -22,9 +22,9 @@ const (
 	channelID = "channel-0"
 )
 
-// registerStrideCoinERC20 registers stEvmos and Evmos coin as an ERC20 token
+// registerStrideCoinERC20 registers stAkila and Akila coin as an ERC20 token
 func (s *PrecompileTestSuite) registerStrideCoinERC20() {
-	// Register EVMOS ERC20 equivalent
+	// Register AKILA ERC20 equivalent
 	ctx := s.network.GetContext()
 	bondDenom := s.network.App.StakingKeeper.BondDenom(ctx)
 	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(ctx, bondDenom)
@@ -38,7 +38,7 @@ func (s *PrecompileTestSuite) registerStrideCoinERC20() {
 	_, err = s.network.App.Erc20Keeper.RegisterCoin(ctx, akilaMetadata)
 	s.Require().NoError(err)
 
-	// Register stEvmos Token Pair
+	// Register stAkila Token Pair
 	denomTrace := transfertypes.DenomTrace{
 		Path:      fmt.Sprintf("%s/%s", portID, channelID),
 		BaseDenom: "st" + bondDenom,

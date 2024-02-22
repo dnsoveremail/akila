@@ -13,8 +13,8 @@ IStrideOutpost constant STRIDE_OUTPOST_CONTRACT = IStrideOutpost(
 
 /// @dev AutopilotParams is a struct containing the parameters for the liquid stake and redeem transactions.
 /// @param channelID - The channel ID of the IBC channel that will be used to execute the transaction.
-/// @param sender - The address on the Evmos chain that will liquid stake or send LSD.
-/// @param receiver - The address on the Evmos chain that will redeem or receive LSD.
+/// @param sender - The address on the Akila chain that will liquid stake or send LSD.
+/// @param receiver - The address on the Akila chain that will redeem or receive LSD.
 /// @param token - The address of the ERC-20 token pair that will be liquid staked or redeemed.
 /// @param amount - The amount of tokens that will be liquid staked or redeemed.
 /// @param strideForwarder - The bech32-formatted address on the Stride chain that will be used to execute
@@ -29,7 +29,7 @@ struct AutopilotParams {
 }
 
 
-/// @author Evmos Team
+/// @author Akila Team
 /// @title StrideOutpost Precompiled Contract
 /// @dev The interface through which solidity contracts will interact with Stride Outpost that uses ICS20 under the hood
 /// @custom:address 0x0000000000000000000000000000000000000900
@@ -64,7 +64,7 @@ interface IStrideOutpost {
 
     /// @dev Emitted on a Redeem transaction.
     /// @param sender The address of the sender.
-    /// @param receiver The address of the receiver on the Evmos chain.
+    /// @param receiver The address of the receiver on the Akila chain.
     /// @param token The token to be un-luquid staked.
     /// @param strideForwarder The bech32-formatted address of the receiver on the Stride chain.
     /// @param amount The amount of tokens to unstake.
@@ -76,11 +76,11 @@ interface IStrideOutpost {
         uint256 amount
     );
 
-    /// @dev Liquid stake a native Coin on the Stride chain and return it to the Evmos chain.
+    /// @dev Liquid stake a native Coin on the Stride chain and return it to the Akila chain.
     /// @param payload The AutopilotParams struct containing the parameters for the liquid stake transaction.
     function liquidStake(AutopilotParams calldata payload) external returns (bool success);
 
-    /// @dev This method unstakes the LSD Coin (ex. stEvmos, stAtom) and redeems
+    /// @dev This method unstakes the LSD Coin (ex. stAkila, stAtom) and redeems
     /// the native Coin by sending an ICS20 Transfer to the specified chain.
     /// @param payload The AutopilotParams struct containing the parameters for the redeem stake transaction.
     function redeemStake(AutopilotParams calldata payload) external returns (bool success);

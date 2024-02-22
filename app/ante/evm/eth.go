@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package evm
 
@@ -144,7 +144,7 @@ func (egcd EthGasConsumeDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simula
 		// that is not bubbled up. Thus, the Tx never runs on DeliverMode
 		// Error: "gas wanted -1 is negative"
 		// For more information, see issue #1554
-		// https://github.com/evmos/ethermint/issues/1554
+		// https://github.com/akila/ethermint/issues/1554
 		newCtx := ctx.WithGasMeter(types.NewInfiniteGasMeterWithLimit(gasWanted))
 		return next(newCtx, tx, simulate)
 	}

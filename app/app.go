@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package app
 
@@ -173,7 +173,7 @@ func init() {
 
 	DefaultNodeHome = filepath.Join(userHomeDir, ".akilad")
 
-	// manually update the power reduction by replacing micro (u) -> atto (a) evmos
+	// manually update the power reduction by replacing micro (u) -> atto (a) akila
 	sdk.DefaultPowerReduction = akilatypes.PowerReduction
 	// modify fee market parameter defaults through global
 	feemarkettypes.DefaultMinGasPrice = MainnetMinGasPrices
@@ -203,7 +203,7 @@ var (
 			[]govclient.ProposalHandler{
 				paramsclient.ProposalHandler, upgradeclient.LegacyProposalHandler, upgradeclient.LegacyCancelProposalHandler,
 				ibcclientclient.UpdateClientProposalHandler, ibcclientclient.UpgradeProposalHandler,
-				// Evmos proposal types
+				// Akila proposal types
 				erc20client.RegisterCoinProposalHandler, erc20client.RegisterERC20ProposalHandler, erc20client.ToggleTokenConversionProposalHandler,
 				vestingclient.RegisterClawbackProposalHandler,
 			},
@@ -250,7 +250,7 @@ var (
 	_ runtime.AppI            = (*Akila)(nil)
 )
 
-// Evmos implements an extended ABCI application. It is an application
+// Akila implements an extended ABCI application. It is an application
 // that may process transactions through Ethereum's EVM running atop of
 // Tendermint consensus.
 type Akila struct {
@@ -294,7 +294,7 @@ type Akila struct {
 	EvmKeeper       *evmkeeper.Keeper
 	FeeMarketKeeper feemarketkeeper.Keeper
 
-	// Evmos keepers
+	// Akila keepers
 	InflationKeeper inflationkeeper.Keeper
 	Erc20Keeper     erc20keeper.Keeper
 	EpochsKeeper    epochskeeper.Keeper
@@ -318,7 +318,7 @@ func (*Akila) SimulationManager() *module.SimulationManager {
 	panic("unimplemented")
 }
 
-// NewEvmos returns a reference to a new initialized Ethermint application.
+// NewAkila returns a reference to a new initialized Ethermint application.
 func NewAkila(
 	logger log.Logger,
 	db dbm.DB,
@@ -462,7 +462,7 @@ func NewAkila(
 	// Set legacy router for backwards compatibility with gov v1beta1
 	govKeeper.SetLegacyRouter(govRouter)
 
-	// Evmos Keeper
+	// Akila Keeper
 	app.InflationKeeper = inflationkeeper.NewKeeper(
 		keys[inflationtypes.StoreKey], appCodec, authtypes.NewModuleAddress(govtypes.ModuleName),
 		app.AccountKeeper, app.BankKeeper, app.DistrKeeper, stakingKeeper,
@@ -630,7 +630,7 @@ func NewAkila(
 		// Ethermint app modules
 		evm.NewAppModule(app.EvmKeeper, app.AccountKeeper, app.GetSubspace(evmtypes.ModuleName)),
 		feemarket.NewAppModule(app.FeeMarketKeeper, app.GetSubspace(feemarkettypes.ModuleName)),
-		// Evmos app modules
+		// Akila app modules
 		inflation.NewAppModule(app.InflationKeeper, app.AccountKeeper, app.StakingKeeper,
 			app.GetSubspace(inflationtypes.ModuleName)),
 		erc20.NewAppModule(app.Erc20Keeper, app.AccountKeeper,
@@ -699,7 +699,7 @@ func NewAkila(
 		feegrant.ModuleName,
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
-		// Evmos modules
+		// Akila modules
 		vestingtypes.ModuleName,
 		inflationtypes.ModuleName,
 		erc20types.ModuleName,
@@ -736,7 +736,7 @@ func NewAkila(
 		feegrant.ModuleName,
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
-		// Evmos modules
+		// Akila modules
 		vestingtypes.ModuleName,
 		inflationtypes.ModuleName,
 		erc20types.ModuleName,
@@ -962,7 +962,7 @@ func (app *Akila) BlockedAddrs() map[string]bool {
 	return blockedAddrs
 }
 
-// LegacyAmino returns Evmos's amino codec.
+// LegacyAmino returns Akila's amino codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -970,7 +970,7 @@ func (app *Akila) LegacyAmino() *codec.LegacyAmino {
 	return app.cdc
 }
 
-// AppCodec returns Evmos's app codec.
+// AppCodec returns Akila's app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -978,7 +978,7 @@ func (app *Akila) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns Evmos's InterfaceRegistry
+// InterfaceRegistry returns Akila's InterfaceRegistry
 func (app *Akila) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
@@ -1126,7 +1126,7 @@ func initParamsKeeper(
 	// ethermint subspaces
 	paramsKeeper.Subspace(evmtypes.ModuleName).WithKeyTable(evmtypes.ParamKeyTable()) //nolint:staticcheck
 	paramsKeeper.Subspace(feemarkettypes.ModuleName).WithKeyTable(feemarkettypes.ParamKeyTable())
-	// evmos subspaces
+	// akila subspaces
 	paramsKeeper.Subspace(inflationtypes.ModuleName)
 	paramsKeeper.Subspace(erc20types.ModuleName)
 	paramsKeeper.Subspace(revenuetypes.ModuleName)

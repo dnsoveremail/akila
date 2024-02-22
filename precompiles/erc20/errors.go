@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package erc20
 
@@ -7,12 +7,12 @@ import (
 	"errors"
 	"strings"
 
+	cmn "akila/precompiles/common"
+	evmtypes "akila/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
-	cmn "akila/precompiles/common"
-	evmtypes "akila/x/evm/types"
 )
 
 // Errors that have formatted information are defined here as a string.

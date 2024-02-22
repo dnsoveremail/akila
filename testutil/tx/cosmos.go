@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package tx
 
 import (
@@ -19,7 +19,7 @@ import (
 
 var (
 	feeAmt     = math.Pow10(16)
-	DefaultFee = sdk.NewCoin(utils.BaseDenom, sdkmath.NewIntFromUint64(uint64(feeAmt))) // 0.01 EVMOS
+	DefaultFee = sdk.NewCoin(utils.BaseDenom, sdkmath.NewIntFromUint64(uint64(feeAmt))) // 0.01 AKILA
 )
 
 // CosmosTxArgs contains the params to create a cosmos tx
@@ -28,7 +28,7 @@ type CosmosTxArgs struct {
 	TxCfg client.TxConfig
 	// Priv is the private key that will be used to sign the tx
 	Priv cryptotypes.PrivKey
-	// ChainID is the chain's id on cosmos format, e.g. 'evmos_9000-1'
+	// ChainID is the chain's id on cosmos format, e.g. 'akila_9000-1'
 	ChainID string
 	// Gas to be used on the tx
 	Gas uint64

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package keyring
 
@@ -11,14 +11,14 @@ import (
 	"akila/crypto/hd"
 )
 
-// AppName defines the Ledger app used for signing. Evmos uses the Ethereum app
+// AppName defines the Ledger app used for signing. Akila uses the Ethereum app
 const AppName = "Ethereum"
 
 var (
-	// SupportedAlgorithms defines the list of signing algorithms used on Evmos:
+	// SupportedAlgorithms defines the list of signing algorithms used on Akila:
 	//  - eth_secp256k1 (Ethereum)
 	SupportedAlgorithms = keyring.SigningAlgoList{hd.EthSecp256k1}
-	// SupportedAlgorithmsLedger defines the list of signing algorithms used on Evmos for the Ledger device:
+	// SupportedAlgorithmsLedger defines the list of signing algorithms used on Akila for the Ledger device:
 	//  - secp256k1 (in order to comply with Cosmos SDK)
 	// The Ledger derivation function is responsible for all signing and address generation.
 	SupportedAlgorithmsLedger = keyring.SigningAlgoList{hd.EthSecp256k1}

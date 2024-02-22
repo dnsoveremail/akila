@@ -1,13 +1,13 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package coordinator
 
 import (
 	"strconv"
 	"testing"
 
-	ibctesting "github.com/cosmos/ibc-go/v7/testing"
 	"akila/testutil/integration/common/network"
+	ibctesting "github.com/cosmos/ibc-go/v7/testing"
 )
 
 // getIBCChains returns a map of TestChain's for the given network interface.

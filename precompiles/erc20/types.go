@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package erc20
 
@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	// WEVMOSContractMainnet is the WEVMOS contract address for mainnet
+	// WAKILAContractMainnet is the WAKILA contract address for mainnet
 	WAKILAContractMainnet = "0xD4949664cD82660AaE99bEdc034a0deA8A0bd517"
-	// WEVMOSContractTestnet is the WEVMOS contract address for testnet
+	// WAKILAContractTestnet is the WAKILA contract address for testnet
 	WAKILAContractTestnet = "0xcc491f589b45d4a3c679016195b3fb87d7848210"
 )
 

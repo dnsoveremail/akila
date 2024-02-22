@@ -1,16 +1,16 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package contracts
 
 import (
 	"math/big"
 
+	"akila/crypto/ethsecp256k1"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
-	"akila/crypto/ethsecp256k1"
 )
 
 // CallArgs is a struct to define all relevant data to call a smart contract.
@@ -85,7 +85,7 @@ func (c CallArgs) WithArgs(args ...interface{}) CallArgs {
 }
 
 // WithAmount populates the CallArgs struct's Amount field with the given amount.
-// This is the amount of Evmos that will be sent with the contract call.
+// This is the amount of Akila that will be sent with the contract call.
 func (c CallArgs) WithAmount(amount *big.Int) CallArgs {
 	c.Amount = amount
 	return c

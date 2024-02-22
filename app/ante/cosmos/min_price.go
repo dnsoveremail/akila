@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package cosmos
 
 import (
@@ -8,9 +8,9 @@ import (
 
 	"golang.org/x/exp/slices"
 
+	evmante "akila/app/ante/evm"
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
-	evmante "akila/app/ante/evm"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	errortypes "github.com/cosmos/cosmos-sdk/types/errors"
@@ -44,7 +44,7 @@ func (mpd MinGasPriceDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate 
 	evmParams := mpd.evmKeeper.GetParams(ctx)
 	evmDenom := evmParams.GetEvmDenom()
 
-	// only allow user to pass in aevmos and stake native token as transaction fees
+	// only allow user to pass in aakila and stake native token as transaction fees
 	// allow use stake native tokens for fees is just for unit tests to pass
 	validFees := len(feeCoins) == 0 || (len(feeCoins) == 1 && slices.Contains([]string{evmDenom, sdk.DefaultBondDenom}, feeCoins.GetDenomByIndex(0)))
 	if !validFees && !simulate {

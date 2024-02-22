@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package network
 
 import (
@@ -72,9 +72,9 @@ func createBalances(accounts []sdktypes.AccAddress, coin sdktypes.Coin) []bankty
 	return fundedAccountBalances
 }
 
-// createEvmosApp creates an evmos app
+// createAkilaApp creates an akila app
 func createAkilaApp(chainID string) *app.Akila {
-	// Create evmos app
+	// Create akila app
 	db := dbm.NewMemDB()
 	logger := log.NewNopLogger()
 	loadLatest := true

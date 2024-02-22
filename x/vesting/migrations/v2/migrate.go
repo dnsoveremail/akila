@@ -1,12 +1,12 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package v2
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	accounttypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	v1vestingtypes "akila/x/vesting/migrations/types"
 	vestingtypes "akila/x/vesting/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	accounttypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 // MigrateStore migrates the x/vesting module state from the consensus version 1 to

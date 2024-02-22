@@ -48,7 +48,7 @@ func (suite *KeeperTestSuite) TestOnRecvPacket() {
 	ethsecpAddrAkila := sdk.AccAddress(ethPk.PubKey().Address()).String()
 	ethsecpAddrCosmos := sdk.MustBech32ifyAddressBytes(sdk.Bech32MainPrefix, ethsecpAddr)
 
-	// Setup Cosmos <=> Evmos IBC relayer
+	// Setup Cosmos <=> Akila IBC relayer
 	sourceChannel := "channel-292"
 	akilaChannel := "channel-3"
 	path := fmt.Sprintf("%s/%s", transfertypes.PortID, akilaChannel)
@@ -330,7 +330,7 @@ func (suite *KeeperTestSuite) TestOnRecvPacket() {
 				&suite.app.TransferKeeper,
 			)
 
-			// Fund receiver account with EVMOS, ERC20 coins and IBC vouchers
+			// Fund receiver account with AKILA, ERC20 coins and IBC vouchers
 			// We do this since we are interested in the conversion portion w/ OnRecvPacket
 			err = testutil.FundAccount(suite.ctx, suite.app.BankKeeper, tc.receiver, coins)
 			suite.Require().NoError(err)
@@ -519,7 +519,7 @@ func (suite *KeeperTestSuite) TestOnAcknowledgementPacket() {
 
 				sender = sdk.AccAddress(senderPk.PubKey().Address())
 
-				// Fund receiver account with EVMOS, ERC20 coins and IBC vouchers
+				// Fund receiver account with AKILA, ERC20 coins and IBC vouchers
 				// We do this since we are interested in the conversion portion w/ OnRecvPacket
 				err := testutil.FundAccount(
 					suite.ctx,
@@ -546,7 +546,7 @@ func (suite *KeeperTestSuite) TestOnAcknowledgementPacket() {
 
 				sender = sdk.AccAddress(senderPk.PubKey().Address())
 
-				// Fund receiver account with EVMOS, ERC20 coins and IBC vouchers
+				// Fund receiver account with AKILA, ERC20 coins and IBC vouchers
 				// We do this since we are interested in the conversion portion w/ OnRecvPacket
 				err := testutil.FundAccount(
 					suite.ctx,

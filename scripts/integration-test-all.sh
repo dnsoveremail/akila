@@ -20,7 +20,7 @@ KEY="dev0"
 CHAINID="evmos_9000-1"
 MONIKER="mymoniker"
 
-## default port prefixes for evmosd
+## default port prefixes for akilad
 NODE_P2P_PORT="2660"
 NODE_PORT="2663"
 NODE_RPC_PORT="2666"
@@ -59,7 +59,7 @@ if [[ ! "$DATA_DIR" ]]; then
     exit 1
 fi
 
-# Compile evmos
+# Compile akila
 echo "compiling evmos"
 make build
 
@@ -159,7 +159,7 @@ stop_func() {
     EVMOS_PID=$i
     echo "shutting down node, pid=$EVMOS_PID ..."
 
-    # Shutdown evmos node
+    # Shutdown akila node
     kill -9 "$EVMOS_PID"
     wait "$EVMOS_PID"
 

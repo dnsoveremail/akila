@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package network
 
@@ -124,7 +124,7 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 
 	delegations := createDelegations(valSet.Validators, genAccounts[0].GetAddress())
 
-	// Create a new EvmosApp with the following params
+	// Create a new AkilaApp with the following params
 	akilaApp := createAkilaApp(n.cfg.chainID)
 
 	// Configure Genesis state
@@ -183,7 +183,7 @@ func (n *IntegrationNetwork) configureAndInitChain() error {
 	n.valSet = valSet
 	n.valSigners = valSigners
 
-	// Register EVMOS in denom metadata
+	// Register AKILA in denom metadata
 	akilaMetadata := banktypes.Metadata{
 		Description: "The native token of Akila",
 		Base:        n.cfg.denom,

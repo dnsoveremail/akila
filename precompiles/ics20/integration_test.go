@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package ics20_test
 
 import (
@@ -52,7 +52,7 @@ var (
 	// gasPrice defines a default gas price to be used in the testing suite
 	gasPrice = big.NewInt(200_000)
 
-	// array of allocations with only one allocation for 'aevmos' coin
+	// array of allocations with only one allocation for 'aakila' coin
 	defaultSingleAlloc []cmn.ICS20Allocation
 )
 
@@ -1213,7 +1213,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 		Context("'aakila' coin", func() {
 			Context("with authorization", func() {
 				BeforeEach(func() {
-					// set approval to transfer 'aevmos'
+					// set approval to transfer 'aakila'
 					s.setTransferApprovalForContract(defaultApproveArgs)
 				})
 
@@ -1298,7 +1298,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 
 			Context("without authorization", func() {
 				It("should not transfer IBC coin", func() {
-					// initialEvmosBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
+					// initialAkilaBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
 
 					_, _, err := contracts.CallContractAndCheckLogs(s.chainA.GetContext(), s.app, defaultTransferIbcCoinArgs, execRevertedCheck)
 					Expect(err).To(HaveOccurred(), "error while calling the smart contract: %v", err)
@@ -1307,7 +1307,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 					// TODO: fees are not calculated correctly with this logic
 					// fees := math.NewIntFromBigInt(gasPrice).MulRaw(res.GasUsed)
 					// finalBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), s.bondDenom)
-					// Expect(finalBalance.Amount).To(Equal(initialEvmosBalance.Amount.Sub(fees)))
+					// Expect(finalBalance.Amount).To(Equal(initialAkilaBalance.Amount.Sub(fees)))
 
 					// check IBC coins balance remains unchaged
 					finalOsmoBalance := s.app.BankKeeper.GetBalance(s.chainA.GetContext(), s.address.Bytes(), ibcDenom)
@@ -1538,7 +1538,7 @@ var _ = Describe("Calling ICS20 precompile from another contract", func() {
 
 			Context("with authorization", func() {
 				BeforeEach(func() {
-					// set approval to transfer 'aevmos'
+					// set approval to transfer 'aakila'
 					s.setTransferApprovalForContract(defaultApproveArgs)
 				})
 

@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package ante
 
@@ -20,11 +20,11 @@ import (
 	anteutils "akila/app/ante/utils"
 	evmtypes "akila/x/evm/types"
 
-	sdkvesting "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 	vestingtypes "akila/x/vesting/types"
+	sdkvesting "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
 )
 
-// HandlerOptions defines the list of module keepers required to run the Evmos
+// HandlerOptions defines the list of module keepers required to run the Akila
 // AnteHandler decorators.
 type HandlerOptions struct {
 	Cdc                    codec.BinaryCodec

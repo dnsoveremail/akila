@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package keeper
 
@@ -8,11 +8,11 @@ import (
 
 	"github.com/armon/go-metrics"
 
+	epochstypes "akila/x/epochs/types"
+	"akila/x/inflation/v1/types"
 	sdkmath "cosmossdk.io/math"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	epochstypes "akila/x/epochs/types"
-	"akila/x/inflation/v1/types"
 )
 
 // BeforeEpochStart: noop, We don't need to do anything here

@@ -132,7 +132,7 @@ func (s *PrecompileTestSuite) TestIncreaseAllowanceEvent() {
 			err := s.CreateAuthorization(s.address, staking.DelegateAuthz, nil)
 			s.Require().NoError(err)
 
-			// Approve first with 1 evmos
+			// Approve first with 1 akila
 			_, err = s.precompile.Approve(s.ctx, s.address, s.stateDB, &approvalMethod, tc.malleate())
 			s.Require().NoError(err)
 
@@ -199,7 +199,7 @@ func (s *PrecompileTestSuite) TestDecreaseAllowanceEvent() {
 			err := s.CreateAuthorization(s.address, staking.DelegateAuthz, nil)
 			s.Require().NoError(err)
 
-			// Approve first with 2 evmos
+			// Approve first with 2 akila
 			args := []interface{}{
 				s.address,
 				big.NewInt(2000000000000000000),

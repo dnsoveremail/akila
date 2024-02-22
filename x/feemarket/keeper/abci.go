@@ -1,12 +1,12 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package keeper
 
 import (
 	"fmt"
 
-	abci "github.com/cometbft/cometbft/abci/types"
 	"akila/x/feemarket/types"
+	abci "github.com/cometbft/cometbft/abci/types"
 
 	"cosmossdk.io/math"
 	"github.com/cosmos/cosmos-sdk/telemetry"
@@ -62,7 +62,7 @@ func (k *Keeper) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) {
 	// to prevent BaseFee manipulation we limit the gasWanted so that
 	// gasWanted = max(gasWanted * MinGasMultiplier, gasUsed)
 	// this will be keep BaseFee protected from un-penalized manipulation
-	// more info here https://github.com/evmos/ethermint/pull/1105#discussion_r888798925
+	// more info here https://github.com/akila/ethermint/pull/1105#discussion_r888798925
 	minGasMultiplier := k.GetParams(ctx).MinGasMultiplier
 	limitedGasWanted := math.LegacyNewDec(gasWanted.Int64()).Mul(minGasMultiplier)
 	updatedGasWanted := math.LegacyMaxDec(limitedGasWanted, math.LegacyNewDec(gasUsed.Int64())).TruncateInt().Uint64()

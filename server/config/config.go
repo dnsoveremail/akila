@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package config
 
 import (
@@ -213,7 +213,7 @@ func AppConfig(denom string) (string, interface{}) {
 	// - if you set srvCfg.MinGasPrices non-empty, validators CAN tweak their
 	//   own app.toml to override, or use this default value.
 	//
-	// In evmos, we set the min gas prices to 0.
+	// In akila, we set the min gas prices to 0.
 	if denom != "" {
 		customAppConfig.Config.MinGasPrices = "0" + denom
 	}

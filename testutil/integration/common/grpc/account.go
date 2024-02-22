@@ -1,13 +1,13 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package grpc
 
 import (
 	"context"
 
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"akila/app"
 	"akila/encoding"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 // GetAccount returns the account for the given address.

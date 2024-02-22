@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package post_test
 
@@ -9,7 +9,7 @@ import (
 	"fmt"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	// "github.com/evmos/evmos/v16/testutil/integration/evmos/factory"
+	// "github.com/akila/akila/v16/testutil/integration/akila/factory"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

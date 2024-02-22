@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package backend
 
 import (
@@ -9,6 +9,9 @@ import (
 
 	errorsmod "cosmossdk.io/errors"
 
+	rpctypes "akila/rpc/types"
+	"akila/types"
+	evmtypes "akila/x/evm/types"
 	tmrpcclient "github.com/cometbft/cometbft/rpc/client"
 	tmrpctypes "github.com/cometbft/cometbft/rpc/core/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -16,9 +19,6 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	rpctypes "akila/rpc/types"
-	"akila/types"
-	evmtypes "akila/x/evm/types"
 	"github.com/pkg/errors"
 )
 
@@ -131,7 +131,7 @@ func (b *Backend) getTransactionByHashPending(txHash common.Hash) (*rpctypes.RPC
 func (b *Backend) GetGasUsed(res *types.TxResult, price *big.Int, gas uint64) uint64 {
 	// patch gasUsed if tx is reverted and happened before height on which fixed was introduced
 	// to return real gas charged
-	// more info at https://github.com/evmos/ethermint/pull/1557
+	// more info at https://github.com/akila/ethermint/pull/1557
 	if res.Failed && res.Height < b.cfg.JSONRPC.FixRevertGasRefundHeight {
 		return new(big.Int).Mul(price, new(big.Int).SetUint64(gas)).Uint64()
 	}

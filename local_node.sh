@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CHAINID="${CHAIN_ID:-evmos_9000-1}"
+CHAINID="${CHAIN_ID:-akila_9000-1}"
 MONIKER="localtestnet"
 # Remember to change to other types of keyring like 'file' in-case exposing to outside world,
 # otherwise your balance will be wiped quickly
@@ -8,8 +8,8 @@ MONIKER="localtestnet"
 KEYRING="test"
 KEYALGO="eth_secp256k1"
 LOGLEVEL="info"
-# Set dedicated home directory for the evmosd instance
-HOMEDIR="$HOME/.tmp-evmosd"
+# Set dedicated home directory for the akilad instance
+HOMEDIR="$HOME/.tmp-akilad"
 # to trace evm
 #TRACE="--trace"
 TRACE=""
@@ -50,7 +50,7 @@ while [[ $# -gt 0 ]]; do
 		shift # Move past the argument
 		;;
 	--no-install)
-		echo "Flag --no-install passed -> Skipping installation of the evmosd binary."
+		echo "Flag --no-install passed -> Skipping installation of the akilad binary."
 		install=false
 		shift # Move past the flag
 		;;
@@ -84,51 +84,51 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 	rm -rf "$HOMEDIR"
 
 	# Set client config
-	evmosd config keyring-backend "$KEYRING" --home "$HOMEDIR"
-	evmosd config chain-id "$CHAINID" --home "$HOMEDIR"
+	akilad config keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad config chain-id "$CHAINID" --home "$HOMEDIR"
 
-	# myKey address 0x7cb61d4117ae31a12e393a1cfa3bac666481d02e | evmos10jmp6sgh4cc6zt3e8gw05wavvejgr5pwjnpcky
+	# myKey address 0x7cb61d4117ae31a12e393a1cfa3bac666481d02e | akila10jmp6sgh4cc6zt3e8gw05wavvejgr5pwjnpcky
 	VAL_KEY="mykey"
 	VAL_MNEMONIC="gesture inject test cycle original hollow east ridge hen combine junk child bacon zero hope comfort vacuum milk pitch cage oppose unhappy lunar seat"
 
-	# dev0 address 0xc6fe5d33615a1c52c08018c47e8bc53646a0e101 | evmos1cml96vmptgw99syqrrz8az79xer2pcgp84pdun
+	# dev0 address 0xc6fe5d33615a1c52c08018c47e8bc53646a0e101 | akila1cml96vmptgw99syqrrz8az79xer2pcgp84pdun
 	USER1_KEY="dev0"
 	USER1_MNEMONIC="copper push brief egg scan entry inform record adjust fossil boss egg comic alien upon aspect dry avoid interest fury window hint race symptom"
 
-	# dev1 address 0x963ebdf2e1f8db8707d05fc75bfeffba1b5bac17 | evmos1jcltmuhplrdcwp7stlr4hlhlhgd4htqh3a79sq
+	# dev1 address 0x963ebdf2e1f8db8707d05fc75bfeffba1b5bac17 | akila1jcltmuhplrdcwp7stlr4hlhlhgd4htqh3a79sq
 	USER2_KEY="dev1"
 	USER2_MNEMONIC="maximum display century economy unlock van census kite error heart snow filter midnight usage egg venture cash kick motor survey drastic edge muffin visual"
 
-	# dev2 address 0x40a0cb1C63e026A81B55EE1308586E21eec1eFa9 | evmos1gzsvk8rruqn2sx64acfsskrwy8hvrmafqkaze8
+	# dev2 address 0x40a0cb1C63e026A81B55EE1308586E21eec1eFa9 | akila1gzsvk8rruqn2sx64acfsskrwy8hvrmafqkaze8
 	USER3_KEY="dev2"
 	USER3_MNEMONIC="will wear settle write dance topic tape sea glory hotel oppose rebel client problem era video gossip glide during yard balance cancel file rose"
 
-	# dev3 address 0x498B5AeC5D439b733dC2F58AB489783A23FB26dA | evmos1fx944mzagwdhx0wz7k9tfztc8g3lkfk6rrgv6l
+	# dev3 address 0x498B5AeC5D439b733dC2F58AB489783A23FB26dA | akila1fx944mzagwdhx0wz7k9tfztc8g3lkfk6rrgv6l
 	USER4_KEY="dev3"
 	USER4_MNEMONIC="doll midnight silk carpet brush boring pluck office gown inquiry duck chief aim exit gain never tennis crime fragile ship cloud surface exotic patch"
 
 	# Import keys from mnemonics
-	echo "$VAL_MNEMONIC" | evmosd keys add "$VAL_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
+	echo "$VAL_MNEMONIC" | akilad keys add "$VAL_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
 
 	# Store the validator address in a variable to use it later
-	node_address=$(evmosd keys show -a "$VAL_KEY" --keyring-backend "$KEYRING" --home "$HOMEDIR")
+	node_address=$(akilad keys show -a "$VAL_KEY" --keyring-backend "$KEYRING" --home "$HOMEDIR")
 
-	echo "$USER1_MNEMONIC" | evmosd keys add "$USER1_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
-	echo "$USER2_MNEMONIC" | evmosd keys add "$USER2_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
-	echo "$USER3_MNEMONIC" | evmosd keys add "$USER3_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
-	echo "$USER4_MNEMONIC" | evmosd keys add "$USER4_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
+	echo "$USER1_MNEMONIC" | akilad keys add "$USER1_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
+	echo "$USER2_MNEMONIC" | akilad keys add "$USER2_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
+	echo "$USER3_MNEMONIC" | akilad keys add "$USER3_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
+	echo "$USER4_MNEMONIC" | akilad keys add "$USER4_KEY" --recover --keyring-backend "$KEYRING" --algo "$KEYALGO" --home "$HOMEDIR"
 
-	# Set moniker and chain-id for Evmos (Moniker can be anything, chain-id must be an integer)
-	evmosd init $MONIKER -o --chain-id "$CHAINID" --home "$HOMEDIR"
+	# Set moniker and chain-id for Akila (Moniker can be anything, chain-id must be an integer)
+	akilad init $MONIKER -o --chain-id "$CHAINID" --home "$HOMEDIR"
 
-	# Change parameter token denominations to aevmos
-	jq '.app_state["staking"]["params"]["bond_denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
-	jq '.app_state["crisis"]["constant_fee"]["denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
-	jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	# Change parameter token denominations to aakila
+	jq '.app_state["staking"]["params"]["bond_denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	jq '.app_state["crisis"]["constant_fee"]["denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 	# When upgrade to cosmos-sdk v0.47, use gov.params to edit the deposit params
-	jq '.app_state["gov"]["params"]["min_deposit"][0]["denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
-	jq '.app_state["evm"]["params"]["evm_denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
-	jq '.app_state["inflation"]["params"]["mint_denom"]="aevmos"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	jq '.app_state["gov"]["params"]["min_deposit"][0]["denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	jq '.app_state["evm"]["params"]["evm_denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	jq '.app_state["inflation"]["params"]["mint_denom"]="aakila"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Set gas limit in genesis
 	jq '.consensus_params["block"]["max_gas"]="10000000"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
@@ -146,8 +146,8 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 	jq '.app_state["claims"]["params"]["duration_until_decay"]="100000s"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Claim module account:
-	# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || evmos15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz
-	jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"evmos15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz","coins":[{"denom":"aevmos", "amount":$amount_to_claim}]}]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
+	# 0xA61808Fe40fEb8B3433778BBC2ecECCAA47c8c47 || akila15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz
+	jq -r --arg amount_to_claim "$amount_to_claim" '.app_state["bank"]["balances"] += [{"address":"akila15cvq3ljql6utxseh0zau9m8ve2j8erz89m5wkz","coins":[{"denom":"aakila", "amount":$amount_to_claim}]}]' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Set base fee in genesis
 	jq '.app_state["feemarket"]["params"]["base_fee"]="'${BASEFEE}'"' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
@@ -201,11 +201,11 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 	sed -i.bak 's/pruning-interval = "0"/pruning-interval = "10"/g' "$APP_TOML"
 
 	# Allocate genesis accounts (cosmos formatted addresses)
-	evmosd add-genesis-account "$(evmosd keys show "$VAL_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 100000000000000000000000000aevmos --keyring-backend "$KEYRING" --home "$HOMEDIR"
-	evmosd add-genesis-account "$(evmosd keys show "$USER1_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aevmos --keyring-backend "$KEYRING" --home "$HOMEDIR"
-	evmosd add-genesis-account "$(evmosd keys show "$USER2_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aevmos --keyring-backend "$KEYRING" --home "$HOMEDIR"
-	evmosd add-genesis-account "$(evmosd keys show "$USER3_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aevmos --keyring-backend "$KEYRING" --home "$HOMEDIR"
-	evmosd add-genesis-account "$(evmosd keys show "$USER4_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aevmos --keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad add-genesis-account "$(akilad keys show "$VAL_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 100000000000000000000000000aakila --keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad add-genesis-account "$(akilad keys show "$USER1_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aakila --keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad add-genesis-account "$(akilad keys show "$USER2_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aakila --keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad add-genesis-account "$(akilad keys show "$USER3_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aakila --keyring-backend "$KEYRING" --home "$HOMEDIR"
+	akilad add-genesis-account "$(akilad keys show "$USER4_KEY" -a --keyring-backend "$KEYRING" --home "$HOMEDIR")" 1000000000000000000000aakila --keyring-backend "$KEYRING" --home "$HOMEDIR"
 
 	# bc is required to add these big numbers
 	# NOTE: we have the validator account (1e26) plus 4 (1e21) accounts
@@ -214,19 +214,19 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 	jq -r --arg total_supply "$total_supply" '.app_state["bank"]["supply"][0]["amount"]=$total_supply' "$GENESIS" >"$TMP_GENESIS" && mv "$TMP_GENESIS" "$GENESIS"
 
 	# Sign genesis transaction
-	evmosd gentx "$VAL_KEY" 1000000000000000000000aevmos --gas-prices ${BASEFEE}aevmos --keyring-backend "$KEYRING" --chain-id "$CHAINID" --home "$HOMEDIR"
+	akilad gentx "$VAL_KEY" 1000000000000000000000aakila --gas-prices ${BASEFEE}aakila --keyring-backend "$KEYRING" --chain-id "$CHAINID" --home "$HOMEDIR"
 	## In case you want to create multiple validators at genesis
-	## 1. Back to `evmosd keys add` step, init more keys
-	## 2. Back to `evmosd add-genesis-account` step, add balance for those
-	## 3. Clone this ~/.evmosd home directory into some others, let's say `~/.clonedEvmosd`
+	## 1. Back to `akilad keys add` step, init more keys
+	## 2. Back to `akilad add-genesis-account` step, add balance for those
+	## 3. Clone this ~/.akilad home directory into some others, let's say `~/.clonedAkilad`
 	## 4. Run `gentx` in each of those folders
-	## 5. Copy the `gentx-*` folders under `~/.clonedEvmosd/config/gentx/` folders into the original `~/.evmosd/config/gentx`
+	## 5. Copy the `gentx-*` folders under `~/.clonedAkilad/config/gentx/` folders into the original `~/.akilad/config/gentx`
 
 	# Collect genesis tx
-	evmosd collect-gentxs --home "$HOMEDIR"
+	akilad collect-gentxs --home "$HOMEDIR"
 
 	# Run this to ensure everything worked and that the genesis file is setup correctly
-	evmosd validate-genesis --home "$HOMEDIR"
+	akilad validate-genesis --home "$HOMEDIR"
 
 	if [[ $1 == "pending" ]]; then
 		echo "pending mode is on, please wait for the first block committed."
@@ -234,10 +234,10 @@ if [[ $overwrite == "y" || $overwrite == "Y" ]]; then
 fi
 
 # Start the node
-evmosd start \
+akilad start \
 	--metrics "$TRACE" \
 	--log_level $LOGLEVEL \
-	--minimum-gas-prices=0.0001aevmos \
+	--minimum-gas-prices=0.0001aakila \
 	--json-rpc.api eth,txpool,personal,net,debug,web3 \
 	--home "$HOMEDIR" \
 	--chain-id "$CHAINID"

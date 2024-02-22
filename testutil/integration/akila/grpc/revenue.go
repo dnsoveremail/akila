@@ -1,12 +1,12 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package grpc
 
 import (
 	"context"
 
-	"github.com/ethereum/go-ethereum/common"
 	revtypes "akila/x/revenue/v1/types"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // GetRevenue returns the revenue for the given address.

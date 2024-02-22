@@ -1,13 +1,13 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package v6
 
 import (
+	"akila/utils"
+	"akila/x/evm/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"akila/utils"
-	"akila/x/evm/types"
 
 	v5types "akila/x/evm/migrations/v6/types"
 )
@@ -58,7 +58,7 @@ func MigrateStore(
 	params.ActivePrecompiles = paramsV5.ActivePrecompiles
 	params.EVMChannels = types.DefaultEVMChannels
 
-	// DefaultEVMChannels are for Evmos mainnet
+	// DefaultEVMChannels are for Akila mainnet
 	// leave empty for testnet
 	if ctx.ChainID() == utils.TestnetChainID+"-4" {
 		params.EVMChannels = []string{}

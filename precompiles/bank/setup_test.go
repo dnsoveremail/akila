@@ -62,7 +62,7 @@ func (s *PrecompileTestSuite) SetupTest() {
 	s.keyring = keyring
 	s.network = integrationNetwork
 
-	// Register EVMOS
+	// Register AKILA
 	akilaMetadata, found := s.network.App.BankKeeper.GetDenomMetaData(s.network.GetContext(), s.bondDenom)
 	s.Require().True(found, "expected akila denom metadata")
 

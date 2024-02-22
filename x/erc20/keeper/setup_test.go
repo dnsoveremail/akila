@@ -56,11 +56,11 @@ type KeeperTestSuite struct {
 
 var (
 	s *KeeperTestSuite
-	// sendAndReceiveMsgFee corresponds to the fees paid on Evmos chain when calling the SendAndReceive function
+	// sendAndReceiveMsgFee corresponds to the fees paid on Akila chain when calling the SendAndReceive function
 	// This function makes 3 cosmos txs under the hood
 	sendAndReceiveMsgFee = math.NewInt(ibctesting.DefaultFeeAmt * 3)
-	// sendBackCoinsFee corresponds to the fees paid on Evmos chain when calling the SendBackCoins function
-	// or calling the SendAndReceive from another chain to Evmos
+	// sendBackCoinsFee corresponds to the fees paid on Akila chain when calling the SendBackCoins function
+	// or calling the SendAndReceive from another chain to Akila
 	// This function makes 2 cosmos txs under the hood
 	sendBackCoinsFee = math.NewInt(ibctesting.DefaultFeeAmt * 2)
 )

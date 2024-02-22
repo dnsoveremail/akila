@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 package app
 
 import (
@@ -30,7 +30,7 @@ import (
 )
 
 // EthDefaultConsensusParams defines the default Tendermint consensus params used in
-// EvmosApp testing.
+// AkilaApp testing.
 var EthDefaultConsensusParams = &tmtypes.ConsensusParams{
 	Block: &tmtypes.BlockParams{
 		MaxBytes: 200000,
@@ -48,12 +48,12 @@ var EthDefaultConsensusParams = &tmtypes.ConsensusParams{
 	},
 }
 
-// EthSetup initializes a new EvmosApp. A Nop logger is set in EvmosApp.
+// EthSetup initializes a new AkilaApp. A Nop logger is set in AkilaApp.
 func EthSetup(isCheckTx bool, patchGenesis func(*Akila, simapp.GenesisState) simapp.GenesisState) *Akila {
 	return EthSetupWithDB(isCheckTx, patchGenesis, dbm.NewMemDB())
 }
 
-// EthSetupWithDB initializes a new EvmosApp. A Nop logger is set in EvmosApp.
+// EthSetupWithDB initializes a new AkilaApp. A Nop logger is set in AkilaApp.
 func EthSetupWithDB(isCheckTx bool, patchGenesis func(*Akila, simapp.GenesisState) simapp.GenesisState, db dbm.DB) *Akila {
 	chainID := utils.TestnetChainID + "-1"
 	app := NewAkila(log.NewNopLogger(),

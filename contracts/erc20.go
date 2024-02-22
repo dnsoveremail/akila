@@ -1,5 +1,5 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)
+// Copyright Tharsis Labs Ltd.(Akila)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)
 
 package contracts
 
@@ -7,8 +7,8 @@ import (
 	_ "embed" // embed compiled smart contract
 	"encoding/json"
 
-	"github.com/ethereum/go-ethereum/common"
 	evmtypes "akila/x/evm/types"
+	"github.com/ethereum/go-ethereum/common"
 
 	"akila/x/erc20/types"
 )

@@ -1,4 +1,4 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
+// Copyright Tharsis Labs Ltd.(Akila)
 // SPDX-License-Identifier:LGPL-3.0-only
 
 package types
@@ -6,8 +6,8 @@ package types
 import (
 	"fmt"
 
-	"cosmossdk.io/math"
 	"akila/x/revenue/v1/types"
+	"cosmossdk.io/math"
 
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 )

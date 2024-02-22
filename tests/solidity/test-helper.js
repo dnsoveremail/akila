@@ -192,7 +192,7 @@ function setupNetwork ({ runConfig, timeout }) {
     return
   }
 
-  // Spawn the evmos process
+  // Spawn the akila process
 
   const spawnPromise = new Promise((resolve, reject) => {
     const serverStartedLog = 'Starting JSON-RPC server'
