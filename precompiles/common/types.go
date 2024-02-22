@@ -23,13 +23,13 @@ var (
 	DefaultChainID = akilautils.MainnetChainID + "-1"
 	// DefaultPrecompilesBech32 is the standard bech32 address for the precompiles
 	DefaultPrecompilesBech32 = []string{
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqn2svlxe", // secp256r1 curve precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqqnqcxyd", // bech32 precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqq4xrkxv", // Staking precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqpgshrm7", // Distribution precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqzxrz44p", // ICS20 transfer precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqrm4kqgn", // Vesting precompile
-		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqy6vpsfk", // Bank precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqn8xnepl", // secp256r1 curve precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqq7k8qrt", // bech32 precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqqcsusp2", // Staking precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqp9xg9uc", // Distribution precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqzt4anj8", // ICS20 transfer precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqrkrfx04", // Vesting precompile
+		"akila1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqzqyh67kws", // Bank precompile
 	}
 )
 
