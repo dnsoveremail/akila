@@ -22,8 +22,8 @@ EXEMPT_FILES: List[str] = [
     r"x/claims/genesis\.go$",
     r"x/erc20/keeper/proposals\.go$",
     r"x/erc20/types/utils\.go$",
-    r"proto/evmos/revenue/v1/",  # All files in this folder
-    r"proto/evmos/claims/v1/genesis\.proto$",
+    r"proto/akila/revenue/v1/",  # All files in this folder
+    r"proto/akila/claims/v1/genesis\.proto$",
 ]
 
 # List of folders that should be ignored.
@@ -38,7 +38,7 @@ LGPL3_LICENSE = [
 
 ENCL_LICENSE = [
     "// Copyright Tharsis Labs Ltd.(Akila)\n",
-    "// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/evmos/blob/main/LICENSE)\n"
+    "// SPDX-License-Identifier:ENCL-1.0(https://github.com/akila/akila/blob/main/LICENSE)\n"
 ]
 
 

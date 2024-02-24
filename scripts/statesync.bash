@@ -31,18 +31,18 @@ go install ./...
 # go install -ldflags '-w -s -X github.com/cosmos/cosmos-sdk/types.DBBackend=boltdb' -tags boltdb ./...
 
 # Initialize chain.
-evmosd init test --chain-id evmos_9000-1
+akilad init test --chain-id akila_9000-1
 
 # Get Genesis
-wget https://archive.evmos.org/mainnet/genesis.json
-mv genesis.json ~/.evmosd/config/
+wget https://archive.akila.org/mainnet/genesis.json
+mv genesis.json ~/.akilad/config/
 
 
 # Get "trust_hash" and "trust_height".
 INTERVAL=1000
-LATEST_HEIGHT=$(curl -s https://evmos-rpc.polkachu.com/block | jq -r .result.block.header.height)
+LATEST_HEIGHT=$(curl -s https://akila-rpc.polkachu.com/block | jq -r .result.block.header.height)
 BLOCK_HEIGHT=$(($LATEST_HEIGHT-$INTERVAL)) 
-TRUST_HASH=$(curl -s "https://evmos-rpc.polkachu.com/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
+TRUST_HASH=$(curl -s "https://akila-rpc.polkachu.com/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
 
 # Print out block and transaction hash from which to sync state.
 echo "trust_height: $BLOCK_HEIGHT"
@@ -51,12 +51,12 @@ echo "trust_hash: $TRUST_HASH"
 # Export state sync variables.
 export AKILAD_STATESYNC_ENABLE=true
 export AKILAD_P2P_MAX_NUM_OUTBOUND_PEERS=200
-export AKILAD_STATESYNC_RPC_SERVERS="https://rpc.evmos.interbloc.org:443,https://evmos-rpc.polkachu.com:443,https://tendermint.bd.evmos.org:26657,https://rpc.evmos.posthuman.digital:443,https://rpc.evmos.testnet.run:443,https://rpc.evmos.bh.rocks:443"
+export AKILAD_STATESYNC_RPC_SERVERS="https://rpc.akila.interbloc.org:443,https://akila-rpc.polkachu.com:443,https://tendermint.bd.akila.org:26657,https://rpc.akila.posthuman.digital:443,https://rpc.akila.testnet.run:443,https://rpc.akila.bh.rocks:443"
 export AKILAD_STATESYNC_TRUST_HEIGHT=$BLOCK_HEIGHT
 export AKILAD_STATESYNC_TRUST_HASH=$TRUST_HASH
 
 # Fetch and set list of seeds from chain registry.
-export AKILAD_P2P_SEEDS=$(curl -s https://raw.githubusercontent.com/cosmos/chain-registry/master/evmos/chain.json | jq -r '[foreach .peers.seeds[] as $item (""; "\($item.id)@\($item.address)")] | join(",")')
+export AKILAD_P2P_SEEDS=$(curl -s https://raw.githubusercontent.com/cosmos/chain-registry/master/akila/chain.json | jq -r '[foreach .peers.seeds[] as $item (""; "\($item.id)@\($item.address)")] | join(",")')
 
 # Start chain.
-evmosd start --x-crisis-skip-assert-invariants 
+akilad start --x-crisis-skip-assert-invariants

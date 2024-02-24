@@ -17,7 +17,7 @@ RPC_PORT="854"
 IP_ADDR="0.0.0.0"
 
 KEY="dev0"
-CHAINID="evmos_9000-1"
+CHAINID="akila_9000-1"
 MONIKER="mymoniker"
 
 ## default port prefixes for akilad
@@ -52,7 +52,7 @@ done
 
 set -euxo pipefail
 
-DATA_DIR=$(mktemp -d -t evmos-datadir.XXXXX)
+DATA_DIR=$(mktemp -d -t akila-datadir.XXXXX)
 
 if [[ ! "$DATA_DIR" ]]; then
     echo "Could not create $DATA_DIR"
@@ -60,21 +60,21 @@ if [[ ! "$DATA_DIR" ]]; then
 fi
 
 # Compile akila
-echo "compiling evmos"
+echo "compiling akila"
 make build
 
 # PID array declaration
 arr=()
 
 init_func() {
-    "$PWD"/build/evmosd keys add $KEY"$i" --keyring-backend test --home "$DATA_DIR$i" --no-backup --algo "eth_secp256k1"
-    "$PWD"/build/evmosd init $MONIKER --chain-id $CHAINID --home "$DATA_DIR$i"
-    "$PWD"/build/evmosd add-genesis-account \
-    "$("$PWD"/build/evmosd keys show "$KEY$i" --keyring-backend test -a --home "$DATA_DIR$i")" 1000000000000000000aevmos,1000000000000000000stake \
+    "$PWD"/build/akilad keys add $KEY"$i" --keyring-backend test --home "$DATA_DIR$i" --no-backup --algo "eth_secp256k1"
+    "$PWD"/build/akilad init $MONIKER --chain-id $CHAINID --home "$DATA_DIR$i"
+    "$PWD"/build/akilad add-genesis-account \
+    "$("$PWD"/build/akilad keys show "$KEY$i" --keyring-backend test -a --home "$DATA_DIR$i")" 1000000000000000000aakila,1000000000000000000stake \
     --keyring-backend test --home "$DATA_DIR$i"
-    "$PWD"/build/evmosd gentx "$KEY$i" 1000000000000000000stake --chain-id $CHAINID --keyring-backend test --home "$DATA_DIR$i"
-    "$PWD"/build/evmosd collect-gentxs --home "$DATA_DIR$i"
-    "$PWD"/build/evmosd validate-genesis --home "$DATA_DIR$i"
+    "$PWD"/build/akilad gentx "$KEY$i" 1000000000000000000stake --chain-id $CHAINID --keyring-backend test --home "$DATA_DIR$i"
+    "$PWD"/build/akilad collect-gentxs --home "$DATA_DIR$i"
+    "$PWD"/build/akilad validate-genesis --home "$DATA_DIR$i"
 
     if [[ $MODE == "pending" ]]; then
       ls $DATA_DIR$i
@@ -103,15 +103,15 @@ init_func() {
 }
 
 start_func() {
-    echo "starting evmos node $i in background ..."
-    "$PWD"/build/evmosd start --pruning=nothing --rpc.unsafe \
+    echo "starting akila node $i in background ..."
+    "$PWD"/build/akilad start --pruning=nothing --rpc.unsafe \
     --p2p.laddr tcp://$IP_ADDR:$NODE_P2P_PORT"$i" --address tcp://$IP_ADDR:$NODE_PORT"$i" --rpc.laddr tcp://$IP_ADDR:$NODE_RPC_PORT"$i" \
     --json-rpc.address=$IP_ADDR:$RPC_PORT"$i" \
     --keyring-backend test --home "$DATA_DIR$i" \
     >"$DATA_DIR"/node"$i".log 2>&1 & disown
 
     AKILA_PID=$!
-    echo "started evmos node, pid=$AKILA_PID"
+    echo "started akila node, pid=$AKILA_PID"
     # add PID to array
     arr+=("$AKILA_PID")
 
@@ -147,7 +147,7 @@ if [[ -z $TEST || $TEST == "rpc" ||  $TEST == "pending" ]]; then
 
     for i in $(seq 1 "$TEST_QTD"); do
         HOST_RPC=http://$IP_ADDR:$RPC_PORT"$i"
-        echo "going to test evmos node $HOST_RPC ..."
+        echo "going to test akila node $HOST_RPC ..."
         MODE=$MODE HOST=$HOST_RPC go test ./tests/... -timeout=$time_out -v -short
 
         RPC_FAIL=$?

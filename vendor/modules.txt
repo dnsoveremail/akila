@@ -362,7 +362,7 @@ github.com/cosmos/btcutil/bech32
 github.com/cosmos/cosmos-proto
 github.com/cosmos/cosmos-proto/anyutil
 github.com/cosmos/cosmos-proto/runtime
-# github.com/cosmos/cosmos-sdk v0.47.5 => github.com/evmos/cosmos-sdk v0.47.5-evmos.2
+# github.com/cosmos/cosmos-sdk v0.47.5 => github.com/akila/cosmos-sdk v0.47.5-akila.2
 ## explicit; go 1.19
 github.com/cosmos/cosmos-sdk/baseapp
 github.com/cosmos/cosmos-sdk/client
@@ -804,7 +804,7 @@ github.com/dvsekhvalnov/jose2go/padding
 # github.com/edsrzf/mmap-go v1.1.0
 ## explicit; go 1.17
 github.com/edsrzf/mmap-go
-# github.com/ethereum/go-ethereum v1.11.5 => github.com/evmos/go-ethereum v1.10.26-evmos-rc2
+# github.com/ethereum/go-ethereum v1.11.5 => github.com/akila/go-ethereum v1.10.26-akila-rc2
 ## explicit; go 1.17
 github.com/ethereum/go-ethereum
 github.com/ethereum/go-ethereum/accounts
@@ -1692,7 +1692,7 @@ pgregory.net/rapid
 sigs.k8s.io/yaml
 sigs.k8s.io/yaml/goyaml.v2
 # github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
-# github.com/cosmos/cosmos-sdk => github.com/evmos/cosmos-sdk v0.47.5-evmos.2
-# github.com/ethereum/go-ethereum => github.com/evmos/go-ethereum v1.10.26-evmos-rc2
+# github.com/cosmos/cosmos-sdk => github.com/akila/cosmos-sdk v0.47.5-akila.2
+# github.com/ethereum/go-ethereum => github.com/akila/go-ethereum v1.10.26-akila-rc2
 # github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.9.1
 # github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
